@@ -20,7 +20,7 @@ const LAPEP_CONFIG = {
      GOOGLE SHEETS — ID DA PLANILHA
   ────────────────────────────────────────────────────────────── */
   sheetId: '',          // ← Cole o ID da planilha aqui
-  noticiasSheetId: '', // ← ID da planilha de notícias (separada)
+  noticiasSheetId: '1xej4U-TsxlSgLgdDamxdrlC1WKY2sDEJ5zaD-dc-nJQ', // ← ID da planilha de notícias (separada)
   abaAlunos: 'Alunos',
   abaNoticias: 'Noticias',
 
@@ -187,8 +187,4 @@ const LAPEP_CONFIG = {
       periodico: 'Journal of Aerospace Technology and Management (JATM), v.6, p.61-67',
       qualis: 'B1',
       doi: '',
-      pdf: 'Portifolio/Publicados/2014_Development and Optimization of a catalytic thruster for hydrogen peroxide decmposition.pdf'
-    }
-  ]
-
-};
+      pdf: 'Portifolio/Publicados/2014_Development and Optimization of a catalytic thruster for hydrog
