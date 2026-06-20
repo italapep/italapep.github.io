@@ -20,6 +20,7 @@ const LAPEP_CONFIG = {
      GOOGLE SHEETS — ID DA PLANILHA
   ────────────────────────────────────────────────────────────── */
   sheetId: '',          // ← Cole o ID da planilha aqui
+  noticiasSheetId: '', // ← ID da planilha de notícias (separada)
   abaAlunos: 'Alunos',
   abaNoticias: 'Noticias',
 
