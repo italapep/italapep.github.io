@@ -256,6 +256,7 @@
     }
     .noticia-card:hover { transform: translateY(-3px); }
     .noticia-topo { height: 6px; background: linear-gradient(90deg, var(--azul), var(--laranja)); }
+    .noticia-img { width: 100%; height: 180px; object-fit: cover; display: block; }
     .noticia-body { padding: 20px; }
     .noticia-data { font-size: .75rem; color: var(--texto-cl); margin-bottom: 6px; }
     .noticia-card h3 { font-size: .95rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
@@ -910,26 +911,41 @@ async function carregarAlunos() {
   }
 }
 
-/* ── Carrega Notícias do Google Sheets ── */
+/* ── Carrega Notícias do Google Sheets (planilha separada) ── */
 async function carregarNoticias() {
-  const sheetId = LAPEP_CONFIG.sheetId;
+  const sheetId = LAPEP_CONFIG.noticiasSheetId;
   if (!sheetId) {
     document.getElementById('noticias-container').innerHTML =
-      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Configure o ID da planilha em <code>config.js</code> para exibir as notícias.</p>';
+      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
     return;
   }
-  const abaNoticias = LAPEP_CONFIG.abaNoticias;
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(abaNoticias)}`;
+  // A planilha deve estar publicada na web (Arquivo > Compartilhar > Publicar na web)
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
   try {
     const r = await fetch(url);
     const txt = await r.text();
-    const linhas = parseCSV(txt).slice(1);
-    const cards = linhas.filter(l => l[1]).map(l => {
-      const data = l[0] || '';
-      const titulo = l[1] || '';
-      const texto = l[2] || '';
+    const linhas = parseCSV(txt).slice(1); // pula cabeçalho
+    // Colunas: A=Data, B=Titulo, C=Texto, D=ImagemURL, E=Ativo(sim/não)
+    const ativas = linhas.filter(l => {
+      const ativo = (l[4] || 'sim').trim().toLowerCase();
+      return l[1] && ativo !== 'não' && ativo !== 'nao' && ativo !== 'n';
+    });
+    if (!ativas.length) {
+      document.getElementById('noticias-container').innerHTML =
+        '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
+      return;
+    }
+    const cards = ativas.map(l => {
+      const data    = l[0] || '';
+      const titulo  = l[1] || '';
+      const texto   = l[2] || '';
+      const imgUrl  = l[3] ? l[3].trim() : '';
+      const imgHtml = imgUrl
+        ? `<img class="noticia-img" src="${imgUrl}" alt="${titulo}" loading="lazy" onerror="this.style.display='none'">`
+        : '';
       return `<div class="noticia-card">
         <div class="noticia-topo"></div>
+        ${imgHtml}
         <div class="noticia-body">
           <div class="noticia-data">${data}</div>
           <h3>${titulo}</h3>
@@ -937,11 +953,10 @@ async function carregarNoticias() {
         </div>
       </div>`;
     }).join('');
-    document.getElementById('noticias-container').innerHTML =
-      cards || '<p style="color:var(--texto-cl);text-align:center;padding:20px">Nenhuma notícia publicada ainda.</p>';
+    document.getElementById('noticias-container').innerHTML = cards;
   } catch {
     document.getElementById('noticias-container').innerHTML =
-      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Não foi possível carregar as notícias.</p>';
+      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
   }
 }
 
@@ -983,32 +998,4 @@ carregarNoticias();
     stars = Array.from({ length: 220 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 1.4 + 0.2,
-      alpha: Math.random() * 0.6 + 0.3,
-      speed: Math.random() * 0.015 + 0.003,
-      dir: Math.random() > 0.5 ? 1 : -1
-    }));
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      s.alpha += s.speed * s.dir;
-      if (s.alpha > 0.9) { s.alpha = 0.9; s.dir = -1; }
-      if (s.alpha < 0.1) { s.alpha = 0.1; s.dir =  1; }
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(tick);
-  }
-
-  window.addEventListener('resize', setup);
-  setup();
-  tick();
-})();
-
-</script>
-</body>
-</html>
+      r:
