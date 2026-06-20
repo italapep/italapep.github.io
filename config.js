@@ -30,7 +30,7 @@ const LAPEP_CONFIG = {
       autores: 'Pereira, L.G.F. et al.',
       periodico: 'Brazilian Journal of Chemical Engineering',
       qualis: 'A3', doi: '',
-      pdf: 'Portifolio/Publicados/2026_Optimization of a green bipropellant with monoethanolamine, 2-propanol, and hydrogen peroxide 90 wt% as oxidizer.pdf'
+      pdf: 'Portifolio/Publicados/2026_Optimization of a green bipropellant with monoethanolamine, 2-propanol, and hydrogen peroxide 90 wt%25 as oxidizer.pdf'
     },
     {
       ano: 2026,
@@ -86,7 +86,7 @@ const LAPEP_CONFIG = {
       autores: 'Pereira, L.G.F. et al.',
       periodico: 'Propellants, Explosives, Pyrotechnics, v.45',
       qualis: 'A4', doi: '',
-      pdf: 'Portifolio/Publicados/2020_CoMn-Spinel Oxides as Supported Catalyst for Rocket-Grade Hydrogen Peroxide Decomposition.pdf'
+      pdf: 'Portifolio/Publicados/2020_CoMn‐Spinel Oxides as Supported Catalyst for Rocket‐Grade Hydrogen Peroxide Decomposition.pdf'
     },
     {
       ano: 2018,
@@ -118,7 +118,7 @@ const LAPEP_CONFIG = {
       autores: 'Pereira, L.G.F. et al.',
       periodico: 'Journal of Aerospace Technology and Management (JATM), v.6, p.61-67',
       qualis: 'B1', doi: '',
-      pdf: 'Portifolio/Publicados/2014_Development and Optimization of a catalytic thruster for hydrogen peroxide decomposition.pdf'
+      pdf: 'Portifolio/Publicados/2014_Development and Optimization of a catalytic thruster for hydrogen peroxide decmposition.pdf'
     }
   ]
 
