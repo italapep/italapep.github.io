@@ -855,7 +855,6 @@ function renderPublicacoes() {
       <div class="pub-titulo">${p.titulo}</div>
       <div class="pub-meta">
         ${p.autores} · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
-        ${p.qualis ? `· Qualis ${p.qualis}` : ''}
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
         ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank">🔗 Acessar artigo</a>` : ''}
