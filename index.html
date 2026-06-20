@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAPEP-ITA — Laboratório de Pesquisas em Propelentes</title>
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    /* ═══════════════════════════════════════════════
+       VARIÁVEIS DE COR — baseadas no logo LAPEP
+       ═══════════════════════════════════════════════ */
+    :root {
+      --azul:      #1e3a5f;
+      --azul-med:  #2a5080;
+      --laranja:   #d4621a;
+      --laranja-cl:#f07830;
+      --cinza-cl:  #f5f6f8;
+      --cinza-med: #e8eaed;
+      --branco:    #ffffff;
+      --texto:     #2d3748;
+      --texto-cl:  #718096;
+      --sombra:    0 2px 12px rgba(30,58,95,.10);
+    }
+
+    /* ═══════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--texto); background: var(--branco); }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════════════
+       NAVBAR
+       ═══════════════════════════════════════════════ */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--azul);
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 60px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo span { color: var(--branco); font-weight: 700; font-size: 1.1rem; letter-spacing: .5px; white-space: nowrap; }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.85); padding: 8px 14px; border-radius: 6px;
+      font-size: .88rem; font-weight: 500; transition: background .2s, color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255,255,255,.12); color: var(--branco);
+    }
+    /* Botão hamburguer (mobile) */
+    #nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    #nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; margin: 5px 0; border-radius: 2px; transition: .3s; }
+
+    /* ═══════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════ */
+    #inicio {
+      background: linear-gradient(135deg, #111827 0%, #1e3259 50%, #7c2c12 100%);
+      color: var(--branco);
+      min-height: calc(100vh - 60px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 60px 24px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #hero-starfield { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    @keyframes hero-orbit {
+      from { offset-distance: 0%; }
+      to   { offset-distance: 100%; }
+    }
+    .hero-sat {
+      position: absolute; width: 10px; height: 10px; border-radius: 50%;
+      background: #f07830; box-shadow: 0 0 10px 3px rgba(240,120,48,.7);
+      offset-path: path('M 350,10 A 340,140 0 1 1 349.9,10');
+      animation: hero-orbit 12s linear infinite;
+      opacity: 0.75; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      z-index: 1;
+    }
+    #inicio img.hero-logo, #inicio h1, #inicio p.hero-sub { position: relative; z-index: 2; }
+    #inicio img.hero-logo { width: 300px; margin: 0 auto 40px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.3)); border-radius: 16px; }
+    #inicio h1 { font-size: 4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
+    #inicio h1 span { color: #ffffff; }
+    #inicio p.hero-sub { font-size: 1.05rem; max-width: 700px; margin: 0 auto 0; }
+    .hero-sub .lab-nome { display: block; font-size: 1.8rem; font-weight: 700; color: var(--laranja-cl); margin-bottom: 1rem; }
+    .hero-sub .ita-nome { display: block; font-size: 1.4rem; font-weight: 400; color: #ffffff; opacity: .92; }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: .95rem;
+      cursor: pointer; border: none; transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+    .btn-primary { background: var(--laranja); color: #fff; }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+    .btn-outline:hover { background: rgba(255,255,255,.1); }
+
+    /* ═══════════════════════════════════════════════
+       SEÇÕES GERAIS
+       ═══════════════════════════════════════════════ */
+    section { padding: 72px 24px; }
+    section:nth-child(even) { background: var(--cinza-cl); }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-title { font-size: 1.8rem; font-weight: 800; color: var(--azul); margin-bottom: 6px; }
+    .section-title span { color: var(--laranja); }
+    .section-sub { color: var(--texto-cl); margin-bottom: 40px; font-size: .97rem; }
+    .divider { width: 48px; height: 4px; background: var(--laranja); border-radius: 2px; margin-bottom: 12px; }
+
+    /* ═══════════════════════════════════════════════
+       SOBRE
+       ═══════════════════════════════════════════════ */
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 28px; }
+    .sobre-texto p { line-height: 1.8; color: var(--texto); font-size: .97rem; text-align: justify; }
+    .sobre-foto img { width: 100%; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,.15); display: block; }
+
+    /* ═══════════════════════════════════════════════
+       LINHAS DE PESQUISA
+       ═══════════════════════════════════════════════ */
+    .pesquisa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .pesq-card {
+      background: var(--branco); border-radius: 12px; padding: 22px 20px;
+      box-shadow: var(--sombra); border-left: 4px solid var(--azul);
+      transition: transform .2s;
+    }
+    .pesq-card:hover { transform: translateY(-3px); }
+    .pesq-card h3 { font-size: .97rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
+    .pesq-card p { font-size: .85rem; color: var(--texto-cl); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════════
+       EQUIPE — Tabs: Professores / Alunos
+       ═══════════════════════════════════════════════ */
+    .tab-btns { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 10px 22px; border-radius: 8px; font-weight: 600; font-size: .9rem;
+      border: 2px solid var(--azul); color: var(--azul); background: transparent;
+      cursor: pointer; transition: .2s;
+    }
+    .tab-btn.active { background: var(--azul); color: #fff; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .equipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .membro-card {
+      background: var(--branco); border-radius: 12px; padding: 24px 18px;
+      box-shadow: var(--sombra); text-align: center; transition: transform .2s;
+    }
+    .membro-card:hover { transform: translateY(-3px); }
+    .avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--azul); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 700; margin: 0 auto 14px;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .membro-card h3 { font-size: .92rem; font-weight: 700; color: var(--azul); margin-bottom: 4px; }
+    .membro-card .nivel { font-size: .78rem; color: var(--laranja); font-weight: 600; margin-bottom: 6px; }
+    .membro-card .tema { font-size: .78rem; color: var(--texto-cl); line-height: 1.5; }
+
+    /* Loading spinner */
+    .loading { text-align: center; padding: 40px; color: var(--texto-cl); font-size: .9rem; }
+
+    /* ═══════════════════════════════════════════════
+       PUBLICAÇÕES
+       ═══════════════════════════════════════════════ */
+    .pub-list { display: flex; flex-direction: column; gap: 14px; }
+    .pub-item {
+      background: var(--branco); border-radius: 10px; padding: 18px 20px;
+      box-shadow: var(--sombra); border-left: 4px solid var(--azul);
+    }
+    .pub-item .pub-titulo { font-weight: 600; color: var(--azul); margin-bottom: 4px; font-size: .93rem; }
+    .pub-item .pub-meta { font-size: .8rem; color: var(--texto-cl); }
+    .pub-item .pub-journal { color: var(--laranja); font-weight: 600; }
+    .pub-item a.pub-doi {
+      display: inline-block; margin-top: 6px; font-size: .78rem;
+      color: var(--azul-med); text-decoration: underline;
+    }
+
+    /* ═══════════════════════════════════════════════
+       PROJETOS
+       ═══════════════════════════════════════════════ */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .proj-card {
+      background: var(--branco); border-radius: 12px; padding: 22px;
+      box-shadow: var(--sombra); display: flex; flex-direction: column; gap: 8px;
+    }
+    .proj-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      background: #e8f4ea; color: #276d35;
+    }
+    .proj-badge.encerrado { background: #f0f0f0; color: #666; }
+    .proj-card h3 { font-size: .95rem; font-weight: 700; color: var(--azul); }
+    .proj-card p { font-size: .83rem; color: var(--texto-cl); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════════
+       PARCERIAS
+       ═══════════════════════════════════════════════ */
+    .parcerias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+    .parceiro-card {
+      background: var(--branco); border-radius: 12px; padding: 24px 16px;
+      box-shadow: var(--sombra); text-align: center; transition: transform .2s;
+    }
+    .parceiro-card:hover { transform: translateY(-3px); }
+    .parceiro-logo {
+      width: 60px; height: 60px; border-radius: 10px;
+      background: var(--azul); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 800; margin: 0 auto 12px;
+    }
+    .parceiro-card h3 { font-size: .88rem; font-weight: 700; color: var(--azul); }
+    .parceiro-card p { font-size: .77rem; color: var(--texto-cl); margin-top: 4px; }
+
+    /* ═══════════════════════════════════════════════
+       PORTAIS
+       ═══════════════════════════════════════════════ */
+    #portais { background: var(--branco); }
+
+    .portal-tab-btns { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+    .portal-tab-btn {
+      padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: .95rem;
+      border: 2px solid var(--azul); color: var(--azul); background: transparent;
+      cursor: pointer; transition: .2s;
+    }
+    .portal-tab-btn.active { background: var(--azul); color: #fff; border-color: var(--azul); }
+    .portal-tab-btn:hover:not(.active) { background: var(--cinza-cl); }
+    .portal-nova-janela {
+      margin-left: auto; font-size: .82rem; color: var(--laranja); font-weight: 600;
+      cursor: pointer; background: none; border: none; text-decoration: underline;
+    }
+
+    .portal-panel { display: none; }
+    .portal-panel.active { display: block; }
+    .iframe-wrap {
+      width: 100%; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+      background: #fff;
+    }
+    .iframe-wrap iframe {
+      width: 100%; height: 680px; border: none; display: block;
+    }
+
+    /* ═══════════════════════════════════════════════
+       NOTÍCIAS
+       ═══════════════════════════════════════════════ */
+    .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .noticia-card {
+      background: var(--branco); border-radius: 12px; overflow: hidden;
+      box-shadow: var(--sombra); transition: transform .2s;
+    }
+    .noticia-card:hover { transform: translateY(-3px); }
+    .noticia-topo { height: 6px; background: linear-gradient(90deg, var(--azul), var(--laranja)); }
+    .noticia-body { padding: 20px; }
+    .noticia-data { font-size: .75rem; color: var(--texto-cl); margin-bottom: 6px; }
+    .noticia-card h3 { font-size: .95rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
+    .noticia-card p { font-size: .83rem; color: var(--texto); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════════
+       CONTATO
+       ═══════════════════════════════════════════════ */
+    .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contato-info { display: flex; flex-direction: column; gap: 16px; }
+    .contato-item { display: flex; align-items: flex-start; gap: 14px; }
+    .contato-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--azul); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contato-item h4 { font-size: .85rem; font-weight: 700; color: var(--azul); margin-bottom: 2px; }
+    .contato-item p { font-size: .85rem; color: var(--texto-cl); }
+    .contato-item a { color: var(--laranja); }
+    .map-placeholder {
+      background: var(--cinza-med); border-radius: 12px; height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--texto-cl); font-size: .9rem; text-align: center; padding: 20px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════ */
+    footer {
+      background: var(--azul); color: rgba(255,255,255,.7);
+      text-align: center; padding: 28px 24px; font-size: .83rem;
+    }
+    footer strong { color: #fff; }
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVO
+       ═══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      #nav-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--azul); padding: 12px 16px 20px; gap: 2px; }
+      .nav-links.open { display: flex; }
+      .sobre-grid, .contato-grid, .sobre-foto { grid-template-columns: 1fr; }
+      .sobre-foto { order: -1; }
+      #inicio h1 { font-size: 1.9rem; }
+      .iframe-wrap iframe { height: 520px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#inicio">
+      <img src="assets/logo.png" alt="Logo LAPEP">
+    </a>
+    <button id="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#pesquisa">Pesquisa</a></li>
+      <li><a href="#equipe">Equipe</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#publicacoes">Publicações</a></li>
+      <li><a href="#defesas">Defesas</a></li>
+      <li><a href="#parcerias">Parcerias</a></li>
+      <li><a href="#portais">Portais</a></li>
+      <li><a href="#noticias" style="white-space:nowrap">Notícias/Oportunidades</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="inicio">
+  <canvas id="hero-starfield"></canvas>
+  <div class="hero-sat"></div>
+  <img class="hero-logo" src="assets/logo.png" alt="Logo LAPEP">
+  <h1>LAPEP<span>-ITA</span></h1>
+  <p class="hero-sub">
+    <span class="lab-nome">Laboratório de Pesquisas em Propelentes</span>
+    <span class="ita-nome">Instituto Tecnológico de Aeronáutica</span>
+  </p>
+</section>
+
+<!-- ═══════ SOBRE ═══════ -->
+<section id="sobre">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Sobre o <span>LAPEP</span></h2>
+    <div class="sobre-grid">
+      <div class="sobre-texto">
+        <p>O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas principais linhas de pesquisa incluem propelentes líquidos, sólidos, híbridos e em gel, propelentes verdes à base de HTP, N₂O e ADN, catalisadores e suportes catalíticos para sistemas propulsivos, materiais cerâmicos e carbonosos avançados, materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O laboratório atua na síntese, caracterização e avaliação de desempenho desses materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil, com foco na autonomia tecnológica, na inovação e no fortalecimento da capacidade nacional.</p>
+      </div>
+      <div class="sobre-foto">
+        <img src="foto-lapep.png" alt="Laboratório LAPEP-ITA">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PESQUISA ═══════ -->
+<section id="pesquisa">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Linhas de <span>Pesquisa</span></h2>
+    <p class="section-sub">Pesquisa aplicada em propulsão química, catálise e materiais avançados</p>
+    <div class="pesquisa-grid">
+      <div class="pesq-card">
+        <h3>🚀 Monopropelentes Verdes</h3>
+        <p>HTP, ADN e N₂O como propelentes para sistemas de decomposição catalítica em micropropulsores e satélites.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>⚗️ Bipropelentes Hipergólicos Verdes</h3>
+        <p>Pares oxidante-combustível baseados em HTP como oxidante para sistemas bipropelentes de baixa toxicidade.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🔥 Propulsão Híbrida e Propelentes em Gel</h3>
+        <p>Combustíveis compósitos e gelificados para sistemas híbridos de propulsão com elevada densidade energética.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🔬 Catalisadores e Suportes Catalíticos</h3>
+        <p>Espinélios de metais de transição e catalisadores heterogêneos, com suportes à base de hexaaluminatos e aluminas estruturadas.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🏗️ Manufatura Aditiva</h3>
+        <p>Produção de monólitos e componentes catalíticos funcionais por impressão 3D para aplicações em propulsão.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🌿 H₂ Verde e Fotocatálise</h3>
+        <p>Catalisadores de metais de transição e óxidos mistos para geração de hidrogênio verde e degradação fotocatalítica de poluentes.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🧱 Materiais Carbonosos</h3>
+        <p>Materiais carbonosos nanoestruturados obtidos por pirólise controlada para eletrocatálise, absorvedores de radiação eletromagnética, refratários industriais e aeroespaciais, e sistemas de defesa.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>🛡️ Materiais Cerâmicos Avançados</h3>
+        <p>Síntese e caracterização de cerâmicas avançadas para aplicações aeroespaciais e de defesa, suportes catalíticos de alta estabilidade térmica e monólitos estruturados para sistemas propulsivos.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>💻 Simulações Termodinâmicas</h3>
+        <p>Simulação termodinâmica de sistemas propulsivos químicos para avaliação de desempenho e dimensionamento de câmaras de combustão.</p>
+      </div>
+      <div class="pesq-card">
+        <h3>📊 DOE / RSM</h3>
+        <p>Planejamento experimental e otimização multivariada por superfície de resposta, aplicados transversalmente a todos os projetos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EQUIPE ═══════ -->
+<section id="equipe">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Nossa <span>Equipe</span></h2>
+    <p class="section-sub">Conheça os pesquisadores e orientandos do LAPEP-ITA</p>
+    <div class="equipe-grid">
+      <!-- Coordenadores -->
+      <div class="membro-card">
+        <div class="avatar"><img src="Fotos Alunos/Luis-Gustavo.jpeg" alt="Luís Gustavo Ferroni Pereira"></div>
+        <h3>Prof. Dr. Luís Gustavo Ferroni Pereira</h3>
+        <div class="nivel">Coordenador | Professor Adjunto</div>
+        <div class="tema">Monopropelentes, bipropelentes hipergólicos, propelentes sólidos e híbridos, propelentes em gel, catalisadores, suportes catalíticos, manufatura aditiva, H₂ verde, fotocatálise, materiais carbonosos e materiais eletromagnéticos</div>
+      </div>
+      <div class="membro-card">
+        <div class="avatar"><img src="Fotos Alunos/Leonardo-Henrique.jpeg" alt="Leonardo Henrique Gouvêa"></div>
+        <h3>Prof. Dr. Leonardo Henrique Gouvêa</h3>
+        <div class="nivel">Coordenador Adjunto | Professor Adjunto</div>
+        <div class="tema">Propulsão química de foguetes, propelentes híbridos, motores hipergólicos, candy rocket, HTP, projeto e operação de bancadas de testes e motores foguete</div>
+      </div>
+      <!-- Pós-Doutorado -->
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Renata.jpeg" alt="Renata Fraga Cardoso"></div><h3>Dra. Renata Fraga Cardoso</h3><div class="nivel">Pós-Doutorado</div><div class="tema">Catálise e propulsão</div></div>
+      <!-- Doutorado -->
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Sandra.jpeg" alt="Sandra Helena da Silva Siqueira Tanaka"></div><h3>Sandra Helena da Silva Siqueira Tanaka</h3><div class="nivel">Doutorado</div><div class="tema">Métodos analíticos para detecção de contaminantes</div></div>
+      <!-- Mestrado — ordem alfabética -->
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Emilly.jpeg" alt="Emilly Estefane"></div><h3>Emilly Estefane de Oliveira Fernandes</h3><div class="nivel">Mestrado</div><div class="tema">Catalisadores para H₂ verde</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Joao-Vitor.jpeg" alt="João Vítor Lima dos Santos"></div><h3>João Vítor Lima dos Santos</h3><div class="nivel">Mestrado</div><div class="tema">Sistema propulsivo monopropelente a HTP</div></div>
+      <div class="membro-card"><div class="avatar">JL</div><h3>Júlia Lima Siqueira</h3><div class="nivel">Mestrado</div><div class="tema">Nanocatalisadores para sistemas propulsivos</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Mariana.jpeg" alt="Mariana Rosa de Lima Silva"></div><h3>Mariana Rosa de Lima Silva</h3><div class="nivel">Mestrado</div><div class="tema">Suportes catalíticos para propulsão</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Sarah.jpeg" alt="Sarah Moreira"></div><h3>Sarah Moreira Silva Lima</h3><div class="nivel">Mestrado</div><div class="tema">Suportes monolíticos por manufatura aditiva</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Victor.jpeg" alt="Victor Rabelo Rodrigues"></div><h3>Victor Rabelo Rodrigues</h3><div class="nivel">Mestrado</div><div class="tema">Combustível hipergólico com HTP</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Vitoria-Argiona.jpeg" alt="Vitória Argiona"></div><h3>Vitória Isabelle dos Santos Argiona</h3><div class="nivel">Mestrado</div><div class="tema">Catalisadores para decomposição de monopropelente a HTP e ADN</div></div>
+      <!-- IC — ordem alfabética -->
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Andre.jpeg" alt="André Luís Ventura Moreira"></div><h3>André Luís Ventura Moreira</h3><div class="nivel">IC</div><div class="tema">Materiais carbonosos nanoestruturados para refratários industriais e aeroespaciais por pirólise controlada</div></div>
+      <div class="membro-card"><div class="avatar">BR</div><h3>Breno Raphael da Silva Pereira</h3><div class="nivel">IC</div><div class="tema">Decomposição catalítica de HTP</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Karine.jpeg" alt="Karine de Fátima da Silva"></div><h3>Karine de Fátima da Silva</h3><div class="nivel">IC</div><div class="tema">Oxidantes verdes para sistemas propulsivos</div></div>
+      <div class="membro-card"><div class="avatar">KL</div><h3>Kimberly Liandra da Silva</h3><div class="nivel">IC</div><div class="tema">Catalisadores para decomposição de H₂O₂</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Luana.jpeg" alt="Luana Vitória"></div><h3>Luana Vitória da Silva Chantre</h3><div class="nivel">IC</div><div class="tema">Síntese de óxidos mistos para fotocatálise</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Maria-Eduarda.jpeg" alt="Maria Eduarda"></div><h3>Maria Eduarda Cardoso de Oliveira</h3><div class="nivel">IC</div><div class="tema">Fotocatálise de poluentes em meio aquoso</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Maria-Vitoria.png" alt="Maria Vitória"></div><h3>Maria Vitória Santos do Nascimento</h3><div class="nivel">IC</div><div class="tema">Materiais carbonosos nanoestruturados</div></div>
+      <div class="membro-card"><div class="avatar"><img src="Fotos Alunos/Samuel.jpeg" alt="Samuel Francisco Delfino Alves"></div><h3>Samuel Francisco Delfino Alves</h3><div class="nivel">IC</div><div class="tema">Materiais carbonosos para eletrocatálise</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROJETOS ═══════ -->
+<section id="projetos">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Projetos</h2>
+    <p class="section-sub">Projetos de pesquisa e desenvolvimento em andamento e concluídos</p>
+    <div class="proj-grid" id="projetos-container">
+
+      <!-- ── Em andamento ── -->
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Use of Hydrogen Peroxide as Propellant in Propulsion Systems</h3>
+        <p>P&D e desenvolvimento tecnológico com parceria internacional (TII). HTP como propelente para satélites e micropropulsores, com interesse estratégico para a defesa nacional.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Desenvolvimento de Catalisador Heterogêneo para Propulsor Monopropelente</h3>
+        <p>Síntese e caracterização de catalisadores para decomposição de HTP em sistemas propulsivos de satélites.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Desenvolvimento de Metodologia de Preparo de HTP em Grau Propulsivo</h3>
+        <p>Protocolo de produção e qualificação de HTP propulsivo em colaboração com o LTF-ITA.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Nanopartículas de Espinélios para Nanocatalisadores em Sistemas Propulsivos</h3>
+        <p>Síntese e caracterização de nanopartículas catalíticas para aplicação em decomposição de propelentes. (Mestrado, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Síntese de Precursor de Alumina como Suporte Catalítico Propulsivo</h3>
+        <p>Produção de suporte de alumina a partir de precursores para catálise em sistemas propulsivos. (Mestrado, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Catalisadores de Metais de Transição para Produção de H₂ Verde</h3>
+        <p>Desenvolvimento de catalisadores para geração de hidrogênio verde em aplicações aeroespaciais. (Mestrado, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Suportes Monolíticos de Alumina por Manufatura Aditiva para Propulsão Monopropelente</h3>
+        <p>Impressão 3D de monólitos cerâmicos como suportes catalíticos para propulsores a HTP. (Mestrado, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Projeto e Otimização de Sistema Propulsivo Monopropelente a HTP</h3>
+        <p>Desenvolvimento e caracterização de propulsor monopropelente operado com HTP, com aplicações em defesa e sistemas aeroespaciais. (Mestrado, 2024)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Combustível Hipergólico para Sistemas Bipropelentes com HTP como Oxidante</h3>
+        <p>Desenvolvimento e avaliação de combustível hipergólico verde compatível com HTP. (Mestrado, 2024)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Metodologia Portátil para Quantificação de Defensivos Agrícolas em Sementes</h3>
+        <p>Desenvolvimento de método analítico miniaturizado para monitoramento de resíduos em sementes. (Doutorado, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Catalisadores para Decomposição de Monopropelente à Base de HTP e ADN</h3>
+        <p>Desenvolvimento e avaliação de catalisadores heterogêneos para decomposição de monopropelentes verdes à base de HTP e ADN. (Mestrado)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Nanopartículas de Espinélios para Decomposição Catalítica de HTP</h3>
+        <p>Síntese e avaliação de nanopartículas catalíticas à base de espinélios para propulsão monopropelente. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Oxidantes Verdes à Base de ADN e HTP para Sistemas Bipropelentes</h3>
+        <p>Avaliação de oxidantes alternativos de baixa toxicidade para aplicações em propulsão bipropelente. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Síntese de Catalisadores de Ag para Decomposição de H₂O₂ por DOE</h3>
+        <p>Planejamento experimental para otimização de catalisadores de prata para decomposição catalítica de peróxido de hidrogênio. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Óxidos Mistos para Degradação Fotocatalítica de Corantes</h3>
+        <p>Síntese e avaliação de óxidos mistos nanoestruturados como fotocatalisadores para tratamento de efluentes. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Materiais Carbonosos como Suportes para Eletrocatalisadores</h3>
+        <p>Desenvolvimento de suportes carbonosos nanoestruturados para aplicação em eletrocatálise e energia. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Materiais Carbonosos Nanoestruturados para Aplicação em Refratários Industriais e Aeroespaciais por Pirólise Controlada</h3>
+        <p>Síntese de materiais carbonosos via pirólise controlada para aplicações refratárias em ambientes industriais e aeroespaciais. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Pirólise para Produção de Materiais Carbonosos Nanoestruturados de Alta Área Superficial</h3>
+        <p>Desenvolvimento de materiais carbonosos com elevada área superficial via pirólise para aplicações energéticas e catalíticas. (IC, 2026)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge">Em andamento</span>
+        <h3>Síntese de Óxidos Mistos Ti-Fe para Degradação Fotocatalítica de Corantes</h3>
+        <p>Desenvolvimento e otimização por DOE de catalisadores à base de óxidos mistos para fotocatálise ambiental. (IC, 2026)</p>
+      </div>
+
+      <!-- ── Concluídos ── -->
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Hexaaluminato de Lantânio como Suporte Catalítico em Sistemas Propulsivos Monopropelentes</h3>
+        <p>Avaliação de suporte de alta estabilidade térmica para propulsão monopropelente a HTP. (Mestrado, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Characterization and Optimization of a Novel Hypergolic Propellant with MEA and n-Butanol</h3>
+        <p>Caracterização e otimização de par hipergólico com HTP como oxidante. (Mestrado, 2024)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Gel de Querosene para Sistemas Bipropelentes Hipergólicos</h3>
+        <p>Síntese e caracterização de combustível gelificado à base de querosene. (IC, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Gel Combustível de Etanol para Bipropelentes com HTP</h3>
+        <p>Desenvolvimento de combustível gelificado à base de etanol para sistemas hipergólicos. (IC, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Otimização de Bipropelentes Hipergólicos com HTP — Variáveis Composicionais</h3>
+        <p>Planejamento experimental aplicado à otimização de formulações bipropelentes verdes. (IC, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Software MATLAB para DOE e Análise Experimental</h3>
+        <p>Desenvolvimento de ferramenta computacional para planejamento e análise estatística de experimentos. (IC, 2025)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Gel Combustível para Sistemas Propulsivos Bipropelentes</h3>
+        <p>Síntese e avaliação de desempenho de combustíveis gelificados para propulsão bipropelente. (IC, 2024)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Propelente Verde com MEA, iPrOH e Catalisador de Cobre e HTP</h3>
+        <p>Avaliação de novo par hipergólico verde para sistemas bipropelentes. (IC, 2023)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Otimização de Leito Catalítico para Propulsor Monopropelente a HTP</h3>
+        <p>Desenvolvimento e otimização geométrica de reator catalítico para decomposição de HTP. (IC, 2023)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Hexaaluminato de Lantânio para Sistemas Monopropulsivos de Satélites</h3>
+        <p>Síntese e avaliação de suporte cerâmico de alta temperatura para propulsão monopropelente. (IC, 2023)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Combustíveis Hipergólicos Catalisados para Sistemas Bipropelentes</h3>
+        <p>Desenvolvimento de combustíveis com aditivos catalíticos para ignição hipergólica com HTP. (IC, 2022)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Catalisadores Mássicos para HTP por Modelagem de Misturas</h3>
+        <p>Síntese e caracterização de catalisadores preparados por modelagem de misturas para decomposição de HTP. (IC, 2021)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Catalisadores Espinélios Mistos para Decomposição de HTP</h3>
+        <p>Síntese e avaliação de catalisadores espinélios de metais de transição para propulsão monopropelente. (IC, 2020)</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-badge encerrado">Concluído</span>
+        <h3>Catalisadores Co-Mn para Decomposição de HTP</h3>
+        <p>Desenvolvimento inicial de catalisadores espinélios Co-Mn para propulsão monopropelente. (IC, 2017)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PUBLICAÇÕES ═══════ -->
+<section id="publicacoes">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Publicações</h2>
+    <p class="section-sub">12 artigos em periódicos internacionais</p>
+    <div class="pub-list" id="pub-container">
+      <!-- Publicações carregadas do config.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DEFESAS ═══════ -->
+<section id="defesas">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Defesas <span>Concluídas</span></h2>
+    <p class="section-sub">Dissertações, teses e supervisões concluídas pelo LAPEP-ITA</p>
+    <div class="pub-list" id="defesas-container">
+
+      <div class="pub-item">
+        <div class="pub-meta">
+          <span class="pub-ano">2025</span>
+          <span class="pub-qualis">Mestrado</span>
+        </div>
+        <div class="pub-corpo">
+          <p class="pub-titulo">Desenvolvimento de Hexaaluminato de Lantânio para Emprego como Suporte Catalítico em Sistemas Propulsivos Monopropelentes</p>
+          <p class="pub-autores">Geovanna Karolinne Carvalho Santos — ITA / CAPES &mdash; <em>Orientador</em></p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <div class="pub-meta">
+          <span class="pub-ano">2024</span>
+          <span class="pub-qualis">Mestrado</span>
+        </div>
+        <div class="pub-corpo">
+          <p class="pub-titulo">Characterization and Optimization of a Novel Hypergolic Propellant Using Monoethanolamine, n-Butanol and 90% Hydrogen Peroxide</p>
+          <p class="pub-autores">Paull Cristhiann Acosta Mendoza — ITA / CAPES &mdash; <em>Co-orientador</em></p>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:32px; margin-bottom:16px; color:var(--azul); font-size:1.1rem; font-weight:700;">Supervisões de Pós-Doutorado</h3>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <div class="pub-meta">
+          <span class="pub-ano">2025</span>
+          <span class="pub-qualis">Pós-Doc</span>
+        </div>
+        <div class="pub-corpo">
+          <p class="pub-titulo">Supervisão de Pós-Doutorado em Catálise e Propulsão</p>
+          <p class="pub-autores">Renata Fraga Cardoso — Instituto Tecnológico de Aeronáutica (2025–2026)</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PARCERIAS ═══════ -->
+<section id="parcerias">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Nossas <span>Parcerias</span></h2>
+    <p class="section-sub">Colaborações institucionais nacionais e internacionais</p>
+    <div class="parcerias-grid" id="parcerias-container">
+      <!-- Carregado do config.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PORTAIS ═══════ -->
+<section id="portais">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Portais</h2>
+    <p class="section-sub">Acesso ao sistema interno do LAPEP</p>
+    <div class="portal-tab-btns">
+      <button class="portal-tab-btn active" onclick="showPortal('aluno', this)">👨‍🎓 Portal do Aluno</button>
+      <button class="portal-tab-btn" onclick="showPortal('orientador', this)">👨‍🏫 Portal do Orientador</button>
+      <button class="portal-nova-janela" onclick="abrirPortalJanela()">↗ Abrir em nova janela</button>
+    </div>
+    <div id="portal-aluno" class="portal-panel active">
+      <div class="iframe-wrap">
+        <iframe src="https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec"
+                title="Portal do Aluno LAPEP" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div id="portal-orientador" class="portal-panel">
+      <div class="iframe-wrap">
+        <iframe src="https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec?page=dashboard"
+                title="Portal do Orientador LAPEP" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NOTÍCIAS ═══════ -->
+<section id="noticias">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Notícias e <span>Oportunidades</span></h2>
+    <p class="section-sub">Novidades, conquistas, eventos e vagas do laboratório</p>
+    <div class="noticias-grid" id="noticias-container">
+      <div class="loading">do notícias...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTATO ═══════ -->
+<section id="contato">
+  <div class="section-inner">
+    <div class="divider"></div>
+    <h2 class="section-title">Contato</h2>
+    <p class="section-sub">Entre em contato com o LAPEP-ITA</p>
+    <div class="contato-grid">
+      <div class="contato-info">
+        <div class="contato-item">
+          <div class="contato-icon">📍</div>
+          <div>
+            <h4>Endereço</h4>
+            <p>Departamento de Química — ITA<br>Campus do CTA, São José dos Campos, SP<br>CEP 12228-900</p>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-icon">📞</div>
+          <div>
+            <h4>Telefone Institucional</h4>
+            <p>(12) 3947-5948</p>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-icon">✉️</div>
+          <div>
+            <h4>E-mail</h4>
+            <p><a href="mailto:lgustavoferroni@ita.br">lgustavoferroni@ita.br</a></p>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-icon">📸</div>
+          <div>
+            <h4>Instagram</h4>
+            <p><a href="https://instagram.com/ita_lapep" target="_blank">@ita_lapep</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        📍 Instituto Tecnológico de Aeronáutica<br>
+        São José dos Campos — SP<br><br>
+        <small>Campus do CTA · Departamento de Química</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <strong>LAPEP-ITA</strong> — Laboratório de Pesquisas em Propelentes<br>
+  Instituto Tecnológico de Aeronáutica · Departamento de Química · São José dos Campos, SP<br>
+  <a href="https://instagram.com/ita_lapep" target="_blank" style="color:rgba(255,255,255,.6);text-decoration:none;">📸 @ita_lapep</a>
+</footer>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<script src="config.js"></script>
+<script>
+
+/* ── Navbar mobile ── */
+document.getElementById('nav-toggle').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
+});
+
+/* ── Destaque nav no scroll ── */
+const sections = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  navAs.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+}, { passive: true });
+
+/* ── Tabs Equipe ── */
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── Tabs Portais ── */
+let _portalAtivo = 'aluno';
+function showPortal(id, btn) {
+  document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.portal-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('portal-' + id).classList.add('active');
+  btn.classList.add('active');
+  _portalAtivo = id;
+}
+function abrirPortalJanela() {
+  const url = _portalAtivo === 'orientador'
+    ? LAPEP_CONFIG.portalOrientador
+    : LAPEP_CONFIG.portalAluno;
+  window.open(url, '_blank', 'width=' + screen.availWidth + ',height=' + screen.availHeight + ',top=0,left=0');
+}
+
+/* ── Renderiza Publicações ── */
+function renderPublicacoes() {
+  const el = document.getElementById('pub-container');
+  el.innerHTML = LAPEP_CONFIG.publicacoes.map(p => `
+    <div class="pub-item">
+      <div class="pub-titulo">${p.titulo}</div>
+      <div class="pub-meta">
+        ${p.autores} · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
+        ${p.qualis ? `· Qualis ${p.qualis}` : ''}
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+        ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank">🔗 Acessar artigo</a>` : ''}
+        ${p.pdf ? `<a class="pub-doi" href="${p.pdf}" target="_blank">📄 Download PDF</a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── Renderiza Parcerias ── */
+function renderParcerias() {
+  const el = document.getElementById('parcerias-container');
+  el.innerHTML = LAPEP_CONFIG.parcerias.map(p => `
+    <div class="parceiro-card">
+      ${p.imagem
+        ? `<img src="${p.imagem}" alt="${p.nome}" style="width:90px;height:60px;object-fit:contain;margin:0 auto 12px;display:block;">`
+        : `<div class="parceiro-logo">${p.sigla}</div>`}
+      <h3>${p.nome}</h3>
+      <p>${p.descricao}</p>
+    </div>
+  `).join('');
+}
+
+/* ── Carrega Alunos do Google Sheets ── */
+async function carregarAlunos() {
+  const sheetId = LAPEP_CONFIG.sheetId;
+  if (!sheetId) {
+    // Sem planilha configurada: alunos já estão hardcoded no HTML
+    return;
+  }
+  const abaAlunos = LAPEP_CONFIG.abaAlunos;
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(abaAlunos)}`;
+  try {
+    const r = await fetch(url);
+    const txt = await r.text();
+    const linhas = parseCSV(txt).slice(1);
+    const cards = linhas.filter(l => l[0]).map(l => {
+      const nome = l[0] || '';
+      const nivel = l[1] || '';
+      const tema = l[2] || '';
+      const iniciais = nome.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
+      return `<div class="membro-card">
+        <div class="avatar">${iniciais}</div>
+        <h3>${nome}</h3>
+        <div class="nivel">${nivel}</div>
+        <div class="tema">${tema}</div>
+      </div>`;
+    }).join('');
+    document.getElementById('alunos-container').innerHTML =
+      `<div class="equipe-grid">${cards || '<p style="color:var(--texto-cl)">Nenhum aluno cadastrado ainda.</p>'}</div>`;
+  } catch {
+    // Mantém o HTML estático em caso de falha
+  }
+}
+
+/* ── Carrega Notícias do Google Sheets ── */
+async function carregarNoticias() {
+  const sheetId = LAPEP_CONFIG.sheetId;
+  if (!sheetId) {
+    document.getElementById('noticias-container').innerHTML =
+      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Configure o ID da planilha em <code>config.js</code> para exibir as notícias.</p>';
+    return;
+  }
+  const abaNoticias = LAPEP_CONFIG.abaNoticias;
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(abaNoticias)}`;
+  try {
+    const r = await fetch(url);
+    const txt = await r.text();
+    const linhas = parseCSV(txt).slice(1);
+    const cards = linhas.filter(l => l[1]).map(l => {
+      const data = l[0] || '';
+      const titulo = l[1] || '';
+      const texto = l[2] || '';
+      return `<div class="noticia-card">
+        <div class="noticia-topo"></div>
+        <div class="noticia-body">
+          <div class="noticia-data">${data}</div>
+          <h3>${titulo}</h3>
+          <p>${texto}</p>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('noticias-container').innerHTML =
+      cards || '<p style="color:var(--texto-cl);text-align:center;padding:20px">Nenhuma notícia publicada ainda.</p>';
+  } catch {
+    document.getElementById('noticias-container').innerHTML =
+      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Não foi possível carregar as notícias.</p>';
+  }
+}
+
+/* ── CSV parser simples ── */
+function parseCSV(txt) {
+  const rows = [];
+  const lines = txt.split('\n');
+  for (const line of lines) {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') { inQ = !inQ; }
+      else if (line[i] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += line[i]; }
+    }
+    cols.push(cur.trim());
+    rows.push(cols);
+  }
+  return rows;
+}
+
+/* ── Init ── */
+renderPublicacoes();
+renderParcerias();
+carregarAlunos();
+carregarNoticias();
+
+/* ── Hero: campo de estrelas ── */
+(function() {
+  const canvas = document.getElementById('hero-starfield');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function setup() {
+    const section = canvas.parentElement;
+    canvas.width  = section.offsetWidth  || window.innerWidth;
+    canvas.height = section.offsetHeight || window.innerHeight;
+    stars = Array.from({ length: 220 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.2,
+      alpha: Math.random() * 0.6 + 0.3,
+      speed: Math.random() * 0.015 + 0.003,
+      dir: Math.random() > 0.5 ? 1 : -1
+    }));
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.alpha += s.speed * s.dir;
+      if (s.alpha > 0.9) { s.alpha = 0.9; s.dir = -1; }
+      if (s.alpha < 0.1) { s.alpha = 0.1; s.dir =  1; }
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', setup);
+  setup();
+  tick();
+})();
+
+</script>
+</body>
+</html>
