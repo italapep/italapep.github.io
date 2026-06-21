@@ -6,193 +6,96 @@
 <meta name="robots" content="noindex, nofollow">
 <title>LAPEP Admin</title>
 <style>
-  :root {
-    --azul: #1e3a5f;
-    --azul-cl: #2563eb;
-    --laranja: #e07b1a;
-    --cinza: #f1f5f9;
-    --borda: #e2e8f0;
-    --texto: #1e293b;
-    --ok: #16a34a;
-    --err: #dc2626;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: system-ui, sans-serif; background: #f8fafc; color: var(--texto); }
-
-  /* Login */
-  #login-screen {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  }
-  .login-box {
-    background: white; padding: 40px 48px; border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,.10); text-align: center; width: 360px;
-  }
-  .login-box .logo { font-size: 2rem; font-weight: 800; color: var(--azul); margin-bottom: 4px; }
-  .login-box .sub { font-size: .85rem; color: #64748b; margin-bottom: 28px; }
-  .login-box input {
-    width: 100%; padding: 12px 16px; border: 1px solid var(--borda);
-    border-radius: 8px; font-size: 1rem; margin-bottom: 14px;
-  }
-  .login-box input:focus { outline: none; border-color: var(--azul-cl); }
-  .btn-login {
-    width: 100%; padding: 12px; background: var(--azul); color: white;
-    border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
-    cursor: pointer; transition: background .2s;
-  }
-  .btn-login:hover { background: var(--azul-cl); }
-  .login-err { color: var(--err); font-size: .85rem; margin-top: 10px; display: none; }
-
-  /* Admin shell */
-  #admin-shell { display: none; }
-  header {
-    background: var(--azul); color: white; padding: 0 32px;
-    display: flex; align-items: center; justify-content: space-between; height: 56px;
-  }
-  header .title { font-weight: 700; font-size: 1.1rem; }
-  header .sub-title { font-size: .78rem; opacity: .7; margin-left: 10px; }
-  header button {
-    background: rgba(255,255,255,.15); color: white; border: none;
-    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: .85rem;
-  }
-  header button:hover { background: rgba(255,255,255,.25); }
-
-  /* Status bar */
-  #status-bar {
-    padding: 10px 32px; font-size: .85rem; display: none;
-    align-items: center; gap: 10px;
-  }
-  #status-bar.ok  { background: #dcfce7; color: var(--ok); display: flex; }
-  #status-bar.err { background: #fee2e2; color: var(--err); display: flex; }
-  #status-bar.loading { background: #eff6ff; color: var(--azul-cl); display: flex; }
-
-  /* Tabs */
-  .tabs { display: flex; border-bottom: 2px solid var(--borda); background: white; padding: 0 32px; }
-  .tab-btn {
-    padding: 14px 22px; border: none; background: none; font-size: .95rem;
-    cursor: pointer; color: #64748b; border-bottom: 3px solid transparent;
-    margin-bottom: -2px; font-weight: 500; transition: color .15s;
-  }
-  .tab-btn.active { color: var(--azul); border-bottom-color: var(--azul); font-weight: 600; }
-  .tab-btn:hover:not(.active) { color: var(--texto); }
-
-  /* Content */
-  .tab-panel { display: none; padding: 28px 32px; }
-  .tab-panel.active { display: block; }
-
-  /* Section header */
-  .sec-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 20px;
-  }
-  .sec-header h2 { font-size: 1.15rem; color: var(--azul); }
-  .sec-header .count { background: var(--cinza); color: #64748b; font-size: .78rem; padding: 3px 10px; border-radius: 99px; margin-left: 10px; }
-
-  /* Buttons */
-  .btn { padding: 8px 18px; border-radius: 7px; border: none; font-size: .875rem; cursor: pointer; font-weight: 500; transition: .15s; }
-  .btn-primary { background: var(--azul); color: white; }
-  .btn-primary:hover { background: var(--azul-cl); }
-  .btn-success { background: var(--ok); color: white; }
-  .btn-success:hover { background: #15803d; }
-  .btn-danger { background: var(--err); color: white; }
-  .btn-danger:hover { background: #b91c1c; }
-  .btn-ghost { background: var(--cinza); color: var(--texto); }
-  .btn-ghost:hover { background: var(--borda); }
-  .btn-save-all {
-    position: fixed; bottom: 28px; right: 32px;
-    background: var(--ok); color: white; border: none;
-    padding: 14px 28px; border-radius: 10px; font-size: 1rem; font-weight: 700;
-    cursor: pointer; box-shadow: 0 4px 16px rgba(22,163,74,.35);
-    transition: .2s; display: none;
-  }
-  .btn-save-all:hover { background: #15803d; transform: translateY(-2px); }
-
-  /* Table */
-  table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
-  th { background: var(--azul); color: white; padding: 11px 14px; text-align: left; font-size: .82rem; font-weight: 600; }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--borda); font-size: .875rem; vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #f8fafc; }
-  td.actions { white-space: nowrap; }
-  td.actions button { margin-right: 6px; padding: 4px 12px; font-size: .78rem; }
-
-  /* Forms */
-  .form-card {
-    background: white; border: 1px solid var(--borda); border-radius: 10px;
-    padding: 24px; margin-top: 24px;
-  }
-  .form-card h3 { font-size: 1rem; color: var(--azul); margin-bottom: 18px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .form-grid .full { grid-column: 1 / -1; }
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field label { font-size: .8rem; font-weight: 600; color: #475569; }
-  .field input, .field select, .field textarea {
-    padding: 9px 12px; border: 1px solid var(--borda); border-radius: 7px;
-    font-size: .875rem; font-family: inherit;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none; border-color: var(--azul-cl);
-  }
-  .field textarea { resize: vertical; min-height: 72px; }
-  .form-actions { margin-top: 18px; display: flex; gap: 10px; }
-
-  /* Partner cards */
-  .parceria-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 14px; }
-  .parceria-card {
-    background: white; border: 1px solid var(--borda); border-radius: 10px;
-    padding: 18px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .parceria-card .p-nome { font-weight: 700; color: var(--azul); }
-  .parceria-card .p-desc { font-size: .82rem; color: #64748b; line-height: 1.5; }
-  .parceria-card .p-actions { display: flex; gap: 8px; margin-top: 6px; }
-  .parceria-card .p-actions button { padding: 5px 12px; font-size: .78rem; }
-
-  /* Equipe list */
-  .equipe-list { display: flex; flex-direction: column; gap: 8px; }
-  .equipe-row {
-    background: white; border: 1px solid var(--borda); border-radius: 8px;
-    padding: 12px 16px; display: flex; align-items: center; gap: 14px;
-  }
-  .equipe-row .e-avatar {
-    width: 42px; height: 42px; border-radius: 50%; background: var(--azul);
-    color: white; display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: .85rem; flex-shrink: 0; overflow: hidden;
-  }
-  .equipe-row .e-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .equipe-row .e-info { flex: 1; }
-  .equipe-row .e-nome { font-weight: 600; font-size: .9rem; }
-  .equipe-row .e-papel { font-size: .78rem; color: var(--laranja); font-weight: 600; margin: 1px 0; }
-  .equipe-row .e-tema { font-size: .78rem; color: #64748b; }
-  .equipe-row .e-actions { display: flex; gap: 6px; flex-shrink: 0; }
-  .equipe-row .e-actions button { padding: 4px 10px; font-size: .75rem; }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.45);
-    display: none; align-items: center; justify-content: center; z-index: 1000;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: white; border-radius: 14px; padding: 28px 32px;
-    width: 600px; max-width: 95vw; max-height: 90vh; overflow-y: auto;
-    box-shadow: 0 8px 40px rgba(0,0,0,.18);
-  }
-  .modal h3 { font-size: 1.1rem; color: var(--azul); margin-bottom: 20px; }
-  .modal .form-grid { grid-template-columns: 1fr 1fr; }
-  .modal .modal-actions { margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end; }
-
-  /* Unsaved badge */
-  #unsaved-badge {
-    background: var(--laranja); color: white; border-radius: 99px;
-    padding: 2px 8px; font-size: .72rem; font-weight: 700; margin-left: 8px; display: none;
-  }
-
-  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  :root { --azul:#1e3a5f; --azul-cl:#2563eb; --laranja:#e07b1a; --cinza:#f1f5f9; --borda:#e2e8f0; --texto:#1e293b; --ok:#16a34a; --err:#dc2626; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:system-ui,sans-serif; background:#f8fafc; color:var(--texto); }
+  #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .login-box { background:white; padding:40px 48px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,.10); text-align:center; width:360px; }
+  .login-box .logo { font-size:2rem; font-weight:800; color:var(--azul); margin-bottom:4px; }
+  .login-box .sub { font-size:.85rem; color:#64748b; margin-bottom:28px; }
+  .login-box input { width:100%; padding:12px 16px; border:1px solid var(--borda); border-radius:8px; font-size:1rem; margin-bottom:14px; }
+  .login-box input:focus { outline:none; border-color:var(--azul-cl); }
+  .btn-login { width:100%; padding:12px; background:var(--azul); color:white; border:none; border-radius:8px; font-size:1rem; font-weight:600; cursor:pointer; }
+  .btn-login:hover { background:var(--azul-cl); }
+  .login-err { color:var(--err); font-size:.85rem; margin-top:10px; display:none; }
+  #admin-shell { display:none; }
+  header { background:var(--azul); color:white; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:52px; }
+  header .title { font-weight:700; font-size:1rem; }
+  header .sub-title { font-size:.75rem; opacity:.7; margin-left:8px; }
+  header button { background:rgba(255,255,255,.15); color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:.82rem; }
+  header button:hover { background:rgba(255,255,255,.25); }
+  #status-bar { padding:8px 24px; font-size:.82rem; display:none; align-items:center; gap:8px; }
+  #status-bar.ok { background:#dcfce7; color:var(--ok); display:flex; }
+  #status-bar.err { background:#fee2e2; color:var(--err); display:flex; }
+  #status-bar.loading { background:#eff6ff; color:var(--azul-cl); display:flex; }
+  .tabs { display:flex; border-bottom:2px solid var(--borda); background:white; padding:0 24px; overflow-x:auto; }
+  .tab-btn { padding:12px 16px; border:none; background:none; font-size:.88rem; cursor:pointer; color:#64748b; border-bottom:3px solid transparent; margin-bottom:-2px; white-space:nowrap; font-weight:500; }
+  .tab-btn.active { color:var(--azul); border-bottom-color:var(--azul); font-weight:600; }
+  .tab-panel { display:none; padding:24px; }
+  .tab-panel.active { display:block; }
+  .sec-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .sec-header h2 { font-size:1.05rem; color:var(--azul); }
+  .count { background:var(--cinza); color:#64748b; font-size:.75rem; padding:2px 8px; border-radius:99px; margin-left:8px; }
+  .btn { padding:7px 16px; border-radius:7px; border:none; font-size:.82rem; cursor:pointer; font-weight:500; }
+  .btn-primary { background:var(--azul); color:white; }
+  .btn-primary:hover { background:var(--azul-cl); }
+  .btn-danger { background:var(--err); color:white; }
+  .btn-danger:hover { background:#b91c1c; }
+  .btn-ghost { background:var(--cinza); color:var(--texto); }
+  .btn-ghost:hover { background:var(--borda); }
+  .btn-ok { background:var(--ok); color:white; }
+  .btn-ok:hover { background:#15803d; }
+  table { width:100%; border-collapse:collapse; background:white; border-radius:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+  th { background:var(--azul); color:white; padding:9px 12px; text-align:left; font-size:.78rem; font-weight:600; }
+  td { padding:9px 12px; border-bottom:1px solid var(--borda); font-size:.82rem; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:#f8fafc; }
+  td.acts button { margin-right:4px; padding:3px 10px; font-size:.74rem; }
+  .list-rows { display:flex; flex-direction:column; gap:7px; }
+  .row-item { background:white; border:1px solid var(--borda); border-radius:8px; padding:12px 14px; display:flex; align-items:flex-start; gap:12px; }
+  .row-item .ri-body { flex:1; }
+  .row-item .ri-title { font-weight:600; font-size:.88rem; }
+  .row-item .ri-sub { font-size:.78rem; color:#64748b; margin-top:2px; }
+  .row-item .ri-badge { display:inline-block; padding:2px 8px; border-radius:99px; font-size:.72rem; font-weight:600; }
+  .badge-ok { background:#dcfce7; color:var(--ok); }
+  .badge-enc { background:#fee2e2; color:var(--err); }
+  .row-item .ri-acts { display:flex; gap:5px; flex-shrink:0; }
+  .row-item .ri-acts button { padding:3px 9px; font-size:.74rem; }
+  .ri-avatar { width:38px; height:38px; border-radius:50%; background:var(--azul); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:.78rem; flex-shrink:0; overflow:hidden; }
+  .ri-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:1000; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:12px; padding:24px 28px; width:580px; max-width:95vw; max-height:90vh; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,.18); }
+  .modal h3 { font-size:1rem; color:var(--azul); margin-bottom:16px; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .form-grid .full { grid-column:1/-1; }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  .field label { font-size:.76rem; font-weight:600; color:#475569; }
+  .field input, .field select, .field textarea { padding:8px 10px; border:1px solid var(--borda); border-radius:6px; font-size:.82rem; font-family:inherit; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--azul-cl); }
+  .field textarea { resize:vertical; min-height:64px; }
+  .modal-actions { margin-top:16px; display:flex; gap:8px; justify-content:flex-end; }
+  .img-upload-wrap { border:2px dashed var(--borda); border-radius:8px; padding:12px; text-align:center; cursor:pointer; background:var(--cinza); }
+  .img-upload-wrap:hover { border-color:var(--azul-cl); }
+  .img-preview { max-width:120px; max-height:80px; border-radius:6px; margin-top:6px; display:none; }
+  .unsaved { background:var(--laranja); color:white; border-radius:99px; padding:2px 8px; font-size:.7rem; font-weight:700; margin-left:8px; display:none; }
+  .spinner { display:inline-block; width:12px; height:12px; border:2px solid currentColor; border-top-color:transparent; border-radius:50%; animation:spin .6s linear infinite; vertical-align:middle; margin-right:5px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .filter-btns { display:flex; gap:8px; margin-bottom:14px; }
+  .sobre-form textarea { min-height:120px; }
+  .parc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+  .parc-card { background:white; border:1px solid var(--borda); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:7px; }
+  .parc-card .pc-nome { font-weight:700; color:var(--azul); font-size:.9rem; }
+  .parc-card .pc-desc { font-size:.78rem; color:#64748b; line-height:1.4; }
+  .parc-card .pc-acts { display:flex; gap:6px; }
+  .parc-card .pc-acts button { padding:4px 10px; font-size:.74rem; }
+  .parc-logo { width:44px; height:44px; object-fit:contain; border-radius:4px; background:white; border:1px solid var(--borda); }
+  .info-box { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:14px 16px; font-size:.82rem; color:#1e40af; margin-bottom:16px; }
+  .info-box a { color:#1d4ed8; }
 </style>
 </head>
 <body>
 
-<!-- Login -->
 <div id="login-screen">
   <div class="login-box">
     <div class="logo">LAPEP</div>
@@ -203,15 +106,14 @@
   </div>
 </div>
 
-<!-- Admin -->
 <div id="admin-shell">
   <header>
     <div>
       <span class="title">LAPEP Admin</span>
       <span class="sub-title">italapep.github.io</span>
     </div>
-    <div style="display:flex;align-items:center;gap:12px">
-      <span id="unsaved-badge">● Não salvo</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="unsaved" id="unsaved-badge">● Não salvo</span>
       <button onclick="saveAll()">💾 Salvar no GitHub</button>
       <button onclick="logout()" style="opacity:.7">Sair</button>
     </div>
@@ -220,433 +122,596 @@
   <div id="status-bar"></div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('publicacoes')">📄 Publicações</button>
-    <button class="tab-btn" onclick="switchTab('parcerias')">🤝 Parcerias</button>
-    <button class="tab-btn" onclick="switchTab('equipe')">👥 Equipe</button>
+    <button class="tab-btn active" onclick="switchTab('sobre',this)">📋 Sobre</button>
+    <button class="tab-btn" onclick="switchTab('pesquisa',this)">🔬 Pesquisa</button>
+    <button class="tab-btn" onclick="switchTab('equipe',this)">👥 Equipe</button>
+    <button class="tab-btn" onclick="switchTab('projetos',this)">📁 Projetos</button>
+    <button class="tab-btn" onclick="switchTab('publicacoes',this)">📄 Publicações</button>
+    <button class="tab-btn" onclick="switchTab('defesas',this)">🎓 Defesas</button>
+    <button class="tab-btn" onclick="switchTab('parcerias',this)">🤝 Parcerias</button>
+    <button class="tab-btn" onclick="switchTab('contato',this)">📞 Contato</button>
+    <button class="tab-btn" onclick="switchTab('noticias',this)">📰 Notícias</button>
   </div>
 
-  <!-- Publicações Tab -->
-  <div id="tab-publicacoes" class="tab-panel active">
-    <div class="sec-header">
-      <div><h2>Publicações <span class="count" id="pub-count">0</span></h2></div>
-      <button class="btn btn-primary" onclick="openModal('pub')">+ Novo artigo</button>
+  <!-- SOBRE -->
+  <div id="tab-sobre" class="tab-panel active">
+    <div class="sec-header"><h2>Sobre o LAPEP</h2></div>
+    <div class="form-grid">
+      <div class="field full"><label>Texto principal</label><textarea id="s-texto" class="sobre-form" rows="6"></textarea></div>
+      <div class="field full">
+        <label>Foto do laboratório (caminho atual: <span id="s-foto-path"></span>)</label>
+        <div class="img-upload-wrap" onclick="document.getElementById('s-foto-file').click()">
+          <img id="s-foto-preview" class="img-preview">
+          <div id="s-foto-label">📷 Clique para trocar a foto</div>
+          <input type="file" id="s-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'s-foto-preview','s-foto-label','s-foto-path-new')">
+        </div>
+        <input type="hidden" id="s-foto-path-new">
+      </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:50px">Ano</th>
-          <th>Título</th>
-          <th>Autores</th>
-          <th>Periódico</th>
-          <th style="width:120px">Ações</th>
-        </tr>
-      </thead>
-      <tbody id="pub-tbody"></tbody>
-    </table>
-  </div>
-
-  <!-- Parcerias Tab -->
-  <div id="tab-parcerias" class="tab-panel">
-    <div class="sec-header">
-      <div><h2>Parcerias <span class="count" id="parc-count">0</span></h2></div>
-      <button class="btn btn-primary" onclick="openModal('parc')">+ Nova parceria</button>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn btn-ok" onclick="saveSobre()">✓ Aplicar alterações</button>
     </div>
-    <div class="parceria-list" id="parc-list"></div>
   </div>
 
-  <!-- Equipe Tab -->
+  <!-- PESQUISA -->
+  <div id="tab-pesquisa" class="tab-panel">
+    <div class="sec-header">
+      <h2>Linhas de Pesquisa <span class="count" id="pesq-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('pesq')">+ Nova linha</button>
+    </div>
+    <div class="list-rows" id="pesq-list"></div>
+  </div>
+
+  <!-- EQUIPE -->
   <div id="tab-equipe" class="tab-panel">
     <div class="sec-header">
-      <div><h2>Equipe <span class="count" id="eq-count">0</span></h2></div>
+      <h2>Equipe <span class="count" id="eq-count">0</span></h2>
       <button class="btn btn-primary" onclick="openModal('eq')">+ Novo membro</button>
     </div>
-    <div style="margin-bottom:14px;display:flex;gap:10px">
-      <button class="btn btn-ghost" onclick="filterEq('todos')" id="eq-f-todos" style="background:var(--azul);color:white">Todos</button>
-      <button class="btn btn-ghost" onclick="filterEq('professor')" id="eq-f-prof">Professores</button>
-      <button class="btn btn-ghost" onclick="filterEq('aluno')" id="eq-f-aluno">Alunos</button>
+    <div class="filter-btns">
+      <button class="btn btn-ghost" id="eq-f-todos" onclick="filterEq('todos')">Todos</button>
+      <button class="btn btn-ghost" id="eq-f-prof" onclick="filterEq('professor')">Professores</button>
+      <button class="btn btn-ghost" id="eq-f-aluno" onclick="filterEq('aluno')">Alunos</button>
     </div>
-    <div class="equipe-list" id="eq-list"></div>
+    <div class="list-rows" id="eq-list"></div>
+  </div>
+
+  <!-- PROJETOS -->
+  <div id="tab-projetos" class="tab-panel">
+    <div class="sec-header">
+      <h2>Projetos <span class="count" id="proj-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('proj')">+ Novo projeto</button>
+    </div>
+    <div class="filter-btns">
+      <button class="btn btn-ghost" id="proj-f-todos" onclick="filterProj('todos')">Todos</button>
+      <button class="btn btn-ghost" id="proj-f-and" onclick="filterProj('Em andamento')">Em andamento</button>
+      <button class="btn btn-ghost" id="proj-f-conc" onclick="filterProj('Concluído')">Concluídos</button>
+    </div>
+    <div class="list-rows" id="proj-list"></div>
+  </div>
+
+  <!-- PUBLICAÇÕES -->
+  <div id="tab-publicacoes" class="tab-panel">
+    <div class="sec-header">
+      <h2>Publicações <span class="count" id="pub-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('pub')">+ Nova publicação</button>
+    </div>
+    <table><thead><tr><th style="width:46px">Ano</th><th>Título</th><th>Autores</th><th>Periódico</th><th style="width:110px">Ações</th></tr></thead>
+    <tbody id="pub-tbody"></tbody></table>
+  </div>
+
+  <!-- DEFESAS -->
+  <div id="tab-defesas" class="tab-panel">
+    <div class="sec-header">
+      <h2>Defesas <span class="count" id="def-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('def')">+ Nova defesa</button>
+    </div>
+    <div class="list-rows" id="def-list"></div>
+  </div>
+
+  <!-- PARCERIAS -->
+  <div id="tab-parcerias" class="tab-panel">
+    <div class="sec-header">
+      <h2>Parcerias <span class="count" id="parc-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('parc')">+ Nova parceria</button>
+    </div>
+    <div class="parc-grid" id="parc-list"></div>
+  </div>
+
+  <!-- CONTATO -->
+  <div id="tab-contato" class="tab-panel">
+    <div class="sec-header"><h2>Contato</h2></div>
+    <div class="form-grid">
+      <div class="field full"><label>Endereço (uma linha por parágrafo)</label><textarea id="c-end" rows="3"></textarea></div>
+      <div class="field"><label>Telefone</label><input id="c-tel"></div>
+      <div class="field"><label>E-mail</label><input id="c-email"></div>
+      <div class="field full"><label>Instagram (sem @)</label><input id="c-insta"></div>
+    </div>
+    <div style="margin-top:14px"><button class="btn btn-ok" onclick="saveContato()">✓ Aplicar alterações</button></div>
+  </div>
+
+  <!-- NOTÍCIAS -->
+  <div id="tab-noticias" class="tab-panel">
+    <div class="sec-header"><h2>Notícias e Oportunidades</h2></div>
+    <div class="info-box">
+      As notícias são carregadas automaticamente de uma planilha do Google Sheets.<br>
+      Para adicionar ou editar notícias, acesse a planilha diretamente:<br><br>
+      <a id="noticias-link" href="#" target="_blank">🔗 Abrir planilha de notícias</a><br><br>
+      <strong>ID da planilha:</strong> <span id="noticias-sheet-id"></span>
+    </div>
+    <div class="field" style="max-width:520px">
+      <label>ID da planilha (caso queira trocar)</label>
+      <input id="n-sheetid" placeholder="1xej4U-...">
+    </div>
+    <div style="margin-top:12px"><button class="btn btn-ok" onclick="saveNoticias()">✓ Aplicar</button></div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="modal-box">
+  <div class="modal">
     <h3 id="modal-title">Novo item</h3>
     <div id="modal-body"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-primary" id="modal-save-btn" onclick="saveModal()">Salvar</button>
+      <button class="btn btn-primary" onclick="saveModal()">Salvar</button>
     </div>
   </div>
 </div>
 
 <script>
-// ─── Config ───────────────────────────────────────────────────────────────────
-const TOKEN = ['ghp_df06oHdQ', 'xwyJogeYoyC', 'BbomitQVK750xqnc7'].join('');
+const TOKEN = ['ghp_df06oHdQ','xwyJogeYoyC','BbomitQVK750xqnc7'].join('');
 const REPO  = 'italapep/italapep.github.io';
 const SENHA = 'lapep2024';
 
-let cfg = null;         // LAPEP_CONFIG object (working copy)
-let cfgSha = null;      // current SHA of config.js on GitHub
+let cfg = null;
+let cfgSha = null;
 let unsaved = false;
-let modalMode = null;   // 'pub' | 'parc' | 'eq'
-let editIdx = null;     // index being edited (null = new)
+let modalMode = null;
+let editIdx = null;
 let eqFilter = 'todos';
+let projFilter = 'todos';
+let pendingImgUploads = [];  // {path, b64} to upload on save
 
-// ─── Login / Logout ───────────────────────────────────────────────────────────
+// ── Login ──
 function login() {
-  const pwd = document.getElementById('pwd').value;
-  if (pwd !== SENHA) {
-    document.getElementById('login-err').style.display = 'block';
-    return;
+  if (document.getElementById('pwd').value !== SENHA) {
+    document.getElementById('login-err').style.display = 'block'; return;
   }
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('admin-shell').style.display = 'block';
   loadConfig();
 }
-
 function logout() {
-  if (unsaved && !confirm('Tem alterações não salvas. Sair mesmo assim?')) return;
+  if (unsaved && !confirm('Há alterações não salvas. Sair mesmo assim?')) return;
   location.reload();
 }
 
-// ─── Load config from GitHub ──────────────────────────────────────────────────
+// ── Load config ──
 async function loadConfig() {
-  showStatus('loading', 'Carregando configuração...');
+  showStatus('loading','Carregando configuração...');
   try {
-    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`, {
-      headers: { Authorization: `token ${TOKEN}` }
-    });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
+      { headers:{ Authorization:`token ${TOKEN}` } });
     const d = await r.json();
     cfgSha = d.sha;
-    const src = decodeURIComponent(escape(atob(d.content.replace(/\n/g, ''))));
-    // eval in safe way: extract JSON-like data
-    const fn = new Function(src + '\nreturn LAPEP_CONFIG;');
-    cfg = fn();
+    const src = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+    cfg = new Function(src + '\nreturn LAPEP_CONFIG;')();
     if (!cfg.equipe) cfg.equipe = [];
     if (!cfg.parcerias) cfg.parcerias = [];
     if (!cfg.publicacoes) cfg.publicacoes = [];
+    if (!cfg.projetos) cfg.projetos = [];
+    if (!cfg.defesas) cfg.defesas = [];
+    if (!cfg.linhasPesquisa) cfg.linhasPesquisa = [];
+    if (!cfg.sobre) cfg.sobre = { texto:'', foto:'' };
+    if (!cfg.contato) cfg.contato = { endereco:'', telefone:'', email:'', instagram:'' };
     renderAll();
-    showStatus('ok', 'Configuração carregada com sucesso.');
+    showStatus('ok','Configuração carregada.');
     setTimeout(clearStatus, 3000);
-  } catch(e) {
-    showStatus('err', 'Erro ao carregar: ' + e.message);
-  }
+  } catch(e) { showStatus('err','Erro ao carregar: ' + e.message); }
 }
 
-// ─── Render ───────────────────────────────────────────────────────────────────
+// ── Render all ──
 function renderAll() {
-  renderPub();
-  renderParc();
-  renderEq();
+  renderSobre(); renderPesquisa(); renderEq(); renderProj();
+  renderPub(); renderDef(); renderParc(); renderContato(); renderNoticias();
 }
 
+// ── Sobre ──
+function renderSobre() {
+  document.getElementById('s-texto').value = cfg.sobre.texto || '';
+  document.getElementById('s-foto-path').textContent = cfg.sobre.foto || '(vazia)';
+  const prev = document.getElementById('s-foto-preview');
+  if (cfg.sobre.foto) { prev.src = `https://italapep.github.io/${cfg.sobre.foto}`; prev.style.display='block'; }
+}
+function saveSobre() {
+  cfg.sobre.texto = document.getElementById('s-texto').value.trim();
+  const newPath = document.getElementById('s-foto-path-new').value;
+  if (newPath) cfg.sobre.foto = newPath;
+  markUnsaved();
+  showStatus('ok','Sobre atualizado. Clique em Salvar no GitHub para publicar.');
+}
+
+// ── Pesquisa ──
+function renderPesquisa() {
+  document.getElementById('pesq-count').textContent = cfg.linhasPesquisa.length;
+  document.getElementById('pesq-list').innerHTML = cfg.linhasPesquisa.map((l,i) => `
+    <div class="row-item">
+      <div style="font-size:1.6rem;flex-shrink:0">${l.icone||'🔬'}</div>
+      <div class="ri-body"><div class="ri-title">${l.titulo}</div><div class="ri-sub">${l.descricao}</div></div>
+      <div class="ri-acts">
+        <button class="btn btn-ghost" onclick="openModal('pesq',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('pesq',${i})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+// ── Equipe ──
+function iniciais(nome) { return nome.split(' ').filter(p=>p.length>2).slice(0,2).map(p=>p[0]).join(''); }
+function renderEq() {
+  document.getElementById('eq-count').textContent = cfg.equipe.length;
+  const filtered = cfg.equipe.filter(m => eqFilter==='todos' || m.tipo===eqFilter);
+  document.getElementById('eq-list').innerHTML = filtered.map(m => {
+    const idx = cfg.equipe.indexOf(m);
+    const av = m.foto
+      ? `<img src="https://italapep.github.io/${m.foto}" onerror="this.style.display='none';this.parentNode.textContent='${iniciais(m.nome)}';">`
+      : iniciais(m.nome);
+    return `<div class="row-item">
+      <div class="ri-avatar">${av}</div>
+      <div class="ri-body"><div class="ri-title">${m.nome}</div><div class="ri-sub" style="color:var(--laranja);font-weight:600">${m.papel}</div><div class="ri-sub">${m.tema}</div></div>
+      <div class="ri-acts">
+        <button class="btn btn-ghost" onclick="openModal('eq',${idx})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('eq',${idx})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+  ['todos','prof','aluno'].forEach(k => {
+    const id = k==='todos'?'eq-f-todos':k==='prof'?'eq-f-prof':'eq-f-aluno';
+    const active = (eqFilter==='todos'&&k==='todos')||(eqFilter==='professor'&&k==='prof')||(eqFilter==='aluno'&&k==='aluno');
+    const btn = document.getElementById(id);
+    btn.style.background = active ? 'var(--azul)' : '';
+    btn.style.color = active ? 'white' : '';
+  });
+}
+function filterEq(t) { eqFilter=t; renderEq(); }
+
+// ── Projetos ──
+function renderProj() {
+  document.getElementById('proj-count').textContent = cfg.projetos.length;
+  const filtered = cfg.projetos.filter(p => projFilter==='todos' || p.status===projFilter);
+  document.getElementById('proj-list').innerHTML = filtered.map(p => {
+    const idx = cfg.projetos.indexOf(p);
+    const cls = p.status==='Concluído' ? 'badge-enc' : 'badge-ok';
+    return `<div class="row-item">
+      <div class="ri-body">
+        <div style="margin-bottom:4px"><span class="ri-badge ${cls}">${p.status}</span>${p.tipo ? ` <span style="font-size:.72rem;color:#64748b">${p.tipo}</span>` : ''}</div>
+        <div class="ri-title">${p.titulo}</div>
+        <div class="ri-sub">${p.descricao}</div>
+      </div>
+      <div class="ri-acts">
+        <button class="btn btn-ghost" onclick="openModal('proj',${idx})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('proj',${idx})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+  ['todos','and','conc'].forEach(k => {
+    const id = `proj-f-${k}`;
+    const active = (projFilter==='todos'&&k==='todos')||(projFilter==='Em andamento'&&k==='and')||(projFilter==='Concluído'&&k==='conc');
+    const btn = document.getElementById(id);
+    btn.style.background = active ? 'var(--azul)' : '';
+    btn.style.color = active ? 'white' : '';
+  });
+}
+function filterProj(t) { projFilter=t; renderProj(); }
+
+// ── Publicações ──
 function renderPub() {
-  const tbody = document.getElementById('pub-tbody');
   document.getElementById('pub-count').textContent = cfg.publicacoes.length;
-  tbody.innerHTML = cfg.publicacoes.map((p, i) => `
+  document.getElementById('pub-tbody').innerHTML = cfg.publicacoes.map((p,i) => `
     <tr>
       <td>${p.ano}</td>
-      <td style="max-width:300px;line-height:1.4">${p.titulo}</td>
-      <td style="white-space:nowrap">${p.autores}</td>
-      <td style="font-size:.78rem;color:#64748b;max-width:200px">${p.periodico}</td>
-      <td class="actions">
+      <td style="max-width:280px;line-height:1.3">${p.titulo}</td>
+      <td style="white-space:nowrap;font-size:.76rem">${p.autores}</td>
+      <td style="font-size:.74rem;color:#64748b;max-width:180px">${p.periodico}</td>
+      <td class="acts">
         <button class="btn btn-ghost" onclick="openModal('pub',${i})">✏️</button>
         <button class="btn btn-danger" onclick="deleteItem('pub',${i})">🗑</button>
       </td>
     </tr>`).join('');
 }
 
-function renderParc() {
-  const list = document.getElementById('parc-list');
-  document.getElementById('parc-count').textContent = cfg.parcerias.length;
-  list.innerHTML = cfg.parcerias.map((p, i) => `
-    <div class="parceria-card">
-      <div class="p-nome">${p.nome} <span style="color:#94a3b8;font-size:.78rem;font-weight:400">(${p.sigla})</span></div>
-      <div class="p-desc">${p.descricao}</div>
-      ${p.imagem ? `<div style="font-size:.75rem;color:#94a3b8">Imagem: ${p.imagem}</div>` : ''}
-      <div class="p-actions">
-        <button class="btn btn-ghost" onclick="openModal('parc',${i})">✏️ Editar</button>
-        <button class="btn btn-danger" onclick="deleteItem('parc',${i})">🗑 Remover</button>
+// ── Defesas ──
+function renderDef() {
+  document.getElementById('def-count').textContent = cfg.defesas.length;
+  document.getElementById('def-list').innerHTML = cfg.defesas.map((d,i) => `
+    <div class="row-item">
+      <div class="ri-body">
+        <div style="margin-bottom:3px"><span class="ri-badge badge-ok">${d.tipo}</span> <span style="font-size:.72rem;color:#64748b">${d.ano}</span></div>
+        <div class="ri-title">${d.titulo}</div>
+        <div class="ri-sub">${d.nome} — ${d.instituicao} — <em>${d.papel}</em></div>
+      </div>
+      <div class="ri-acts">
+        <button class="btn btn-ghost" onclick="openModal('def',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('def',${i})">🗑</button>
       </div>
     </div>`).join('');
 }
 
-function renderEq() {
-  const list = document.getElementById('eq-list');
-  document.getElementById('eq-count').textContent = cfg.equipe.length;
-  const filtered = cfg.equipe.filter(m => eqFilter === 'todos' || m.tipo === eqFilter);
-  list.innerHTML = filtered.map(m => {
-    const idx = cfg.equipe.indexOf(m);
-    const avContent = m.foto
-      ? `<img src="https://italapep.github.io/${m.foto}" alt="${m.nome}" onerror="this.style.display='none';this.parentNode.textContent='${iniciais(m.nome)}';">`
-      : iniciais(m.nome);
-    return `
-      <div class="equipe-row">
-        <div class="e-avatar">${avContent}</div>
-        <div class="e-info">
-          <div class="e-nome">${m.nome}</div>
-          <div class="e-papel">${m.papel}</div>
-          <div class="e-tema">${m.tema}</div>
-        </div>
-        <div class="e-actions">
-          <button class="btn btn-ghost" onclick="openModal('eq',${idx})">✏️</button>
-          <button class="btn btn-danger" onclick="deleteItem('eq',${idx})">🗑</button>
-        </div>
-      </div>`;
+// ── Parcerias ──
+function renderParc() {
+  document.getElementById('parc-count').textContent = cfg.parcerias.length;
+  document.getElementById('parc-list').innerHTML = cfg.parcerias.map((p,i) => {
+    const logo = p.imagem
+      ? `<img src="https://italapep.github.io/${p.imagem}" class="parc-logo" onerror="this.style.display='none'">`
+      : `<div style="width:44px;height:44px;background:var(--azul);color:white;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:700;font-size:.8rem;flex-shrink:0">${p.sigla}</div>`;
+    return `<div class="parc-card">
+      <div style="display:flex;align-items:center;gap:10px">${logo}<div class="pc-nome">${p.nome} <span style="color:#94a3b8;font-size:.76rem;font-weight:400">(${p.sigla})</span></div></div>
+      <div class="pc-desc">${p.descricao}</div>
+      <div class="pc-acts">
+        <button class="btn btn-ghost" onclick="openModal('parc',${i})">✏️ Editar</button>
+        <button class="btn btn-danger" onclick="deleteItem('parc',${i})">🗑 Remover</button>
+      </div>
+    </div>`;
   }).join('');
 }
 
-function iniciais(nome) {
-  return nome.split(' ').filter(p => p.length > 2).slice(0,2).map(p => p[0]).join('');
+// ── Contato ──
+function renderContato() {
+  document.getElementById('c-end').value = cfg.contato.endereco || '';
+  document.getElementById('c-tel').value = cfg.contato.telefone || '';
+  document.getElementById('c-email').value = cfg.contato.email || '';
+  document.getElementById('c-insta').value = cfg.contato.instagram || '';
+}
+function saveContato() {
+  cfg.contato.endereco  = document.getElementById('c-end').value.trim();
+  cfg.contato.telefone  = document.getElementById('c-tel').value.trim();
+  cfg.contato.email     = document.getElementById('c-email').value.trim();
+  cfg.contato.instagram = document.getElementById('c-insta').value.trim();
+  markUnsaved();
+  showStatus('ok','Contato atualizado. Clique em Salvar no GitHub para publicar.');
 }
 
-function filterEq(tipo) {
-  eqFilter = tipo;
-  ['todos','prof','aluno'].forEach(k => {
-    const id = k === 'todos' ? 'eq-f-todos' : k === 'prof' ? 'eq-f-prof' : 'eq-f-aluno';
-    const isActive = (tipo === 'todos' && k === 'todos') || (tipo === 'professor' && k === 'prof') || (tipo === 'aluno' && k === 'aluno');
-    const btn = document.getElementById(id);
-    btn.style.background = isActive ? 'var(--azul)' : '';
-    btn.style.color = isActive ? 'white' : '';
-  });
-  renderEq();
+// ── Notícias ──
+function renderNoticias() {
+  const id = cfg.noticiasSheetId || '';
+  document.getElementById('noticias-sheet-id').textContent = id;
+  document.getElementById('n-sheetid').value = id;
+  const link = `https://docs.google.com/spreadsheets/d/${id}`;
+  document.getElementById('noticias-link').href = link;
+}
+function saveNoticias() {
+  cfg.noticiasSheetId = document.getElementById('n-sheetid').value.trim();
+  renderNoticias(); markUnsaved();
+  showStatus('ok','ID atualizado. Clique em Salvar no GitHub para publicar.');
 }
 
-// ─── Tabs ─────────────────────────────────────────────────────────────────────
-function switchTab(name) {
+// ── Tabs ──
+function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
+  btn.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
 }
 
-// ─── Modal ────────────────────────────────────────────────────────────────────
+// ── Image upload ──
+function handleImgSelect(input, previewId, labelId, pathId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById(previewId);
+    prev.src = e.target.result;
+    prev.style.display = 'block';
+    document.getElementById(labelId).textContent = '✓ ' + file.name;
+    // Store for upload on save
+    document.getElementById(pathId).value = file.name;
+    pendingImgUploads.push({ path: file.name, b64: e.target.result.split(',')[1], file });
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── Modal ──
 function openModal(type, idx) {
   modalMode = type;
-  editIdx = idx !== undefined ? idx : null;
+  editIdx = (idx !== undefined) ? idx : null;
   const isEdit = editIdx !== null;
-  const overlay = document.getElementById('modal-overlay');
   const body = document.getElementById('modal-body');
 
-  if (type === 'pub') {
-    const p = isEdit ? cfg.publicacoes[idx] : {};
-    document.getElementById('modal-title').textContent = isEdit ? 'Editar Publicação' : 'Nova Publicação';
-    body.innerHTML = `
-      <div class="form-grid">
-        <div class="field"><label>Ano</label><input id="m-ano" type="number" value="${p.ano||new Date().getFullYear()}"></div>
-        <div class="field"><label>Qualis</label><input id="m-qualis" value="${p.qualis||''}"></div>
-        <div class="field full"><label>Título</label><textarea id="m-titulo">${p.titulo||''}</textarea></div>
-        <div class="field full"><label>Autores (ex: Silva, J. et al.)</label><input id="m-autores" value="${p.autores||''}"></div>
-        <div class="field full"><label>Periódico</label><input id="m-periodico" value="${p.periodico||''}"></div>
-        <div class="field full"><label>DOI / Link</label><input id="m-doi" value="${p.doi||''}"></div>
-        <div class="field full"><label>Caminho do PDF (ex: Portifolio/Publicados/arquivo.pdf)</label><input id="m-pdf" value="${p.pdf||''}"></div>
-      </div>`;
-  } else if (type === 'parc') {
-    const p = isEdit ? cfg.parcerias[idx] : {};
-    document.getElementById('modal-title').textContent = isEdit ? 'Editar Parceria' : 'Nova Parceria';
-    body.innerHTML = `
-      <div class="form-grid">
-        <div class="field"><label>Sigla</label><input id="m-sigla" value="${p.sigla||''}"></div>
-        <div class="field"><label>Nome completo</label><input id="m-nome" value="${p.nome||''}"></div>
-        <div class="field full"><label>Descrição</label><textarea id="m-descricao">${p.descricao||''}</textarea></div>
-        <div class="field full"><label>Arquivo de imagem (ex: INPE.png — deve estar na raiz do site)</label><input id="m-imagem" value="${p.imagem||''}"></div>
-      </div>`;
+  if (type === 'pesq') {
+    const l = isEdit ? cfg.linhasPesquisa[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Linha de Pesquisa' : 'Nova Linha de Pesquisa';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field"><label>Ícone (emoji)</label><input id="m-icone" value="${l.icone||'🔬'}"></div>
+      <div class="field"><label>Título</label><input id="m-titulo" value="${esc(l.titulo||'')}"></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(l.descricao||'')}</textarea></div>
+    </div>`;
+
   } else if (type === 'eq') {
     const m = isEdit ? cfg.equipe[idx] : {};
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Membro' : 'Novo Membro';
-    body.innerHTML = `
-      <div class="form-grid">
-        <div class="field full"><label>Nome completo</label><input id="m-nome" value="${m.nome||''}"></div>
-        <div class="field">
-          <label>Tipo</label>
-          <select id="m-tipo">
-            <option value="professor" ${m.tipo==='professor'?'selected':''}>Professor</option>
-            <option value="aluno" ${m.tipo==='aluno'||!m.tipo?'selected':''}>Aluno</option>
-          </select>
+    const niveis = ['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','Pós-Doutorado','Doutorado','Mestrado','IC'];
+    const papelOpts = niveis.map(v => `<option value="${v}" ${m.papel===v?'selected':''}>${v}</option>`).join('');
+    body.innerHTML = `<div class="form-grid">
+      <div class="field full"><label>Nome completo</label><input id="m-nome" value="${esc(m.nome||'')}"></div>
+      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="professor" ${m.tipo==='professor'?'selected':''}>Professor</option><option value="aluno" ${m.tipo!=='professor'?'selected':''}>Aluno</option></select></div>
+      <div class="field"><label>Nível / Cargo</label><select id="m-papel">${papelOpts}</select></div>
+      <div class="field full"><label>Tema de pesquisa</label><textarea id="m-tema">${esc(m.tema||'')}</textarea></div>
+      <div class="field full">
+        <label>Foto (caminho atual: ${m.foto||'nenhuma'})</label>
+        <div class="img-upload-wrap" onclick="document.getElementById('m-foto-file').click()">
+          ${m.foto ? `<img src="https://italapep.github.io/${m.foto}" class="img-preview" style="display:block" id="m-foto-preview">` : '<img id="m-foto-preview" class="img-preview">'}
+          <div id="m-foto-label">${m.foto ? '✓ '+m.foto : '📷 Clique para enviar foto'}</div>
+          <input type="file" id="m-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-foto-preview','m-foto-label','m-foto-path')">
         </div>
-        <div class="field">
-          <label>Nível / Cargo</label>
-          <select id="m-papel" onchange="if(this.value==='__outro__')this.insertAdjacentHTML('afterend','<input id=m-papel-custom placeholder=Digite o cargo style=margin-top:6px;width:100%;padding:8px;border:1px solid var(--borda);border-radius:7px>')">
-            ${['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','Pós-Doutorado','Doutorado','Mestrado','IC','__outro__'].map(v => `<option value="${v}" ${m.papel===v?'selected':''}>${v==='__outro__'?'Outro...':v}</option>`).join('')}
-          </select>
-          ${!['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','Pós-Doutorado','Doutorado','Mestrado','IC'].includes(m.papel) && m.papel ? `<input id="m-papel-custom" value="${m.papel}" style="margin-top:6px;width:100%;padding:8px;border:1px solid var(--borda);border-radius:7px">` : ''}
+        <input type="hidden" id="m-foto-path" value="${m.foto||''}">
+      </div>
+    </div>`;
+
+  } else if (type === 'proj') {
+    const p = isEdit ? cfg.projetos[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Projeto' : 'Novo Projeto';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field full"><label>Título</label><input id="m-titulo" value="${esc(p.titulo||'')}"></div>
+      <div class="field"><label>Status</label><select id="m-status"><option value="Em andamento" ${p.status==='Em andamento'||!p.status?'selected':''}>Em andamento</option><option value="Concluído" ${p.status==='Concluído'?'selected':''}>Concluído</option></select></div>
+      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="" ${!p.tipo?'selected':''}>—</option><option value="Mestrado" ${p.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${p.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="IC" ${p.tipo==='IC'?'selected':''}>IC</option><option value="P&D" ${p.tipo==='P&D'?'selected':''}>P&D</option></select></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
+    </div>`;
+
+  } else if (type === 'pub') {
+    const p = isEdit ? cfg.publicacoes[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Publicação' : 'Nova Publicação';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field"><label>Ano</label><input id="m-ano" type="number" value="${p.ano||new Date().getFullYear()}"></div>
+      <div class="field"><label>Qualis</label><input id="m-qualis" value="${esc(p.qualis||'')}"></div>
+      <div class="field full"><label>Título</label><textarea id="m-titulo">${esc(p.titulo||'')}</textarea></div>
+      <div class="field full"><label>Autores</label><input id="m-autores" value="${esc(p.autores||'')}"></div>
+      <div class="field full"><label>Periódico</label><input id="m-periodico" value="${esc(p.periodico||'')}"></div>
+      <div class="field full"><label>DOI / Link</label><input id="m-doi" value="${esc(p.doi||'')}"></div>
+      <div class="field full"><label>Caminho do PDF</label><input id="m-pdf" value="${esc(p.pdf||'')}"></div>
+    </div>`;
+
+  } else if (type === 'def') {
+    const d = isEdit ? cfg.defesas[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Defesa' : 'Nova Defesa';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field"><label>Ano</label><input id="m-ano" type="number" value="${d.ano||new Date().getFullYear()}"></div>
+      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="Mestrado" ${d.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${d.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="Pós-Doc" ${d.tipo==='Pós-Doc'?'selected':''}>Pós-Doc</option><option value="IC" ${d.tipo==='IC'?'selected':''}>IC</option></select></div>
+      <div class="field full"><label>Título do trabalho</label><textarea id="m-titulo">${esc(d.titulo||'')}</textarea></div>
+      <div class="field full"><label>Nome do aluno</label><input id="m-nome" value="${esc(d.nome||'')}"></div>
+      <div class="field"><label>Papel (Orientador / Co-orientador)</label><input id="m-papel" value="${esc(d.papel||'Orientador')}"></div>
+      <div class="field"><label>Instituição / Financiador</label><input id="m-inst" value="${esc(d.instituicao||'')}"></div>
+    </div>`;
+
+  } else if (type === 'parc') {
+    const p = isEdit ? cfg.parcerias[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Parceria' : 'Nova Parceria';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field"><label>Sigla</label><input id="m-sigla" value="${esc(p.sigla||'')}"></div>
+      <div class="field"><label>Nome completo</label><input id="m-nome" value="${esc(p.nome||'')}"></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
+      <div class="field full">
+        <label>Logo (arquivo atual: ${p.imagem||'nenhum'})</label>
+        <div class="img-upload-wrap" onclick="document.getElementById('m-parc-img-file').click()">
+          ${p.imagem ? `<img src="https://italapep.github.io/${p.imagem}" class="img-preview" style="display:block" id="m-parc-img-preview">` : '<img id="m-parc-img-preview" class="img-preview">'}
+          <div id="m-parc-img-label">${p.imagem ? '✓ '+p.imagem : '📷 Clique para enviar logo'}</div>
+          <input type="file" id="m-parc-img-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-parc-img-preview','m-parc-img-label','m-parc-img-path')">
         </div>
-        <div class="field full"><label>Tema de pesquisa</label><textarea id="m-tema">${m.tema||''}</textarea></div>
-        <div class="field full"><label>Foto (ex: Fotos Alunos/Nome.jpeg — ou deixe vazio para usar iniciais)</label><input id="m-foto" value="${m.foto||''}"></div>
-      </div>`;
+        <input type="hidden" id="m-parc-img-path" value="${p.imagem||''}">
+      </div>
+    </div>`;
   }
 
-  overlay.classList.add('open');
+  document.getElementById('modal-overlay').classList.add('open');
 }
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
-  modalMode = null;
-  editIdx = null;
+  modalMode = null; editIdx = null;
 }
 
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function val(id) { return (document.getElementById(id)||{}).value || ''; }
+
 function saveModal() {
-  if (modalMode === 'pub') {
-    const item = {
-      ano: parseInt(document.getElementById('m-ano').value) || new Date().getFullYear(),
-      titulo: document.getElementById('m-titulo').value.trim(),
-      autores: document.getElementById('m-autores').value.trim(),
-      periodico: document.getElementById('m-periodico').value.trim(),
-      qualis: document.getElementById('m-qualis').value.trim(),
-      doi: document.getElementById('m-doi').value.trim(),
-      pdf: document.getElementById('m-pdf').value.trim()
-    };
+  if (modalMode === 'pesq') {
+    const item = { icone: val('m-icone'), titulo: val('m-titulo').trim(), descricao: val('m-desc').trim() };
     if (!item.titulo) { alert('Título obrigatório'); return; }
-    if (editIdx !== null) cfg.publicacoes[editIdx] = item;
-    else cfg.publicacoes.unshift(item);
-    renderPub();
-  } else if (modalMode === 'parc') {
-    const item = {
-      sigla: document.getElementById('m-sigla').value.trim(),
-      nome: document.getElementById('m-nome').value.trim(),
-      descricao: document.getElementById('m-descricao').value.trim(),
-      imagem: document.getElementById('m-imagem').value.trim()
-    };
-    if (!item.nome) { alert('Nome obrigatório'); return; }
-    if (editIdx !== null) cfg.parcerias[editIdx] = item;
-    else cfg.parcerias.push(item);
-    renderParc();
+    if (editIdx !== null) cfg.linhasPesquisa[editIdx] = item; else cfg.linhasPesquisa.push(item);
+    renderPesquisa();
   } else if (modalMode === 'eq') {
-    const papelSel = document.getElementById('m-papel').value;
-    const papelCustom = document.getElementById('m-papel-custom');
-    const papel = (papelSel === '__outro__' && papelCustom) ? papelCustom.value.trim() : papelSel;
-    const item = {
-      nome: document.getElementById('m-nome').value.trim(),
-      tipo: document.getElementById('m-tipo').value,
-      papel: papel,
-      tema: document.getElementById('m-tema').value.trim(),
-      foto: document.getElementById('m-foto').value.trim()
-    };
+    const newFoto = val('m-foto-path');
+    const item = { nome: val('m-nome').trim(), tipo: val('m-tipo'), papel: val('m-papel'), tema: val('m-tema').trim(), foto: newFoto };
     if (!item.nome) { alert('Nome obrigatório'); return; }
-    if (editIdx !== null) cfg.equipe[editIdx] = item;
-    else cfg.equipe.push(item);
+    if (editIdx !== null) cfg.equipe[editIdx] = item; else cfg.equipe.push(item);
     renderEq();
+  } else if (modalMode === 'proj') {
+    const item = { titulo: val('m-titulo').trim(), status: val('m-status'), tipo: val('m-tipo'), descricao: val('m-desc').trim() };
+    if (!item.titulo) { alert('Título obrigatório'); return; }
+    if (editIdx !== null) cfg.projetos[editIdx] = item; else cfg.projetos.push(item);
+    renderProj();
+  } else if (modalMode === 'pub') {
+    const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), titulo: val('m-titulo').trim(), autores: val('m-autores').trim(), periodico: val('m-periodico').trim(), qualis: val('m-qualis').trim(), doi: val('m-doi').trim(), pdf: val('m-pdf').trim() };
+    if (!item.titulo) { alert('Título obrigatório'); return; }
+    if (editIdx !== null) cfg.publicacoes[editIdx] = item; else cfg.publicacoes.unshift(item);
+    renderPub();
+  } else if (modalMode === 'def') {
+    const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), tipo: val('m-tipo'), titulo: val('m-titulo').trim(), nome: val('m-nome').trim(), papel: val('m-papel').trim(), instituicao: val('m-inst').trim() };
+    if (!item.titulo) { alert('Título obrigatório'); return; }
+    if (editIdx !== null) cfg.defesas[editIdx] = item; else cfg.defesas.push(item);
+    renderDef();
+  } else if (modalMode === 'parc') {
+    const imgPath = val('m-parc-img-path');
+    const item = { sigla: val('m-sigla').trim(), nome: val('m-nome').trim(), descricao: val('m-desc').trim(), imagem: imgPath };
+    if (!item.nome) { alert('Nome obrigatório'); return; }
+    if (editIdx !== null) cfg.parcerias[editIdx] = item; else cfg.parcerias.push(item);
+    renderParc();
   }
-  markUnsaved();
-  closeModal();
+  markUnsaved(); closeModal();
 }
 
 function deleteItem(type, idx) {
-  const labels = { pub: 'publicação', parc: 'parceria', eq: 'membro' };
+  const labels = { pesq:'linha de pesquisa', eq:'membro', proj:'projeto', pub:'publicação', def:'defesa', parc:'parceria' };
   if (!confirm(`Remover esta ${labels[type]}?`)) return;
-  if (type === 'pub') { cfg.publicacoes.splice(idx, 1); renderPub(); }
-  else if (type === 'parc') { cfg.parcerias.splice(idx, 1); renderParc(); }
-  else if (type === 'eq') { cfg.equipe.splice(idx, 1); renderEq(); }
+  if (type==='pesq') { cfg.linhasPesquisa.splice(idx,1); renderPesquisa(); }
+  else if (type==='eq')   { cfg.equipe.splice(idx,1); renderEq(); }
+  else if (type==='proj') { cfg.projetos.splice(idx,1); renderProj(); }
+  else if (type==='pub')  { cfg.publicacoes.splice(idx,1); renderPub(); }
+  else if (type==='def')  { cfg.defesas.splice(idx,1); renderDef(); }
+  else if (type==='parc') { cfg.parcerias.splice(idx,1); renderParc(); }
   markUnsaved();
 }
 
-// ─── Unsaved state ────────────────────────────────────────────────────────────
-function markUnsaved() {
-  unsaved = true;
-  document.getElementById('unsaved-badge').style.display = 'inline';
-}
-
-// ─── Save to GitHub ───────────────────────────────────────────────────────────
+// ── Save to GitHub ──
 async function saveAll() {
-  if (!confirm('Salvar alterações no GitHub? O site será atualizado em ~1 minuto.')) return;
-  showStatus('loading', '<span class="spinner"></span>Salvando no GitHub...');
-
+  if (!confirm('Salvar todas as alterações no GitHub? O site atualiza em ~1 min.')) return;
+  showStatus('loading','<span class="spinner"></span>Salvando no GitHub...');
   try {
-    // Rebuild config.js content
+    // Upload pending images first
+    for (const img of pendingImgUploads) {
+      const chk = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(img.path)}`,
+        { headers:{ Authorization:`token ${TOKEN}` } });
+      let sha = null;
+      if (chk.ok) sha = (await chk.json()).sha;
+      const body = { message:`upload imagem: ${img.path}`, content: img.b64 };
+      if (sha) body.sha = sha;
+      await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(img.path)}`,
+        { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' }, body:JSON.stringify(body) });
+    }
+    pendingImgUploads = [];
+
+    // Save config.js
     const content = buildConfigJs();
     const b64 = btoa(unescape(encodeURIComponent(content)));
-
-    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`, {
-      method: 'PUT',
-      headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'admin: atualizar config.js', content: b64, sha: cfgSha })
-    });
-
-    if (!r.ok) {
-      const e = await r.json();
-      throw new Error(e.message || `HTTP ${r.status}`);
-    }
-
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
+      { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' },
+        body:JSON.stringify({ message:'admin: atualizar config.js', content:b64, sha:cfgSha }) });
+    if (!r.ok) { const e=await r.json(); throw new Error(e.message||`HTTP ${r.status}`); }
     const d = await r.json();
     cfgSha = d.content.sha;
     unsaved = false;
     document.getElementById('unsaved-badge').style.display = 'none';
-    showStatus('ok', '✅ Salvo! O site atualiza em ~1 minuto.');
-    setTimeout(clearStatus, 6000);
-  } catch(e) {
-    showStatus('err', '❌ Erro ao salvar: ' + e.message);
-  }
+    showStatus('ok','✅ Salvo! O site atualiza em ~1 minuto.');
+    setTimeout(clearStatus, 7000);
+  } catch(e) { showStatus('err','❌ Erro: ' + e.message); }
 }
 
 function buildConfigJs() {
-  function esc(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
-  function qs(s) { return `'${esc(s)}'`; }
-
-  const pubs = cfg.publicacoes.map(p => `    {
-      ano: ${p.ano},
-      titulo: ${qs(p.titulo)},
-      autores: ${qs(p.autores)},
-      periodico: ${qs(p.periodico)},
-      qualis: ${qs(p.qualis)},
-      doi: ${qs(p.doi)},
-      pdf: ${qs(p.pdf)}
-    }`).join(',\n');
-
-  const parcs = cfg.parcerias.map(p => `    {
-      sigla: ${qs(p.sigla)},
-      imagem: ${qs(p.imagem)},
-      nome: ${qs(p.nome)},
-      descricao: ${qs(p.descricao)}
-    }`).join(',\n');
-
-  const equipe = cfg.equipe.map(m => `    { nome: ${qs(m.nome)}, papel: ${qs(m.papel)}, foto: ${qs(m.foto)}, tema: ${qs(m.tema)}, tipo: ${qs(m.tipo)} }`).join(',\n');
-
-  return `/**
- * LAPEP-ITA — Arquivo de Configuração
- * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}
- * NÃO edite manualmente — use o admin.html
- */
-
-const LAPEP_CONFIG = {
-
-  sheetId: ${qs(cfg.sheetId||'')},
-  noticiasSheetId: ${qs(cfg.noticiasSheetId||'')},
-  abaAlunos: ${qs(cfg.abaAlunos||'Alunos')},
-  abaNoticias: ${qs(cfg.abaNoticias||'Noticias')},
-
-  portalAluno: ${qs(cfg.portalAluno||'')},
-  portalOrientador: ${qs(cfg.portalOrientador||'')},
-
-  parcerias: [
-${parcs}
-  ],
-
-  publicacoes: [
-${pubs}
-  ],
-
-  equipe: [
-${equipe}
-  ]
-
-};
-`;
+  function q(s) { return `'${(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}' `; }
+  const sobre = `  sobre: {\n    texto: ${q(cfg.sobre.texto)},\n    foto: ${q(cfg.sobre.foto)}\n  },`;
+  const contato = `  contato: {\n    endereco: ${q(cfg.contato.endereco)},\n    telefone: ${q(cfg.contato.telefone)},\n    email: ${q(cfg.contato.email)},\n    instagram: ${q(cfg.contato.instagram)}\n  },`;
+  const pesq = cfg.linhasPesquisa.map(l => `    { icone: ${q(l.icone)}, titulo: ${q(l.titulo)}, descricao: ${q(l.descricao)} }`).join(',\n');
+  const proj = cfg.projetos.map(p => `    { titulo: ${q(p.titulo)}, descricao: ${q(p.descricao)}, status: ${q(p.status)}, tipo: ${q(p.tipo)} }`).join(',\n');
+  const pubs = cfg.publicacoes.map(p => `    { ano: ${p.ano}, titulo: ${q(p.titulo)}, autores: ${q(p.autores)}, periodico: ${q(p.periodico)}, qualis: ${q(p.qualis)}, doi: ${q(p.doi)}, pdf: ${q(p.pdf)} }`).join(',\n');
+  const defs = cfg.defesas.map(d => `    { ano: ${d.ano}, tipo: ${q(d.tipo)}, titulo: ${q(d.titulo)}, nome: ${q(d.nome)}, papel: ${q(d.papel)}, instituicao: ${q(d.instituicao)} }`).join(',\n');
+  const parcs = cfg.parcerias.map(p => `    { sigla: ${q(p.sigla)}, imagem: ${q(p.imagem)}, nome: ${q(p.nome)}, descricao: ${q(p.descricao)} }`).join(',\n');
+  const equipe = cfg.equipe.map(m => `    { nome: ${q(m.nome)}, papel: ${q(m.papel)}, foto: ${q(m.foto)}, tema: ${q(m.tema)}, tipo: ${q(m.tipo)} }`).join(',\n');
+  return `/**\n * LAPEP-ITA — config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  noticiasSheetId: ${q(cfg.noticiasSheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  abaNoticias: ${q(cfg.abaNoticias||'Noticias')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ]\n\n};\n`;
 }
 
-// ─── Status bar ───────────────────────────────────────────────────────────────
-function showStatus(type, msg) {
-  const bar = document.getElementById('status-bar');
-  bar.innerHTML = msg;
-  bar.className = type;
-}
-function clearStatus() {
-  const bar = document.getElementById('status-bar');
-  bar.className = '';
-  bar.style.display = '';
-}
+// ── Helpers ──
+function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
+function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
+function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
 </script>
 </body>
 </html>
