@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 13:40:56
+ * Editado via painel admin em 21/06/2026, 13:45:41
  */
 
 const LAPEP_CONFIG = {
@@ -11,7 +11,7 @@ const LAPEP_CONFIG = {
   portalOrientador: 'https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec?page=dashboard' ,
 
   sobre: {
-    texto: 'O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional. [T]' ,
+    texto: 'O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional.' ,
     foto: 'foto-lapep.png' 
   },
 
@@ -23,7 +23,7 @@ const LAPEP_CONFIG = {
   },
 
   linhasPesquisa: [
-    { icone: '🚀' , titulo: 'Monopropelentes Verdes [T]' , descricao: 'HTP, ADN e N₂O como propelentes para sistemas de decomposição catalítica em micropropulsores e satélites.'  },
+    { icone: '🚀' , titulo: 'Monopropelentes Verdes' , descricao: 'HTP, ADN e N₂O como propelentes para sistemas de decomposição catalítica em micropropulsores e satélites.'  },
     { icone: '⚗️' , titulo: 'Bipropelentes Hipergólicos Verdes' , descricao: 'Pares oxidante-combustível baseados em HTP como oxidante para sistemas bipropelentes de baixa toxicidade.'  },
     { icone: '🔥' , titulo: 'Propulsão Híbrida e Propelentes em Gel' , descricao: 'Combustíveis compósitos e gelificados para sistemas híbridos de propulsão com elevada densidade energética.'  },
     { icone: '🔬' , titulo: 'Catalisadores e Suportes Catalíticos' , descricao: 'Espinélios de metais de transição e catalisadores heterogêneos, com suportes à base de hexaaluminatos e aluminas estruturadas.'  },
@@ -36,7 +36,7 @@ const LAPEP_CONFIG = {
   ],
 
   projetos: [
-    { titulo: 'Use of Hydrogen Peroxide as Propellant in Propulsion Systems [T]' , descricao: 'P&D e desenvolvimento tecnológico com parceria internacional (TII). HTP como propelente para satélites e micropropulsores, com interesse estratégico para a defesa nacional.' , status: 'Em andamento' , tipo: ''  },
+    { titulo: 'Use of Hydrogen Peroxide as Propellant in Propulsion Systems' , descricao: 'P&D e desenvolvimento tecnológico com parceria internacional (TII). HTP como propelente para satélites e micropropulsores, com interesse estratégico para a defesa nacional.' , status: 'Em andamento' , tipo: ''  },
     { titulo: 'Desenvolvimento de Catalisador Heterogêneo para Propulsor Monopropelente' , descricao: 'Síntese e caracterização de catalisadores para decomposição de HTP em sistemas propulsivos de satélites.' , status: 'Em andamento' , tipo: ''  },
     { titulo: 'Desenvolvimento de Metodologia de Preparo de HTP em Grau Propulsivo' , descricao: 'Protocolo de produção e qualificação de HTP propulsivo em colaboração com o LTF-ITA.' , status: 'Em andamento' , tipo: ''  },
     { titulo: 'Nanopartículas de Espinélios para Nanocatalisadores em Sistemas Propulsivos' , descricao: 'Síntese e caracterização de nanopartículas catalíticas para aplicação em decomposição de propelentes. (Mestrado, 2026)' , status: 'Em andamento' , tipo: 'Mestrado'  },
@@ -72,22 +72,22 @@ const LAPEP_CONFIG = {
   ],
 
   defesas: [
-    { ano: 2025, tipo: 'Mestrado' , titulo: 'Desenvolvimento de Hexaaluminato de Lantânio para Emprego como Suporte Catalítico em Sistemas Propulsivos Monopropelentes [T]' , nome: 'Geovanna Karolinne Carvalho Santos' , papel: 'Orientador' , instituicao: 'ITA / CAPES'  },
+    { ano: 2025, tipo: 'Mestrado' , titulo: 'Desenvolvimento de Hexaaluminato de Lantânio para Emprego como Suporte Catalítico em Sistemas Propulsivos Monopropelentes' , nome: 'Geovanna Karolinne Carvalho Santos' , papel: 'Orientador' , instituicao: 'ITA / CAPES'  },
     { ano: 2024, tipo: 'Mestrado' , titulo: 'Characterization and Optimization of a Novel Hypergolic Propellant Using Monoethanolamine, n-Butanol and 90% Hydrogen Peroxide' , nome: 'Paull Cristhiann Acosta Mendoza' , papel: 'Co-orientador' , instituicao: 'ITA / CAPES'  },
     { ano: 2025, tipo: 'Pós-Doc' , titulo: 'Supervisão de Pós-Doutorado em Catálise e Propulsão' , nome: 'Renata Fraga Cardoso' , papel: 'Supervisor' , instituicao: 'Instituto Tecnológico de Aeronáutica (2025–2026)'  }
   ],
 
   parcerias: [
-    { sigla: 'INPE' , imagem: 'INPE.png' , nome: 'INPE / LCP [T]' , descricao: 'Laboratório de Combustão e Propulsão — parceria histórica em propulsão e foguetes desde 2011.'  },
+    { sigla: 'INPE' , imagem: 'INPE.png' , nome: 'INPE / LCP' , descricao: 'Laboratório de Combustão e Propulsão — parceria histórica em propulsão e foguetes desde 2011.'  },
     { sigla: 'TII' , imagem: 'TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute — colaboração internacional em propulsão com HTP.'  },
     { sigla: 'LTF' , imagem: 'LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de propulsão e desenvolvimento de HTP propulsivo.'  },
-    { sigla: 'USP' , imagem: '' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
+    { sigla: 'USP' , imagem: 'EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
     { sigla: 'LPL' , imagem: 'LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de Propulsão Líquida.'  },
     { sigla: 'BIZU' , imagem: 'Bizu.jpg' , nome: 'Bizu' , descricao: 'Parceria em projeto de preparo de propelentes e desenvolvimento tecnológico.'  }
   ],
 
   publicacoes: [
-    { ano: 2026, titulo: 'Optimization of a green bipropellant with monoethanolamine, 2-propanol, and hydrogen peroxide 90 wt% as oxidizer [T]' , autores: 'Cardoso, R.F. et al.' , periodico: 'Brazilian Journal of Chemical Engineering' , qualis: 'A3' , doi: '' , pdf: 'Portifolio/Publicados/2026_Optimization of a green bipropellant with monoethanolamine, 2propanol, and hydrogen peroxide 90 wt% as oxidizer.pdf'  },
+    { ano: 2026, titulo: 'Optimization of a green bipropellant with monoethanolamine, 2-propanol, and hydrogen peroxide 90 wt% as oxidizer' , autores: 'Cardoso, R.F. et al.' , periodico: 'Brazilian Journal of Chemical Engineering' , qualis: 'A3' , doi: '' , pdf: 'Portifolio/Publicados/2026_Optimization of a green bipropellant with monoethanolamine, 2propanol, and hydrogen peroxide 90 wt% as oxidizer.pdf'  },
     { ano: 2026, titulo: 'Development and optimization of a green hypergolic gel propellant based on gelled ethanol with aluminum powder and copper(II) chloride with 90% hydrogen peroxide as oxidizer' , autores: 'Cardoso, R.F. et al.' , periodico: 'Acta Astronautica, v.247, p.669-680' , qualis: 'A2' , doi: '' , pdf: 'Portifolio/Publicados/2026_Development and optimization of a green hypergolic gel propellant based on.pdf'  },
     { ano: 2025, titulo: 'Composition optimization of a hypergolic green propellant based on monoethanolamine, n-butanol and 90% hydrogen peroxide' , autores: 'Mendoza, P.C.A. et al.' , periodico: 'Acta Astronautica, v.229, p.140-148' , qualis: 'A2' , doi: '' , pdf: 'Portifolio/Publicados/2025_Composition optimization of a hypergolic green propellant based on.pdf'  },
     { ano: 2022, titulo: 'Thermal, Viscosimetric and Thermomechanical Combined Assessment of Mixture Modelled Composite Fuels for Hybrid Propulsion' , autores: 'Péres de Araújo, E. et al.' , periodico: 'Propellants, Explosives, Pyrotechnics, v.47' , qualis: 'A4' , doi: '' , pdf: 'Portifolio/Publicados/2022_Thermal, Viscosimetric and Thermomechanical Combined Assessment of Mixture Modelled Composite Fuels for Hybrid Propulsion.pdf'  },
@@ -102,7 +102,7 @@ const LAPEP_CONFIG = {
   ],
 
   equipe: [
-    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira [T]' , papel: 'Coordenador | Professor Adjunto' , foto: 'Fotos Alunos/Luis-Gustavo.jpeg' , tema: 'Monopropelentes, bipropelentes hipergólicos, propelentes sólidos e híbridos, propelentes em gel, catalisadores, suportes catalíticos, manufatura aditiva, H₂ verde, fotocatálise, materiais carbonosos e materiais eletromagnéticos' , tipo: 'professor'  },
+    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira' , papel: 'Coordenador | Professor Adjunto' , foto: 'Fotos Alunos/Luis-Gustavo.jpeg' , tema: 'Monopropelentes, bipropelentes hipergólicos, propelentes sólidos e híbridos, propelentes em gel, catalisadores, suportes catalíticos, manufatura aditiva, H₂ verde, fotocatálise, materiais carbonosos e materiais eletromagnéticos' , tipo: 'professor'  },
     { nome: 'Prof. Dr. Leonardo Henrique Gouvêa' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/Leonardo-Henrique.jpeg' , tema: 'Propulsão química de foguetes, propelentes híbridos, motores hipergólicos, candy rocket, HTP, projeto e operação de bancadas de testes e motores foguete' , tipo: 'professor'  },
     { nome: 'Dra. Renata Fraga Cardoso' , papel: 'Pós-Doutorado' , foto: 'Fotos Alunos/Renata.jpeg' , tema: 'Catálise heterogênea e propulsão' , tipo: 'aluno'  },
     { nome: 'Sandra Helena da Silva Siqueira Tanaka' , papel: 'Doutorado' , foto: 'Fotos Alunos/Sandra.jpeg' , tema: 'Métodos analíticos para detecção de contaminantes' , tipo: 'aluno'  },
