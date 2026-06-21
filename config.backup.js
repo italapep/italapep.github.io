@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 12:46:07
+ * Editado via painel admin em 21/06/2026, 13:34:50
  */
 
 const LAPEP_CONFIG = {
@@ -16,9 +16,7 @@ const LAPEP_CONFIG = {
   },
 
   contato: {
-    endereco: 'Departamento de Química — ITA
-Campus do CTA, São José dos Campos, SP
-CEP 12228-900' ,
+    endereco: 'Departamento de Química — ITA\nCampus do CTA, São José dos Campos, SP\nCEP 12228-900' ,
     telefone: '(12) 3947-5948' ,
     email: 'lgustavoferroni@ita.br' ,
     instagram: 'ita_lapep' 
@@ -83,7 +81,7 @@ CEP 12228-900' ,
     { sigla: 'INPE' , imagem: 'INPE.png' , nome: 'INPE / LCP' , descricao: 'Laboratório de Combustão e Propulsão — parceria histórica em propulsão e foguetes desde 2011.'  },
     { sigla: 'TII' , imagem: 'TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute — colaboração internacional em propulsão com HTP.'  },
     { sigla: 'LTF' , imagem: 'LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de propulsão e desenvolvimento de HTP propulsivo.'  },
-    { sigla: 'USP' , imagem: 'EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
+    { sigla: 'USP' , imagem: '' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
     { sigla: 'LPL' , imagem: 'LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de Propulsão Líquida.'  },
     { sigla: 'BIZU' , imagem: 'Bizu.jpg' , nome: 'Bizu' , descricao: 'Parceria em projeto de preparo de propelentes e desenvolvimento tecnológico.'  }
   ],
