@@ -370,7 +370,7 @@
     <div class="divider"></div>
     <h2 class="section-title">Nossa <span>Equipe</span></h2>
     <p class="section-sub">Conheça os pesquisadores e orientandos do LAPEP-ITA</p>
-    <div class="equipe-grid">
+    <div class="equipe-grid" id="equipe-grid">
       <!-- Coordenadores -->
       <div class="membro-card">
         <div class="avatar"><img src="Fotos Alunos/Luis-Gustavo.jpeg" alt="Luís Gustavo Ferroni Pereira"></div>
@@ -563,19 +563,20 @@ function abrirPortalJanela() {
 /* ── Renderiza Publicações ── */
 function renderPublicacoes() {
   const el = document.getElementById('pub-container');
-  el.innerHTML = LAPEP_CONFIG.publicacoes.map(p => `
+  el.innerHTML = LAPEP_CONFIG.publicacoes.map(p => {
+    const primeiroAutor = (p.autores || '').split(/[;,]/)[0].trim();
+    return `
     <div class="pub-item">
       <div class="pub-titulo">${p.titulo}</div>
       <div class="pub-meta">
-        ${p.autores} · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
-        ${p.qualis ? `· Qualis ${p.qualis}` : ''}
+        ${primeiroAutor} et al. · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
         ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank">🔗 Acessar artigo</a>` : ''}
-        ${p.pdf ? `<a class="pub-doi" href="${p.pdf}" target="_blank">📄 Download PDF</a>` : ''}
+        ${p.pdf ? `<a class="pub-doi" href="${encodeURI(p.pdf)}" target="_blank">📄 Download PDF</a>` : ''}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ── Renderiza Parcerias ── */
@@ -718,21 +719,24 @@ function renderContato() {
   function resize() {
     canvas.width  = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-    stars = Array.from({length:120}, () => ({
+    stars = Array.from({length:260}, () => ({
       x: Math.random()*canvas.width,
       y: Math.random()*canvas.height,
-      r: Math.random()*1.4+0.3,
-      o: Math.random()*0.6+0.2,
-      s: Math.random()*0.3+0.1
+      r: Math.random()*1.6+0.2,
+      base: Math.random()*0.5+0.3,
+      speed: Math.random()*1.2+0.4,
+      phase: Math.random()*Math.PI*2
     }));
   }
   function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     const t = Date.now()/1000;
-    stars.forEach((s,i) => {
+    stars.forEach(s => {
+      const o = s.base + 0.45*Math.sin(t*s.speed + s.phase);
+      const r = s.r * (0.85 + 0.15*Math.sin(t*s.speed*0.7 + s.phase));
       ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(255,255,255,${s.o*(0.6+0.4*Math.sin(t*s.s+i))})`;
+      ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.max(0,Math.min(1,o))})`;
       ctx.fill();
     });
     requestAnimationFrame(draw);
@@ -740,6 +744,24 @@ function renderContato() {
   window.addEventListener('resize', resize);
   resize(); draw();
 })();
+
+/* ── Equipe ── */
+function renderEquipe() {
+  const grid = document.getElementById('equipe-grid');
+  if (!grid || typeof LAPEP_CONFIG === 'undefined' || !LAPEP_CONFIG.equipe) return;
+  function iniciais(nome) { return nome.split(' ').filter(p=>p.length>2).slice(0,2).map(p=>p[0]).join(''); }
+  grid.innerHTML = LAPEP_CONFIG.equipe.map(m => {
+    const av = m.foto
+      ? `<img src="${m.foto}" alt="${m.nome}" onerror="this.parentNode.textContent='${iniciais(m.nome)}';">`
+      : iniciais(m.nome);
+    return `<div class="membro-card">
+      <div class="avatar">${av}</div>
+      <h3>${m.nome}</h3>
+      <div class="nivel">${m.papel}</div>
+      <div class="tema">${m.tema}</div>
+    </div>`;
+  }).join('');
+}
 
 /* ── Init ── */
 renderSobre();
