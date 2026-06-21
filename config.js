@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 15:30:51
+ * Editado via painel admin em 21/06/2026, 16:00:09
  */
 
 const LAPEP_CONFIG = {
@@ -108,13 +108,13 @@ const LAPEP_CONFIG = {
     { nome: 'Sandra Helena da Silva Siqueira Tanaka' , papel: 'Doutorado' , foto: 'Fotos Alunos/Sandra.jpeg' , tema: 'Métodos analíticos para detecção de contaminantes' , tipo: 'aluno'  },
     { nome: 'Emilly Estefane de Oliveira Fernandes' , papel: 'Mestrado' , foto: 'Fotos Alunos/Emilly.jpeg' , tema: 'Catalisadores para H₂ verde' , tipo: 'aluno'  },
     { nome: 'João Vítor Lima dos Santos' , papel: 'Mestrado' , foto: 'Fotos Alunos/Joao-Vitor.jpeg' , tema: 'Sistema propulsivo monopropelente a HTP' , tipo: 'aluno'  },
-    { nome: 'Júlia Lima Siqueira' , papel: 'Mestrado' , foto: '' , tema: 'Nanocatalisadores para sistemas propulsivos' , tipo: 'aluno'  },
+    { nome: 'Júlia Lima Siqueira' , papel: 'Mestrado' , foto: 'Fotos Alunos/Julia.jpeg' , tema: 'Nanocatalisadores para sistemas propulsivos' , tipo: 'aluno'  },
     { nome: 'Mariana Rosa de Lima Silva' , papel: 'Mestrado' , foto: 'Fotos Alunos/Mariana.jpeg' , tema: 'Suportes catalíticos para propulsão' , tipo: 'aluno'  },
     { nome: 'Sarah Moreira Silva Lima' , papel: 'Mestrado' , foto: 'Fotos Alunos/Sarah.jpeg' , tema: 'Suportes monolíticos por manufatura aditiva' , tipo: 'aluno'  },
     { nome: 'Victor Rabelo Rodrigues' , papel: 'Mestrado' , foto: 'Fotos Alunos/Victor.jpeg' , tema: 'Combustível hipergólico com HTP' , tipo: 'aluno'  },
     { nome: 'Vitória Isabelle dos Santos Argiona' , papel: 'Mestrado' , foto: 'Fotos Alunos/Vitoria-Argiona.jpeg' , tema: 'Catalisadores para decomposição de monopropelente a HTP e ADN' , tipo: 'aluno'  },
     { nome: 'André Luís Ventura Moreira' , papel: 'IC' , foto: 'Fotos Alunos/Andre.jpeg' , tema: 'Materiais carbonosos nanoestruturados para refratários industriais e aeroespaciais por pirólise controlada' , tipo: 'aluno'  },
-    { nome: 'Breno Raphael da Silva Pereira' , papel: 'IC' , foto: '' , tema: 'Decomposição catalítica de HTP' , tipo: 'aluno'  },
+    { nome: 'Breno Raphael da Silva Pereira' , papel: 'IC' , foto: 'Fotos Alunos/Breno.jpeg' , tema: 'Decomposição catalítica de HTP' , tipo: 'aluno'  },
     { nome: 'Karine de Fátima da Silva' , papel: 'IC' , foto: 'Fotos Alunos/Karine.jpeg' , tema: 'Oxidantes verdes para sistemas propulsivos' , tipo: 'aluno'  },
     { nome: 'Kimberly Liandra da Silva' , papel: 'IC' , foto: '' , tema: 'Catalisadores para decomposição de H₂O₂' , tipo: 'aluno'  },
     { nome: 'Luana Vitória da Silva Chantre' , papel: 'IC' , foto: 'Fotos Alunos/Luana.jpeg' , tema: 'Síntese de óxidos mistos para fotocatálise' , tipo: 'aluno'  },
