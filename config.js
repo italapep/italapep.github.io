@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 16:00:09
+ * Editado via painel admin em 21/06/2026, 19:01:52
  */
 
 const LAPEP_CONFIG = {
@@ -106,7 +106,7 @@ const LAPEP_CONFIG = {
     { nome: 'Prof. Dr. Leonardo Henrique Gouvêa' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/Leonardo-Henrique.jpeg' , tema: 'Propulsão química de foguetes, propelentes híbridos, motores hipergólicos, candy rocket, HTP, projeto e operação de bancadas de testes e motores foguete' , tipo: 'professor'  },
     { nome: 'Dra. Renata Fraga Cardoso' , papel: 'Pós-Doutorado' , foto: 'Fotos Alunos/Renata.jpeg' , tema: 'Catálise heterogênea e propulsão' , tipo: 'aluno'  },
     { nome: 'Sandra Helena da Silva Siqueira Tanaka' , papel: 'Doutorado' , foto: 'Fotos Alunos/Sandra.jpeg' , tema: 'Métodos analíticos para detecção de contaminantes' , tipo: 'aluno'  },
-    { nome: 'Emilly Estefane de Oliveira Fernandes' , papel: 'Mestrado' , foto: 'Fotos Alunos/Emilly.jpeg' , tema: 'Catalisadores para H₂ verde' , tipo: 'aluno'  },
+    { nome: 'Emilly Stefane de Oliveira Fernandes' , papel: 'Mestrado' , foto: 'Fotos Alunos/Emilly.jpeg' , tema: 'Catalisadores para H₂ verde' , tipo: 'aluno'  },
     { nome: 'João Vítor Lima dos Santos' , papel: 'Mestrado' , foto: 'Fotos Alunos/Joao-Vitor.jpeg' , tema: 'Sistema propulsivo monopropelente a HTP' , tipo: 'aluno'  },
     { nome: 'Júlia Lima Siqueira' , papel: 'Mestrado' , foto: 'Fotos Alunos/Julia.jpeg' , tema: 'Nanocatalisadores para sistemas propulsivos' , tipo: 'aluno'  },
     { nome: 'Mariana Rosa de Lima Silva' , papel: 'Mestrado' , foto: 'Fotos Alunos/Mariana.jpeg' , tema: 'Suportes catalíticos para propulsão' , tipo: 'aluno'  },
