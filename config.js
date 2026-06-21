@@ -115,8 +115,8 @@ const LAPEP_CONFIG = {
 
   /* ── EQUIPE ── */
   equipe: [
-    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira', papel: 'Coordenador | Professor Adjunto', foto: 'Fotos Alunos/Ferroni.jpeg', tema: 'Propulsão Química, Catálise Heterogênea, Materiais Avançados', tipo: 'professor' },
-    { nome: 'Prof. Dr. Leonardo Henrique Gouvêa', papel: 'Coordenador Adjunto | Professor Adjunto', foto: 'Fotos Alunos/Leonardo.jpeg', tema: 'Materiais Compósitos, Propulsão Híbrida, Manufatura Aditiva', tipo: 'professor' },
+    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira', papel: 'Coordenador | Professor Adjunto', foto: 'Fotos Alunos/Luis-Gustavo.jpeg', tema: 'Propulsão Química, Catálise Heterogênea, Materiais Avançados', tipo: 'professor' },
+    { nome: 'Prof. Dr. Leonardo Henrique Gouvêa', papel: 'Coordenador Adjunto | Professor Adjunto', foto: 'Fotos Alunos/Leonardo-Henrique.jpeg', tema: 'Materiais Compósitos, Propulsão Híbrida, Manufatura Aditiva', tipo: 'professor' },
     { nome: 'Renata Fraga Cardoso', papel: 'Pós-Doutorado', foto: 'Fotos Alunos/Renata.jpeg', tema: 'Catálise Heterogênea e Propulsão', tipo: 'aluno' },
     { nome: 'Sandra Helena', papel: 'Doutorado', foto: '', tema: 'Metodologia Analítica para Defensivos Agrícolas', tipo: 'aluno' },
     { nome: 'Fernanda Lima', papel: 'Mestrado', foto: '', tema: 'Nanopartículas de Espinélios para Nanocatalisadores', tipo: 'aluno' },
