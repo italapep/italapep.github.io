@@ -945,12 +945,12 @@ async function carregarNoticias() {
         : '';
       return `<div class="noticia-card">
         <div class="noticia-topo"></div>
-        ${imgHtml}
         <div class="noticia-body">
           <div class="noticia-data">${data}</div>
           <h3>${titulo}</h3>
-          <p>${texto}</p>
         </div>
+        ${imgHtml}
+        ${texto ? `<div class="noticia-body" style="padding-top:12px"><p>${texto}</p></div>` : ''}
       </div>`;
     }).join('');
     document.getElementById('noticias-container').innerHTML = cards;
