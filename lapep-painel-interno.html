@@ -232,18 +232,11 @@
 
   <!-- NOTÍCIAS -->
   <div id="tab-noticias" class="tab-panel">
-    <div class="sec-header"><h2>Notícias e Oportunidades</h2></div>
-    <div class="info-box">
-      As notícias são carregadas automaticamente de uma planilha do Google Sheets.<br>
-      Para adicionar ou editar notícias, acesse a planilha diretamente:<br><br>
-      <a id="noticias-link" href="#" target="_blank">🔗 Abrir planilha de notícias</a><br><br>
-      <strong>ID da planilha:</strong> <span id="noticias-sheet-id"></span>
+    <div class="sec-header">
+      <h2>Notícias e Oportunidades <span class="count" id="not-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('not')">+ Nova notícia</button>
     </div>
-    <div class="field" style="max-width:520px">
-      <label>ID da planilha (caso queira trocar)</label>
-      <input id="n-sheetid" placeholder="1xej4U-...">
-    </div>
-    <div style="margin-top:12px"><button class="btn btn-ok" onclick="saveNoticias()">✓ Aplicar</button></div>
+    <div class="list-rows" id="not-list"></div>
   </div>
 </div>
 
@@ -473,16 +466,30 @@ function saveContato() {
 
 // ── Notícias ──
 function renderNoticias() {
-  const id = cfg.noticiasSheetId || '';
-  document.getElementById('noticias-sheet-id').textContent = id;
-  document.getElementById('n-sheetid').value = id;
-  const link = `https://docs.google.com/spreadsheets/d/${id}`;
-  document.getElementById('noticias-link').href = link;
+  if (!cfg.noticias) cfg.noticias = [];
+  document.getElementById('not-count').textContent = cfg.noticias.length;
+  document.getElementById('not-list').innerHTML = cfg.noticias.map((n,i) => {
+    const statusCls = n.ativo !== false ? 'badge-ok' : 'badge-enc';
+    const statusTxt = n.ativo !== false ? 'Ativa' : 'Oculta';
+    const imgHtml = n.imagem ? `<img src="https://italapep.github.io/${n.imagem}" style="width:56px;height:40px;object-fit:cover;border-radius:4px;flex-shrink:0">` : '';
+    return `<div class="row-item">
+      ${imgHtml}
+      <div class="ri-body">
+        <div style="margin-bottom:3px"><span class="ri-badge ${statusCls}">${statusTxt}</span> <span style="font-size:.72rem;color:#64748b">${n.data||''}</span></div>
+        <div class="ri-title">${n.titulo}</div>
+        <div class="ri-sub">${n.texto}</div>
+      </div>
+      <div class="ri-acts">
+        <button class="btn btn-ghost" onclick="toggleNoticia(${i})">${n.ativo!==false?'👁 Ocultar':'👁 Mostrar'}</button>
+        <button class="btn btn-ghost" onclick="openModal('not',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('not',${i})">🗑</button>
+      </div>
+    </div>`;
+  }).join('') || '<p style="color:#94a3b8;padding:12px">Nenhuma notícia cadastrada.</p>';
 }
-function saveNoticias() {
-  cfg.noticiasSheetId = document.getElementById('n-sheetid').value.trim();
+function toggleNoticia(idx) {
+  cfg.noticias[idx].ativo = cfg.noticias[idx].ativo === false ? true : false;
   renderNoticias(); markUnsaved();
-  showStatus('ok','ID atualizado. Clique em Salvar no GitHub para publicar.');
 }
 
 // ── Tabs ──
@@ -621,6 +628,25 @@ function openModal(type, idx) {
         <input type="hidden" id="m-parc-img-path" value="${p.imagem||''}">
       </div>
     </div>`;
+
+  } else if (type === 'not') {
+    const n = isEdit ? cfg.noticias[idx] : {};
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Notícia' : 'Nova Notícia';
+    body.innerHTML = `<div class="form-grid">
+      <div class="field full"><label>Título</label><input id="m-titulo" value="${esc(n.titulo||'')}"></div>
+      <div class="field"><label>Data (ex: Junho 2025)</label><input id="m-data" value="${esc(n.data||'')}"></div>
+      <div class="field"><label>Visível no site</label><select id="m-ativo"><option value="true" ${n.ativo!==false?'selected':''}>Sim</option><option value="false" ${n.ativo===false?'selected':''}>Não (oculta)</option></select></div>
+      <div class="field full"><label>Texto</label><textarea id="m-desc" rows="4">${esc(n.texto||'')}</textarea></div>
+      <div class="field full">
+        <label>Imagem (atual: ${n.imagem||'nenhuma'})</label>
+        <div class="img-upload-wrap" onclick="document.getElementById('m-not-img-file').click()">
+          ${n.imagem ? `<img src="https://italapep.github.io/${n.imagem}" class="img-preview" style="display:block" id="m-not-img-preview">` : '<img id="m-not-img-preview" class="img-preview">'}
+          <div id="m-not-img-label">${n.imagem ? '✓ '+n.imagem : '📷 Clique para enviar imagem (opcional)'}</div>
+          <input type="file" id="m-not-img-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-not-img-preview','m-not-img-label','m-not-img-path')">
+        </div>
+        <input type="hidden" id="m-not-img-path" value="${n.imagem||''}">
+      </div>
+    </div>`;
   }
 
   document.getElementById('modal-overlay').classList.add('open');
@@ -667,12 +693,19 @@ function saveModal() {
     if (!item.nome) { alert('Nome obrigatório'); return; }
     if (editIdx !== null) cfg.parcerias[editIdx] = item; else cfg.parcerias.push(item);
     renderParc();
+  } else if (modalMode === 'not') {
+    const imgPath = val('m-not-img-path');
+    const item = { titulo: val('m-titulo').trim(), data: val('m-data').trim(), texto: val('m-desc').trim(), imagem: imgPath, ativo: val('m-ativo') !== 'false' };
+    if (!item.titulo) { alert('Título obrigatório'); return; }
+    if (!cfg.noticias) cfg.noticias = [];
+    if (editIdx !== null) cfg.noticias[editIdx] = item; else cfg.noticias.unshift(item);
+    renderNoticias();
   }
   markUnsaved(); closeModal();
 }
 
 function deleteItem(type, idx) {
-  const labels = { pesq:'linha de pesquisa', eq:'membro', proj:'projeto', pub:'publicação', def:'defesa', parc:'parceria' };
+  const labels = { pesq:'linha de pesquisa', eq:'membro', proj:'projeto', pub:'publicação', def:'defesa', parc:'parceria', not:'notícia' };
   if (!confirm(`Remover esta ${labels[type]}?`)) return;
   if (type==='pesq') { cfg.linhasPesquisa.splice(idx,1); renderPesquisa(); }
   else if (type==='eq')   { cfg.equipe.splice(idx,1); renderEq(); }
@@ -680,6 +713,7 @@ function deleteItem(type, idx) {
   else if (type==='pub')  { cfg.publicacoes.splice(idx,1); renderPub(); }
   else if (type==='def')  { cfg.defesas.splice(idx,1); renderDef(); }
   else if (type==='parc') { cfg.parcerias.splice(idx,1); renderParc(); }
+  else if (type==='not')  { cfg.noticias.splice(idx,1); renderNoticias(); }
   markUnsaved();
 }
 
@@ -725,9 +759,10 @@ function buildConfigJs() {
   const proj = cfg.projetos.map(p => `    { titulo: ${q(p.titulo)}, descricao: ${q(p.descricao)}, status: ${q(p.status)}, tipo: ${q(p.tipo)} }`).join(',\n');
   const pubs = cfg.publicacoes.map(p => `    { ano: ${p.ano}, titulo: ${q(p.titulo)}, autores: ${q(p.autores)}, periodico: ${q(p.periodico)}, qualis: ${q(p.qualis)}, doi: ${q(p.doi)}, pdf: ${q(p.pdf)} }`).join(',\n');
   const defs = cfg.defesas.map(d => `    { ano: ${d.ano}, tipo: ${q(d.tipo)}, titulo: ${q(d.titulo)}, nome: ${q(d.nome)}, papel: ${q(d.papel)}, instituicao: ${q(d.instituicao)} }`).join(',\n');
+  const nots  = (cfg.noticias||[]).map(n => `    { titulo: ${q(n.titulo)}, data: ${q(n.data)}, texto: ${q(n.texto)}, imagem: ${q(n.imagem)}, ativo: ${n.ativo!==false} }`).join(',\n');
   const parcs = cfg.parcerias.map(p => `    { sigla: ${q(p.sigla)}, imagem: ${q(p.imagem)}, nome: ${q(p.nome)}, descricao: ${q(p.descricao)} }`).join(',\n');
   const equipe = cfg.equipe.map(m => `    { nome: ${q(m.nome)}, papel: ${q(m.papel)}, foto: ${q(m.foto)}, tema: ${q(m.tema)}, tipo: ${q(m.tipo)} }`).join(',\n');
-  return `/**\n * LAPEP-ITA — config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  noticiasSheetId: ${q(cfg.noticiasSheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  abaNoticias: ${q(cfg.abaNoticias||'Noticias')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ]\n\n};\n`;
+  return `/**\n * LAPEP-ITA — config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ],\n\n  noticias: [\n${nots}\n  ]\n\n};\n`;
 }
 
 // ── Helpers ──
