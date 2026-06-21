@@ -624,71 +624,29 @@ async function carregarAlunos() {
   }
 }
 
-/* ── Carrega Notícias do Google Sheets (planilha separada) ── */
-async function carregarNoticias() {
-  const sheetId = LAPEP_CONFIG.noticiasSheetId;
-  if (!sheetId) {
-    document.getElementById('noticias-container').innerHTML =
-      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
+/* ── Notícias do config.js ── */
+function renderNoticias() {
+  const container = document.getElementById('noticias-container');
+  if (!container || typeof LAPEP_CONFIG === 'undefined') return;
+  const ativas = (LAPEP_CONFIG.noticias || []).filter(n => n.ativo !== false);
+  if (!ativas.length) {
+    container.innerHTML = '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
     return;
   }
-  // A planilha deve estar publicada na web (Arquivo > Compartilhar > Publicar na web)
-  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
-  try {
-    const r = await fetch(url);
-    const txt = await r.text();
-    const linhas = parseCSV(txt).slice(1); // pula cabeçalho
-    // Colunas: A=Data, B=Titulo, C=Texto, D=ImagemURL, E=Ativo(sim/não)
-    const ativas = linhas.filter(l => {
-      const ativo = (l[4] || 'sim').trim().toLowerCase();
-      return l[1] && ativo !== 'não' && ativo !== 'nao' && ativo !== 'n';
-    });
-    if (!ativas.length) {
-      document.getElementById('noticias-container').innerHTML =
-        '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
-      return;
-    }
-    const cards = ativas.map(l => {
-      const data    = l[0] || '';
-      const titulo  = l[1] || '';
-      const texto   = l[2] || '';
-      const imgUrl  = l[3] ? l[3].trim() : '';
-      const imgHtml = imgUrl
-        ? `<img class="noticia-img" src="${imgUrl}" alt="${titulo}" loading="lazy" onerror="this.style.display='none'">`
-        : '';
-      return `<div class="noticia-card">
-        <div class="noticia-topo"></div>
-        ${imgHtml}
-        <div class="noticia-body">
-          <div class="noticia-data">${data}</div>
-          <h3>${titulo}</h3>
-          <p>${texto}</p>
-        </div>
-      </div>`;
-    }).join('');
-    document.getElementById('noticias-container').innerHTML = cards;
-  } catch {
-    document.getElementById('noticias-container').innerHTML =
-      '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
-  }
-}
-
-/* ── CSV parser simples ── */
-function parseCSV(txt) {
-  const rows = [];
-  const lines = txt.split('\n');
-  for (const line of lines) {
-    const cols = [];
-    let cur = '', inQ = false;
-    for (let i = 0; i < line.length; i++) {
-      if (line[i] === '"') { inQ = !inQ; }
-      else if (line[i] === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += line[i]; }
-    }
-    cols.push(cur.trim());
-    rows.push(cols);
-  }
-  return rows;
+  container.innerHTML = ativas.map(n => {
+    const imgHtml = n.imagem
+      ? `<img class="noticia-img" src="${n.imagem}" alt="${n.titulo}" loading="lazy" onerror="this.style.display='none'">`
+      : '';
+    return `<div class="noticia-card">
+      <div class="noticia-topo"></div>
+      ${imgHtml}
+      <div class="noticia-body">
+        <div class="noticia-data">${n.data}</div>
+        <h3>${n.titulo}</h3>
+        <p>${n.texto}</p>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 /* ── Sobre ── */
@@ -724,7 +682,7 @@ function renderProjetos() {
 /* ── Defesas ── */
 function renderDefesas() {
   const c = document.getElementById('defesas-container');
-  if (!c || typeof LAPEP_CONFIG === 'undefined') return;
+  if (!c || typeof LAPEP_CONFIG === 'undefined') return
   c.innerHTML = (LAPEP_CONFIG.defesas || []).map(d =>
     `<div class="pub-item">
       <div class="pub-meta"><span class="pub-ano">${d.ano}</span><span class="pub-qualis">${d.tipo}</span></div>
@@ -756,52 +714,11 @@ renderPesquisa();
 renderProjetos();
 renderDefesas();
 renderContato();
+renderNoticias();
 renderPublicacoes();
 renderParcerias();
 renderEquipe();
 carregarAlunos();
-carregarNoticias();
-
-/* ── Hero: campo de estrelas ── */
-(function() {
-  const canvas = document.getElementById('hero-starfield');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let stars = [];
-
-  function setup() {
-    const section = canvas.parentElement;
-    canvas.width  = section.offsetWidth  || window.innerWidth;
-    canvas.height = section.offsetHeight || window.innerHeight;
-    stars = Array.from({ length: 220 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.4 + 0.2,
-      alpha: Math.random() * 0.6 + 0.3,
-      speed: Math.random() * 0.015 + 0.003,
-      dir: Math.random() > 0.5 ? 1 : -1
-    }));
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      s.alpha += s.speed * s.dir;
-      if (s.alpha > 0.9) { s.alpha = 0.9; s.dir = -1; }
-      if (s.alpha < 0.1) { s.alpha = 0.1; s.dir =  1; }
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(tick);
-  }
-
-  window.addEventListener('resize', setup);
-  setup();
-  tick();
-})();
-
 </script>
 </body>
 </html>
