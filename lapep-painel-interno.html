@@ -503,7 +503,18 @@ function handleImgSelect(input, previewId, labelId, pathId) {
     prev.src = e.target.result;
     prev.style.display = 'block';
     document.getElementById(labelId).textContent = '✓ ' + file.name;
-    // Store for upload on save
+    document.getElementById(pathId).value = file.name;
+    pendingImgUploads.push({ path: file.name, b64: e.target.result.split(',')[1], file });
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleFileSelect(input, labelId, pathId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById(labelId).textContent = '✓ ' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
     document.getElementById(pathId).value = file.name;
     pendingImgUploads.push({ path: file.name, b64: e.target.result.split(',')[1], file });
   };
@@ -566,8 +577,19 @@ function openModal(type, idx) {
       <div class="field full"><label>Título</label><textarea id="m-titulo">${esc(p.titulo||'')}</textarea></div>
       <div class="field full"><label>Autores</label><input id="m-autores" value="${esc(p.autores||'')}"></div>
       <div class="field full"><label>Periódico</label><input id="m-periodico" value="${esc(p.periodico||'')}"></div>
-      <div class="field full"><label>DOI / Link</label><input id="m-doi" value="${esc(p.doi||'')}"></div>
-      <div class="field full"><label>Caminho do PDF</label><input id="m-pdf" value="${esc(p.pdf||'')}"></div>
+      <div class="field full"><label>DOI / Link (URL externa, ex: doi.org/...)</label><input id="m-doi" value="${esc(p.doi||'')}"></div>
+      <div class="field full">
+        <label>PDF para download ${p.pdf ? `(atual: <a href="https://italapep.github.io/${p.pdf}" target="_blank">${p.pdf}</a>)` : '(nenhum)'}</label>
+        <div class="img-upload-wrap" onclick="document.getElementById('m-pdf-file').click()" style="text-align:left;display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">📄</span>
+          <div>
+            <div id="m-pdf-label">${p.pdf ? '✓ '+p.pdf : 'Clique para enviar um PDF'}</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">O arquivo será enviado ao GitHub junto com as demais alterações</div>
+          </div>
+          <input type="file" id="m-pdf-file" accept="application/pdf" style="display:none" onchange="handleFileSelect(this,'m-pdf-label','m-pdf-path')">
+        </div>
+        <input type="hidden" id="m-pdf-path" value="${esc(p.pdf||'')}">
+      </div>
     </div>`;
 
   } else if (type === 'def') {
@@ -630,7 +652,7 @@ function saveModal() {
     if (editIdx !== null) cfg.projetos[editIdx] = item; else cfg.projetos.push(item);
     renderProj();
   } else if (modalMode === 'pub') {
-    const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), titulo: val('m-titulo').trim(), autores: val('m-autores').trim(), periodico: val('m-periodico').trim(), qualis: val('m-qualis').trim(), doi: val('m-doi').trim(), pdf: val('m-pdf').trim() };
+    const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), titulo: val('m-titulo').trim(), autores: val('m-autores').trim(), periodico: val('m-periodico').trim(), qualis: val('m-qualis').trim(), doi: val('m-doi').trim(), pdf: val('m-pdf-path').trim() };
     if (!item.titulo) { alert('Título obrigatório'); return; }
     if (editIdx !== null) cfg.publicacoes[editIdx] = item; else cfg.publicacoes.unshift(item);
     renderPub();
