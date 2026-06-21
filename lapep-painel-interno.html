@@ -786,8 +786,7 @@ async function restoreBackup() {
       { headers:{ Authorization:`token ${TOKEN}` } });
     if (!r.ok) { showStatus('err','❌ Nenhum backup encontrado.'); return; }
     const d = await r.json();
-    const backupSrc = decodeURIComponent(escape(atob(d.content.replace(/
-/g,''))));
+    const backupSrc = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
     const b64 = btoa(unescape(encodeURIComponent(backupSrc)));
     const chk = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
       { headers:{ Authorization:`token ${TOKEN}` } });
@@ -805,4 +804,4 @@ function showStatus(type,msg) { const b=document.getElementById('status-bar'); b
 function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
 </script>
 </body>
-</html>
+</html
