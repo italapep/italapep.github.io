@@ -115,6 +115,7 @@
     <div style="display:flex;align-items:center;gap:10px">
       <span class="unsaved" id="unsaved-badge">● Não salvo</span>
       <button onclick="saveAll()">💾 Salvar no GitHub</button>
+      <button onclick="restoreBackup()" style="background:rgba(220,38,38,.4)" title="Restaura a versão anterior do config.js">↩ Restaurar backup</button>
       <button onclick="logout()" style="opacity:.7">Sair</button>
     </div>
   </header>
@@ -722,6 +723,17 @@ async function saveAll() {
   if (!confirm('Salvar todas as alterações no GitHub? O site atualiza em ~1 min.')) return;
   showStatus('loading','<span class="spinner"></span>Salvando no GitHub...');
   try {
+    // Salvar backup do config.js atual antes de publicar
+    const backupContent = buildConfigJs();
+    const backupB64 = btoa(unescape(encodeURIComponent(backupContent)));
+    const backupChk = await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
+      { headers:{ Authorization:`token ${TOKEN}` } });
+    const backupBody = { message:'backup automático antes de salvar', content: backupB64 };
+    if (backupChk.ok) backupBody.sha = (await backupChk.json()).sha;
+    await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
+      { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' },
+        body:JSON.stringify(backupBody) });
+
     // Upload pending images first
     for (const img of pendingImgUploads) {
       const chk = await fetch(`https://api.github.com/repos/${REPO}/contents/${encodeURIComponent(img.path)}`,
@@ -766,6 +778,28 @@ function buildConfigJs() {
 }
 
 // ── Helpers ──
+async function restoreBackup() {
+  if (!confirm('Restaurar o backup? Isso desfaz todas as alterações publicadas desde o último salvamento.')) return;
+  showStatus('loading','<span class="spinner"></span>Restaurando backup...');
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
+      { headers:{ Authorization:`token ${TOKEN}` } });
+    if (!r.ok) { showStatus('err','❌ Nenhum backup encontrado.'); return; }
+    const d = await r.json();
+    const backupSrc = decodeURIComponent(escape(atob(d.content.replace(/
+/g,''))));
+    const b64 = btoa(unescape(encodeURIComponent(backupSrc)));
+    const chk = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
+      { headers:{ Authorization:`token ${TOKEN}` } });
+    const cfgCurrent = await chk.json();
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
+      { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' },
+        body:JSON.stringify({ message:'restaurar backup', content:b64, sha:cfgCurrent.sha }) });
+    if (!res.ok) throw new Error((await res.json()).message);
+    showStatus('ok','✅ Backup restaurado! Recarregue a página para ver o estado anterior.');
+  } catch(e) { showStatus('err','❌ Erro: ' + e.message); }
+}
+
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
 function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
 function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
