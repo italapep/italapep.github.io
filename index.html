@@ -564,12 +564,11 @@ function abrirPortalJanela() {
 function renderPublicacoes() {
   const el = document.getElementById('pub-container');
   el.innerHTML = LAPEP_CONFIG.publicacoes.map(p => {
-    const primeiroAutor = (p.autores || '').split(/[;,]/)[0].trim();
     return `
     <div class="pub-item">
       <div class="pub-titulo">${p.titulo}</div>
       <div class="pub-meta">
-        ${primeiroAutor} et al. · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
+        ${p.autores} · <span class="pub-journal">${p.periodico}</span> · ${p.ano}
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
         ${p.doi ? `<a class="pub-doi" href="${p.doi}" target="_blank">🔗 Acessar artigo</a>` : ''}
