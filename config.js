@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 13:48:20
+ * Editado via painel admin em 21/06/2026, 15:29:24
  */
 
 const LAPEP_CONFIG = {
@@ -11,7 +11,7 @@ const LAPEP_CONFIG = {
   portalOrientador: 'https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec?page=dashboard' ,
 
   sobre: {
-    texto: 'O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional.' ,
+    texto: 'O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional. L' ,
     foto: 'LAPEP/Foto_LAPEP_Sobre.png' 
   },
 
