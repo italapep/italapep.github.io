@@ -804,4 +804,6 @@ async function restoreBackup() {
 
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
 function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
-function clearStatus() { const b=document.getElementById('status-bar
+function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
+</script>
+</body></html>
