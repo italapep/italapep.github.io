@@ -502,29 +502,32 @@ function switchTab(name, btn) {
 }
 
 // ── Image upload ──
-function handleImgSelect(input, previewId, labelId, pathId) {
+// folder: subpasta opcional (ex: 'Fotos Alunos'). Se omitido, vai para a raiz.
+function handleImgSelect(input, previewId, labelId, pathId, folder) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
+    const path = folder ? folder + '/' + file.name : file.name;
     const prev = document.getElementById(previewId);
     prev.src = e.target.result;
     prev.style.display = 'block';
     document.getElementById(labelId).textContent = '✓ ' + file.name;
-    document.getElementById(pathId).value = file.name;
-    pendingImgUploads.push({ path: file.name, b64: e.target.result.split(',')[1], file });
+    document.getElementById(pathId).value = path;
+    pendingImgUploads.push({ path: path, b64: e.target.result.split(',')[1], file });
   };
   reader.readAsDataURL(file);
 }
 
-function handleFileSelect(input, labelId, pathId) {
+function handleFileSelect(input, labelId, pathId, folder) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
+    const path = folder ? folder + '/' + file.name : file.name;
     document.getElementById(labelId).textContent = '✓ ' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
-    document.getElementById(pathId).value = file.name;
-    pendingImgUploads.push({ path: file.name, b64: e.target.result.split(',')[1], file });
+    document.getElementById(pathId).value = path;
+    pendingImgUploads.push({ path: path, b64: e.target.result.split(',')[1], file });
   };
   reader.readAsDataURL(file);
 }
@@ -560,7 +563,7 @@ function openModal(type, idx) {
         <div class="img-upload-wrap" onclick="document.getElementById('m-foto-file').click()">
           ${m.foto ? `<img src="https://italapep.github.io/${m.foto}" class="img-preview" style="display:block" id="m-foto-preview">` : '<img id="m-foto-preview" class="img-preview">'}
           <div id="m-foto-label">${m.foto ? '✓ '+m.foto : '📷 Clique para enviar foto'}</div>
-          <input type="file" id="m-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-foto-preview','m-foto-label','m-foto-path')">
+          <input type="file" id="m-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-foto-preview','m-foto-label','m-foto-path','Fotos Alunos')">
         </div>
         <input type="hidden" id="m-foto-path" value="${m.foto||''}">
       </div>
@@ -800,8 +803,4 @@ async function restoreBackup() {
 }
 
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
-function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
-function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
-</script>
-</body>
-</html
+function showStatus(type,msg) {
