@@ -249,19 +249,34 @@
     /* ═══════════════════════════════════════════════
        NOTÍCIAS
        ═══════════════════════════════════════════════ */
-    .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 24px; }
     .noticia-card {
       background: var(--branco); border-radius: 12px; overflow: hidden;
       box-shadow: var(--sombra); transition: transform .2s;
       border: 1px solid #b0b8c4;
     }
-    .noticia-card:hover { transform: translateY(-3px); }
+    .noticia-card { cursor: pointer; }
+    .noticia-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.13); }
+    .noticia-resumo { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
     .noticia-topo { height: 6px; background: linear-gradient(90deg, var(--azul), var(--laranja)); }
     .noticia-img { width: 100%; max-height: 320px; object-fit: contain; display: block; background: #f8f9fa; }
     .noticia-body { padding: 20px; }
     .noticia-data { font-size: .75rem; color: var(--texto-cl); margin-bottom: 6px; }
     .noticia-card h3 { font-size: .95rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
     .noticia-card p { font-size: .83rem; color: var(--texto); line-height: 1.6; margin-bottom: 16px; }
+
+    /* ── Modal Notícia ── */
+    .not-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; padding:16px; }
+    .not-modal-overlay.open { display:flex; }
+    .not-modal-box { background:#fff; border-radius:16px; max-width:720px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+    .not-modal-topo { height:6px; background:linear-gradient(90deg,var(--azul),var(--laranja)); border-radius:16px 16px 0 0; }
+    .not-modal-body { padding:28px 32px; }
+    .not-modal-data { font-size:.78rem; color:#64748b; margin-bottom:10px; }
+    .not-modal-titulo { font-size:1.25rem; font-weight:800; color:var(--azul); margin-bottom:16px; line-height:1.4; }
+    .not-modal-texto { font-size:.92rem; color:#334155; line-height:1.75; margin-bottom:20px; white-space:pre-line; }
+    .not-modal-img { width:100%; border-radius:8px; display:block; }
+    .not-modal-close { float:right; background:none; border:none; font-size:1.4rem; cursor:pointer; color:#94a3b8; margin-top:-4px; }
+    .not-modal-close:hover { color:var(--azul); }
 
     /* ═══════════════════════════════════════════════
        CONTATO
@@ -634,16 +649,16 @@ function renderNoticias() {
     container.innerHTML = '<p style="color:var(--texto-cl);text-align:center;padding:20px">Em breve: notícias e oportunidades do LAPEP.</p>';
     return;
   }
-  container.innerHTML = ativas.map(n => {
+  container.innerHTML = ativas.map((n,i) => {
     const imgHtml = n.imagem
       ? `<img class="noticia-img" src="${n.imagem}" alt="${n.titulo}" loading="lazy" onerror="this.style.display='none'">`
       : '';
-    return `<div class="noticia-card">
+    return `<div class="noticia-card" onclick="abrirNotModal(${i})">
       <div class="noticia-topo"></div>
       <div class="noticia-body">
         <h3>${n.titulo}</h3>
         <div class="noticia-data">${n.data}</div>
-        <p>${n.texto}</p>
+        <p class="noticia-resumo">${n.texto}</p>
       </div>
       ${imgHtml}
     </div>`;
@@ -770,10 +785,40 @@ renderProjetos();
 renderDefesas();
 renderContato();
 renderNoticias();
+
+function abrirNotModal(i) {
+  const ativas = (LAPEP_CONFIG.noticias || []).filter(n => n.ativo !== false);
+  const n = ativas[i];
+  if (!n) return;
+  document.getElementById('not-modal-data').textContent = n.data || '';
+  document.getElementById('not-modal-titulo').textContent = n.titulo || '';
+  document.getElementById('not-modal-texto').textContent = n.texto || '';
+  const img = document.getElementById('not-modal-img');
+  if (n.imagem) { img.src = n.imagem; img.alt = n.titulo; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+  document.getElementById('not-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function fecharNotModal() {
+  document.getElementById('not-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 renderPublicacoes();
 renderParcerias();
 renderEquipe();
 carregarAlunos();
 </script>
+<div class="not-modal-overlay" id="not-modal-overlay" onclick="if(event.target===this)fecharNotModal()">
+  <div class="not-modal-box">
+    <div class="not-modal-topo"></div>
+    <div class="not-modal-body">
+      <button class="not-modal-close" onclick="fecharNotModal()">✕</button>
+      <div class="not-modal-data" id="not-modal-data"></div>
+      <div class="not-modal-titulo" id="not-modal-titulo"></div>
+      <div class="not-modal-texto" id="not-modal-texto"></div>
+      <img class="not-modal-img" id="not-modal-img" src="" alt="" style="display:none">
+    </div>
+  </div>
+</div>
 </body>
 </html>
