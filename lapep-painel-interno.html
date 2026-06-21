@@ -289,7 +289,7 @@ async function loadConfig() {
       { headers:{ Authorization:`token ${TOKEN}` } });
     const d = await r.json();
     cfgSha = d.sha;
-    const src = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+    const src = new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')),c=>c.charCodeAt(0)));
     cfg = new Function(src + '\nreturn LAPEP_CONFIG;')();
     if (!cfg.equipe) cfg.equipe = [];
     if (!cfg.parcerias) cfg.parcerias = [];
@@ -789,7 +789,7 @@ async function restoreBackup() {
       { headers:{ Authorization:`token ${TOKEN}` } });
     if (!r.ok) { showStatus('err','❌ Nenhum backup encontrado.'); return; }
     const d = await r.json();
-    const backupSrc = decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));
+    const backupSrc = new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')),c=>c.charCodeAt(0)));
     const b64 = btoa(unescape(encodeURIComponent(backupSrc)));
     const chk = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
       { headers:{ Authorization:`token ${TOKEN}` } });
@@ -804,7 +804,4 @@ async function restoreBackup() {
 
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
 function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
-function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
-</script>
-</body>
-</html>
+function clearStatus() { const b=document.getElementById('status-bar
