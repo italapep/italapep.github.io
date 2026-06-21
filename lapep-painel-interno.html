@@ -767,7 +767,7 @@ async function saveAll() {
 }
 
 function buildConfigJs() {
-  function q(s) { return `'${(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}' `; }
+  function q(s) { return `'${(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/\r/g,'\\r')}' `; }
   const sobre = `  sobre: {\n    texto: ${q(cfg.sobre.texto)},\n    foto: ${q(cfg.sobre.foto)}\n  },`;
   const contato = `  contato: {\n    endereco: ${q(cfg.contato.endereco)},\n    telefone: ${q(cfg.contato.telefone)},\n    email: ${q(cfg.contato.email)},\n    instagram: ${q(cfg.contato.instagram)}\n  },`;
   const pesq = cfg.linhasPesquisa.map(l => `    { icone: ${q(l.icone)}, titulo: ${q(l.titulo)}, descricao: ${q(l.descricao)} }`).join(',\n');
@@ -804,6 +804,4 @@ async function restoreBackup() {
 
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
 function showStatus(type,msg) { const b=document.getElementById('status-bar'); b.innerHTML=msg; b.className=type; }
-function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.style.display=''; }
-</script>
-</body></html>
+function clearStatus() { const b=document.getElementById('status-bar'); b.className=''; b.st
