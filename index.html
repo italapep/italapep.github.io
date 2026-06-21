@@ -253,14 +253,15 @@
     .noticia-card {
       background: var(--branco); border-radius: 12px; overflow: hidden;
       box-shadow: var(--sombra); transition: transform .2s;
+      border: 1px solid var(--borda);
     }
     .noticia-card:hover { transform: translateY(-3px); }
     .noticia-topo { height: 6px; background: linear-gradient(90deg, var(--azul), var(--laranja)); }
-    .noticia-img { width: 100%; height: 180px; object-fit: cover; display: block; }
+    .noticia-img { width: 100%; max-height: 320px; object-fit: contain; display: block; background: #f8f9fa; }
     .noticia-body { padding: 20px; }
     .noticia-data { font-size: .75rem; color: var(--texto-cl); margin-bottom: 6px; }
     .noticia-card h3 { font-size: .95rem; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
-    .noticia-card p { font-size: .83rem; color: var(--texto); line-height: 1.6; }
+    .noticia-card p { font-size: .83rem; color: var(--texto); line-height: 1.6; margin-bottom: 16px; }
 
     /* ═══════════════════════════════════════════════
        CONTATO
@@ -639,12 +640,12 @@ function renderNoticias() {
       : '';
     return `<div class="noticia-card">
       <div class="noticia-topo"></div>
-      ${imgHtml}
       <div class="noticia-body">
-        <div class="noticia-data">${n.data}</div>
         <h3>${n.titulo}</h3>
+        <div class="noticia-data">${n.data}</div>
         <p>${n.texto}</p>
       </div>
+      ${imgHtml}
     </div>`;
   }).join('');
 }
