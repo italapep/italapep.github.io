@@ -948,9 +948,9 @@ async function carregarNoticias() {
         <div class="noticia-body">
           <div class="noticia-data">${data}</div>
           <h3>${titulo}</h3>
+          ${texto ? `<p style="margin-top:8px">${texto}</p>` : ''}
         </div>
         ${imgHtml}
-        ${texto ? `<div class="noticia-body" style="padding-top:12px"><p>${texto}</p></div>` : ''}
       </div>`;
     }).join('');
     document.getElementById('noticias-container').innerHTML = cards;
