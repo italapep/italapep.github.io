@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 13:45:43
+ * Editado via painel admin em 21/06/2026, 13:48:20
  */
 
 const LAPEP_CONFIG = {
@@ -124,7 +124,7 @@ const LAPEP_CONFIG = {
   ],
 
   noticias: [
-
+    { titulo: 'Faça parte do LAPEP' , data: 'Junho de 2026' , texto: '' , imagem: 'Faça parte do LAPEP.png' , ativo: true }
   ]
 
 };
