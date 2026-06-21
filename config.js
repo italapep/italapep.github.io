@@ -134,6 +134,16 @@ const LAPEP_CONFIG = {
     { nome: 'Vitória Nascimento', papel: 'IC', foto: '', tema: 'Refratários por Pirólise Controlada', tipo: 'aluno' },
     { nome: 'Caio Martins', papel: 'IC', foto: '', tema: 'Pirólise — Alta Área Superficial', tipo: 'aluno' },
     { nome: 'Isabela Torres', papel: 'IC', foto: '', tema: 'Óxidos Ti-Fe para Fotocatálise', tipo: 'aluno' }
+  ],
+
+  noticias: [
+    {
+      data: 'Junho 2025',
+      titulo: 'Bem-vindo ao site do LAPEP!',
+      texto: 'O site do laboratório foi lançado. Acompanhe nossas pesquisas, projetos e oportunidades.',
+      imagem: '',
+      ativo: true
+    }
   ]
 
 };
