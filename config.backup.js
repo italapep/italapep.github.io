@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 21/06/2026, 19:01:50
+ * Editado via painel admin em 22/06/2026, 15:31:53
  */
 
 const LAPEP_CONFIG = {
@@ -113,7 +113,6 @@ const LAPEP_CONFIG = {
     { nome: 'Sarah Moreira Silva Lima' , papel: 'Mestrado' , foto: 'Fotos Alunos/Sarah.jpeg' , tema: 'Suportes monolíticos por manufatura aditiva' , tipo: 'aluno'  },
     { nome: 'Victor Rabelo Rodrigues' , papel: 'Mestrado' , foto: 'Fotos Alunos/Victor.jpeg' , tema: 'Combustível hipergólico com HTP' , tipo: 'aluno'  },
     { nome: 'Vitória Isabelle dos Santos Argiona' , papel: 'Mestrado' , foto: 'Fotos Alunos/Vitoria-Argiona.jpeg' , tema: 'Catalisadores para decomposição de monopropelente a HTP e ADN' , tipo: 'aluno'  },
-    { nome: 'André Luís Ventura Moreira' , papel: 'IC' , foto: 'Fotos Alunos/Andre.jpeg' , tema: 'Materiais carbonosos nanoestruturados para refratários industriais e aeroespaciais por pirólise controlada' , tipo: 'aluno'  },
     { nome: 'Breno Raphael da Silva Pereira' , papel: 'IC' , foto: 'Fotos Alunos/Breno.jpeg' , tema: 'Decomposição catalítica de HTP' , tipo: 'aluno'  },
     { nome: 'Karine de Fátima da Silva' , papel: 'IC' , foto: 'Fotos Alunos/Karine.jpeg' , tema: 'Oxidantes verdes para sistemas propulsivos' , tipo: 'aluno'  },
     { nome: 'Kimberly Liandra da Silva' , papel: 'IC' , foto: '' , tema: 'Catalisadores para decomposição de H₂O₂' , tipo: 'aluno'  },
