@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 22/06/2026, 15:31:54
+ * Editado via painel admin em 25/06/2026, 09:23:32
  */
 
 const LAPEP_CONFIG = {
@@ -119,7 +119,8 @@ const LAPEP_CONFIG = {
     { nome: 'Luana Vitória da Silva Chantre' , papel: 'IC' , foto: 'Fotos Alunos/Luana.jpeg' , tema: 'Síntese de óxidos mistos para fotocatálise' , tipo: 'aluno'  },
     { nome: 'Maria Eduarda Cardoso de Oliveira' , papel: 'IC' , foto: 'Fotos Alunos/Maria-Eduarda.jpeg' , tema: 'Fotocatálise de poluentes em meio aquoso' , tipo: 'aluno'  },
     { nome: 'Maria Vitória Santos do Nascimento' , papel: 'IC' , foto: 'Fotos Alunos/Maria-Vitoria.png' , tema: 'Materiais carbonosos nanoestruturados' , tipo: 'aluno'  },
-    { nome: 'Samuel Francisco Delfino Alves' , papel: 'IC' , foto: 'Fotos Alunos/Samuel.jpeg' , tema: 'Materiais carbonosos para eletrocatálise' , tipo: 'aluno'  }
+    { nome: 'Samuel Francisco Delfino Alves' , papel: 'IC' , foto: 'Fotos Alunos/Samuel.jpeg' , tema: 'Materiais carbonosos para eletrocatálise' , tipo: 'aluno'  },
+    { nome: 'Camile Caroline de Sousa' , papel: 'IC' , foto: 'Fotos Alunos/Camile.jpeg' , tema: 'Divulgação Científica' , tipo: 'aluno'  }
   ],
 
   noticias: [
