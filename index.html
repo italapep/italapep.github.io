@@ -765,7 +765,20 @@ function renderEquipe() {
   const grid = document.getElementById('equipe-grid');
   if (!grid || typeof LAPEP_CONFIG === 'undefined' || !LAPEP_CONFIG.equipe) return;
   function iniciais(nome) { return nome.split(' ').filter(p=>p.length>2).slice(0,2).map(p=>p[0]).join(''); }
-  grid.innerHTML = LAPEP_CONFIG.equipe.map(m => {
+  const _ordemNivel = m => {
+    if (m.tipo === 'professor') return 0;
+    const p = (m.papel || '').toLowerCase();
+    if (p.includes('pós') || p.includes('pos-doc')) return 1;
+    if (p.includes('doutora')) return 2;
+    if (p.includes('mestra')) return 3;
+    if (p.includes('ic') || p.includes('inicia')) return 4;
+    return 5;
+  };
+  const _equipeOrd = [...LAPEP_CONFIG.equipe].sort((a, b) => {
+    const d = _ordemNivel(a) - _ordemNivel(b);
+    return d !== 0 ? d : a.nome.localeCompare(b.nome, 'pt-BR');
+  });
+  grid.innerHTML = _equipeOrd.map(m => {
     const av = m.foto
       ? `<img src="${m.foto}" alt="${m.nome}" onerror="this.parentNode.textContent='${iniciais(m.nome)}';">`
       : iniciais(m.nome);
