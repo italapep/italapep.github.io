@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 25/06/2026, 14:58:59
+ * Editado via painel admin em 25/06/2026, 15:24:53
  */
 
 const LAPEP_CONFIG = {
@@ -124,7 +124,7 @@ const LAPEP_CONFIG = {
   ],
 
   noticias: [
-    { titulo: 'Oportunidade de Iniciação Científica' , data: 'Junho de 2026' , texto: 'Oportunidade de IC: Desenvolvimento de material carbonoso nanoestruturado para emprego em material refratário industrial. \n\nParceria ITA/INPE' , imagem: 'Refratários.jpeg' , ativo: true },
+    { titulo: 'Oportunidade de Iniciação Científica' , data: 'Junho de 2026' , texto: '' , imagem: 'Refratários.jpeg' , ativo: true },
     { titulo: 'Faça parte do LAPEP' , data: 'Junho de 2026' , texto: '' , imagem: 'Faça parte do LAPEP.png' , ativo: true }
   ]
 
