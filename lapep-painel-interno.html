@@ -99,7 +99,7 @@
 <div id="login-screen">
   <div class="login-box">
     <div class="logo">LAPEP</div>
-    <div class="sub">Painel de AdministraÃ§Ã£o</div>
+    <div class="sub">Painel de Administração</div>
     <input type="password" id="pwd" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
     <button class="btn-login" onclick="login()">Entrar</button>
     <div class="login-err" id="login-err">Senha incorreta.</div>
@@ -113,9 +113,9 @@
       <span class="sub-title">italapep.github.io</span>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
-      <span class="unsaved" id="unsaved-badge">â NÃ£o salvo</span>
-      <button onclick="saveAll()">ð¾ Salvar no GitHub</button>
-      <button onclick="restoreBackup()" style="background:rgba(220,38,38,.4)" title="Restaura a versÃ£o anterior do config.js">â© Restaurar backup</button>
+      <span class="unsaved" id="unsaved-badge">● Não salvo</span>
+      <button onclick="saveAll()">💾 Salvar no GitHub</button>
+      <button onclick="restoreBackup()" style="background:rgba(220,38,38,.4)" title="Restaura a versão anterior do config.js">↩ Restaurar backup</button>
       <button onclick="logout()" style="opacity:.7">Sair</button>
     </div>
   </header>
@@ -123,15 +123,15 @@
   <div id="status-bar"></div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('sobre',this)">ð Sobre</button>
-    <button class="tab-btn" onclick="switchTab('pesquisa',this)">ð¬ Pesquisa</button>
-    <button class="tab-btn" onclick="switchTab('equipe',this)">ð¥ Equipe</button>
-    <button class="tab-btn" onclick="switchTab('projetos',this)">ð Projetos</button>
-    <button class="tab-btn" onclick="switchTab('publicacoes',this)">ð PublicaÃ§Ãµes</button>
-    <button class="tab-btn" onclick="switchTab('defesas',this)">ð Defesas</button>
-    <button class="tab-btn" onclick="switchTab('parcerias',this)">ð¤ Parcerias</button>
-    <button class="tab-btn" onclick="switchTab('contato',this)">ð Contato</button>
-    <button class="tab-btn" onclick="switchTab('noticias',this)">ð° NotÃ­cias</button>
+    <button class="tab-btn active" onclick="switchTab('sobre',this)">📋 Sobre</button>
+    <button class="tab-btn" onclick="switchTab('pesquisa',this)">🔬 Pesquisa</button>
+    <button class="tab-btn" onclick="switchTab('equipe',this)">👥 Equipe</button>
+    <button class="tab-btn" onclick="switchTab('projetos',this)">📁 Projetos</button>
+    <button class="tab-btn" onclick="switchTab('publicacoes',this)">📄 Publicações</button>
+    <button class="tab-btn" onclick="switchTab('defesas',this)">🎓 Defesas</button>
+    <button class="tab-btn" onclick="switchTab('parcerias',this)">🤝 Parcerias</button>
+    <button class="tab-btn" onclick="switchTab('contato',this)">📞 Contato</button>
+    <button class="tab-btn" onclick="switchTab('noticias',this)">📰 Notícias</button>
   </div>
 
   <!-- SOBRE -->
@@ -140,17 +140,17 @@
     <div class="form-grid">
       <div class="field full"><label>Texto principal</label><textarea id="s-texto" class="sobre-form" rows="6"></textarea></div>
       <div class="field full">
-        <label>Foto do laboratÃ³rio (caminho atual: <span id="s-foto-path"></span>)</label>
+        <label>Foto do laboratório (caminho atual: <span id="s-foto-path"></span>)</label>
         <div class="img-upload-wrap" onclick="document.getElementById('s-foto-file').click()">
           <img id="s-foto-preview" class="img-preview">
-          <div id="s-foto-label">ð· Clique para trocar a foto</div>
+          <div id="s-foto-label">📷 Clique para trocar a foto</div>
           <input type="file" id="s-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'s-foto-preview','s-foto-label','s-foto-path-new')">
         </div>
         <input type="hidden" id="s-foto-path-new">
       </div>
     </div>
     <div style="margin-top:14px;display:flex;gap:8px">
-      <button class="btn btn-ok" onclick="saveSobre()">â Aplicar alteraÃ§Ãµes</button>
+      <button class="btn btn-ok" onclick="saveSobre()">✓ Aplicar alterações</button>
     </div>
   </div>
 
@@ -186,18 +186,18 @@
     <div class="filter-btns">
       <button class="btn btn-ghost" id="proj-f-todos" onclick="filterProj('todos')">Todos</button>
       <button class="btn btn-ghost" id="proj-f-and" onclick="filterProj('Em andamento')">Em andamento</button>
-      <button class="btn btn-ghost" id="proj-f-conc" onclick="filterProj('ConcluÃ­do')">ConcluÃ­dos</button>
+      <button class="btn btn-ghost" id="proj-f-conc" onclick="filterProj('Concluído')">Concluídos</button>
     </div>
     <div class="list-rows" id="proj-list"></div>
   </div>
 
-  <!-- PUBLICAÃÃES -->
+  <!-- PUBLICAÇÕES -->
   <div id="tab-publicacoes" class="tab-panel">
     <div class="sec-header">
-      <h2>PublicaÃ§Ãµes <span class="count" id="pub-count">0</span></h2>
-      <button class="btn btn-primary" onclick="openModal('pub')">+ Nova publicaÃ§Ã£o</button>
+      <h2>Publicações <span class="count" id="pub-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('pub')">+ Nova publicação</button>
     </div>
-    <table><thead><tr><th style="width:46px">Ano</th><th>TÃ­tulo</th><th>Autores</th><th>PeriÃ³dico</th><th style="width:110px">AÃ§Ãµes</th></tr></thead>
+    <table><thead><tr><th style="width:46px">Ano</th><th>Título</th><th>Autores</th><th>Periódico</th><th style="width:110px">Ações</th></tr></thead>
     <tbody id="pub-tbody"></tbody></table>
   </div>
 
@@ -223,19 +223,19 @@
   <div id="tab-contato" class="tab-panel">
     <div class="sec-header"><h2>Contato</h2></div>
     <div class="form-grid">
-      <div class="field full"><label>EndereÃ§o (uma linha por parÃ¡grafo)</label><textarea id="c-end" rows="3"></textarea></div>
+      <div class="field full"><label>Endereço (uma linha por parágrafo)</label><textarea id="c-end" rows="3"></textarea></div>
       <div class="field"><label>Telefone</label><input id="c-tel"></div>
       <div class="field"><label>E-mail</label><input id="c-email"></div>
       <div class="field full"><label>Instagram (sem @)</label><input id="c-insta"></div>
     </div>
-    <div style="margin-top:14px"><button class="btn btn-ok" onclick="saveContato()">â Aplicar alteraÃ§Ãµes</button></div>
+    <div style="margin-top:14px"><button class="btn btn-ok" onclick="saveContato()">✓ Aplicar alterações</button></div>
   </div>
 
-  <!-- NOTÃCIAS -->
+  <!-- NOTÍCIAS -->
   <div id="tab-noticias" class="tab-panel">
     <div class="sec-header">
-      <h2>NotÃ­cias e Oportunidades <span class="count" id="not-count">0</span></h2>
-      <button class="btn btn-primary" onclick="openModal('not')">+ Nova notÃ­cia</button>
+      <h2>Notícias e Oportunidades <span class="count" id="not-count">0</span></h2>
+      <button class="btn btn-primary" onclick="openModal('not')">+ Nova notícia</button>
     </div>
     <div class="list-rows" id="not-list"></div>
   </div>
@@ -267,7 +267,7 @@ let eqFilter = 'todos';
 let projFilter = 'todos';
 let pendingImgUploads = [];  // {path, b64} to upload on save
 
-// ââ Login ââ
+// ── Login ──
 function login() {
   if (document.getElementById('pwd').value !== SENHA) {
     document.getElementById('login-err').style.display = 'block'; return;
@@ -277,13 +277,13 @@ function login() {
   loadConfig();
 }
 function logout() {
-  if (unsaved && !confirm('HÃ¡ alteraÃ§Ãµes nÃ£o salvas. Sair mesmo assim?')) return;
+  if (unsaved && !confirm('Há alterações não salvas. Sair mesmo assim?')) return;
   location.reload();
 }
 
-// ââ Load config ââ
+// ── Load config ──
 async function loadConfig() {
-  showStatus('loading','Carregando configuraÃ§Ã£o...');
+  showStatus('loading','Carregando configuração...');
   try {
     const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.js`,
       { headers:{ Authorization:`token ${TOKEN}` } });
@@ -300,18 +300,18 @@ async function loadConfig() {
     if (!cfg.sobre) cfg.sobre = { texto:'', foto:'' };
     if (!cfg.contato) cfg.contato = { endereco:'', telefone:'', email:'', instagram:'' };
     renderAll();
-    showStatus('ok','ConfiguraÃ§Ã£o carregada.');
+    showStatus('ok','Configuração carregada.');
     setTimeout(clearStatus, 3000);
   } catch(e) { showStatus('err','Erro ao carregar: ' + e.message); }
 }
 
-// ââ Render all ââ
+// ── Render all ──
 function renderAll() {
   renderSobre(); renderPesquisa(); renderEq(); renderProj();
   renderPub(); renderDef(); renderParc(); renderContato(); renderNoticias();
 }
 
-// ââ Sobre ââ
+// ── Sobre ──
 function renderSobre() {
   document.getElementById('s-texto').value = cfg.sobre.texto || '';
   document.getElementById('s-foto-path').textContent = cfg.sobre.foto || '(vazia)';
@@ -326,21 +326,21 @@ function saveSobre() {
   showStatus('ok','Sobre atualizado. Clique em Salvar no GitHub para publicar.');
 }
 
-// ââ Pesquisa ââ
+// ── Pesquisa ──
 function renderPesquisa() {
   document.getElementById('pesq-count').textContent = cfg.linhasPesquisa.length;
   document.getElementById('pesq-list').innerHTML = cfg.linhasPesquisa.map((l,i) => `
     <div class="row-item">
-      <div style="font-size:1.6rem;flex-shrink:0">${l.icone||'ð¬'}</div>
+      <div style="font-size:1.6rem;flex-shrink:0">${l.icone||'🔬'}</div>
       <div class="ri-body"><div class="ri-title">${l.titulo}</div><div class="ri-sub">${l.descricao}</div></div>
       <div class="ri-acts">
-        <button class="btn btn-ghost" onclick="openModal('pesq',${i})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('pesq',${i})">ð</button>
+        <button class="btn btn-ghost" onclick="openModal('pesq',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('pesq',${i})">🗑</button>
       </div>
     </div>`).join('');
 }
 
-// ââ Equipe ââ
+// ── Equipe ──
 function iniciais(nome) { return nome.split(' ').filter(p=>p.length>2).slice(0,2).map(p=>p[0]).join(''); }
 function renderEq() {
   document.getElementById('eq-count').textContent = cfg.equipe.length;
@@ -354,8 +354,8 @@ function renderEq() {
       <div class="ri-avatar">${av}</div>
       <div class="ri-body"><div class="ri-title">${m.nome}</div><div class="ri-sub" style="color:var(--laranja);font-weight:600">${m.papel}</div><div class="ri-sub">${m.tema}</div></div>
       <div class="ri-acts">
-        <button class="btn btn-ghost" onclick="openModal('eq',${idx})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('eq',${idx})">ð</button>
+        <button class="btn btn-ghost" onclick="openModal('eq',${idx})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('eq',${idx})">🗑</button>
       </div>
     </div>`;
   }).join('');
@@ -369,13 +369,13 @@ function renderEq() {
 }
 function filterEq(t) { eqFilter=t; renderEq(); }
 
-// ââ Projetos ââ
+// ── Projetos ──
 function renderProj() {
   document.getElementById('proj-count').textContent = cfg.projetos.length;
   const filtered = cfg.projetos.filter(p => projFilter==='todos' || p.status===projFilter);
   document.getElementById('proj-list').innerHTML = filtered.map(p => {
     const idx = cfg.projetos.indexOf(p);
-    const cls = p.status==='ConcluÃ­do' ? 'badge-enc' : 'badge-ok';
+    const cls = p.status==='Concluído' ? 'badge-enc' : 'badge-ok';
     return `<div class="row-item">
       <div class="ri-body">
         <div style="margin-bottom:4px"><span class="ri-badge ${cls}">${p.status}</span>${p.tipo ? ` <span style="font-size:.72rem;color:#64748b">${p.tipo}</span>` : ''}</div>
@@ -383,14 +383,14 @@ function renderProj() {
         <div class="ri-sub">${p.descricao}</div>
       </div>
       <div class="ri-acts">
-        <button class="btn btn-ghost" onclick="openModal('proj',${idx})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('proj',${idx})">ð</button>
+        <button class="btn btn-ghost" onclick="openModal('proj',${idx})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('proj',${idx})">🗑</button>
       </div>
     </div>`;
   }).join('');
   ['todos','and','conc'].forEach(k => {
     const id = `proj-f-${k}`;
-    const active = (projFilter==='todos'&&k==='todos')||(projFilter==='Em andamento'&&k==='and')||(projFilter==='ConcluÃ­do'&&k==='conc');
+    const active = (projFilter==='todos'&&k==='todos')||(projFilter==='Em andamento'&&k==='and')||(projFilter==='Concluído'&&k==='conc');
     const btn = document.getElementById(id);
     btn.style.background = active ? 'var(--azul)' : '';
     btn.style.color = active ? 'white' : '';
@@ -398,7 +398,7 @@ function renderProj() {
 }
 function filterProj(t) { projFilter=t; renderProj(); }
 
-// ââ PublicaÃ§Ãµes ââ
+// ── Publicações ──
 function renderPub() {
   document.getElementById('pub-count').textContent = cfg.publicacoes.length;
   document.getElementById('pub-tbody').innerHTML = cfg.publicacoes.map((p,i) => `
@@ -408,13 +408,13 @@ function renderPub() {
       <td style="white-space:nowrap;font-size:.76rem">${p.autores}</td>
       <td style="font-size:.74rem;color:#64748b;max-width:180px">${p.periodico}</td>
       <td class="acts">
-        <button class="btn btn-ghost" onclick="openModal('pub',${i})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('pub',${i})">ð</button>
+        <button class="btn btn-ghost" onclick="openModal('pub',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('pub',${i})">🗑</button>
       </td>
     </tr>`).join('');
 }
 
-// ââ Defesas ââ
+// ── Defesas ──
 function renderDef() {
   document.getElementById('def-count').textContent = cfg.defesas.length;
   document.getElementById('def-list').innerHTML = cfg.defesas.map((d,i) => `
@@ -422,16 +422,16 @@ function renderDef() {
       <div class="ri-body">
         <div style="margin-bottom:3px"><span class="ri-badge badge-ok">${d.tipo}</span> <span style="font-size:.72rem;color:#64748b">${d.ano}</span></div>
         <div class="ri-title">${d.titulo}</div>
-        <div class="ri-sub">${d.nome} â ${d.instituicao} â <em>${d.papel}</em></div>
+        <div class="ri-sub">${d.nome} — ${d.instituicao} — <em>${d.papel}</em></div>
       </div>
       <div class="ri-acts">
-        <button class="btn btn-ghost" onclick="openModal('def',${i})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('def',${i})">ð</button>
+        <button class="btn btn-ghost" onclick="openModal('def',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('def',${i})">🗑</button>
       </div>
     </div>`).join('');
 }
 
-// ââ Parcerias ââ
+// ── Parcerias ──
 function renderParc() {
   document.getElementById('parc-count').textContent = cfg.parcerias.length;
   document.getElementById('parc-list').innerHTML = cfg.parcerias.map((p,i) => {
@@ -442,14 +442,14 @@ function renderParc() {
       <div style="display:flex;align-items:center;gap:10px">${logo}<div class="pc-nome">${p.nome} <span style="color:#94a3b8;font-size:.76rem;font-weight:400">(${p.sigla})</span></div></div>
       <div class="pc-desc">${p.descricao}</div>
       <div class="pc-acts">
-        <button class="btn btn-ghost" onclick="openModal('parc',${i})">âï¸ Editar</button>
-        <button class="btn btn-danger" onclick="deleteItem('parc',${i})">ð Remover</button>
+        <button class="btn btn-ghost" onclick="openModal('parc',${i})">✏️ Editar</button>
+        <button class="btn btn-danger" onclick="deleteItem('parc',${i})">🗑 Remover</button>
       </div>
     </div>`;
   }).join('');
 }
 
-// ââ Contato ââ
+// ── Contato ──
 function renderContato() {
   document.getElementById('c-end').value = cfg.contato.endereco || '';
   document.getElementById('c-tel').value = cfg.contato.telefone || '';
@@ -465,7 +465,7 @@ function saveContato() {
   showStatus('ok','Contato atualizado. Clique em Salvar no GitHub para publicar.');
 }
 
-// ââ NotÃ­cias ââ
+// ── Notícias ──
 function renderNoticias() {
   if (!cfg.noticias) cfg.noticias = [];
   document.getElementById('not-count').textContent = cfg.noticias.length;
@@ -481,19 +481,19 @@ function renderNoticias() {
         <div class="ri-sub">${n.texto}</div>
       </div>
       <div class="ri-acts">
-        <button class="btn btn-ghost" onclick="toggleNoticia(${i})">${n.ativo!==false?'ð Ocultar':'ð Mostrar'}</button>
-        <button class="btn btn-ghost" onclick="openModal('not',${i})">âï¸</button>
-        <button class="btn btn-danger" onclick="deleteItem('not',${i})">ð</button>
+        <button class="btn btn-ghost" onclick="toggleNoticia(${i})">${n.ativo!==false?'👁 Ocultar':'👁 Mostrar'}</button>
+        <button class="btn btn-ghost" onclick="openModal('not',${i})">✏️</button>
+        <button class="btn btn-danger" onclick="deleteItem('not',${i})">🗑</button>
       </div>
     </div>`;
-  }).join('') || '<p style="color:#94a3b8;padding:12px">Nenhuma notÃ­cia cadastrada.</p>';
+  }).join('') || '<p style="color:#94a3b8;padding:12px">Nenhuma notícia cadastrada.</p>';
 }
 function toggleNoticia(idx) {
   cfg.noticias[idx].ativo = cfg.noticias[idx].ativo === false ? true : false;
   renderNoticias(); markUnsaved();
 }
 
-// ââ Tabs ââ
+// ── Tabs ──
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -501,7 +501,7 @@ function switchTab(name, btn) {
   document.getElementById('tab-' + name).classList.add('active');
 }
 
-// ââ Image upload ââ
+// ── Image upload ──
 // folder: subpasta opcional (ex: 'Fotos Alunos'). Se omitido, vai para a raiz.
 function handleImgSelect(input, previewId, labelId, pathId, folder) {
   const file = input.files[0];
@@ -512,7 +512,7 @@ function handleImgSelect(input, previewId, labelId, pathId, folder) {
     const prev = document.getElementById(previewId);
     prev.src = e.target.result;
     prev.style.display = 'block';
-    document.getElementById(labelId).textContent = 'â ' + file.name;
+    document.getElementById(labelId).textContent = '✓ ' + file.name;
     document.getElementById(pathId).value = path;
     pendingImgUploads.push({ path: path, b64: e.target.result.split(',')[1], file });
   };
@@ -525,14 +525,14 @@ function handleFileSelect(input, labelId, pathId, folder) {
   const reader = new FileReader();
   reader.onload = e => {
     const path = folder ? folder + '/' + file.name : file.name;
-    document.getElementById(labelId).textContent = 'â ' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
+    document.getElementById(labelId).textContent = '✓ ' + file.name + ' (' + (file.size/1024).toFixed(0) + ' KB)';
     document.getElementById(pathId).value = path;
     pendingImgUploads.push({ path: path, b64: e.target.result.split(',')[1], file });
   };
   reader.readAsDataURL(file);
 }
 
-// ââ Modal ââ
+// ── Modal ──
 function openModal(type, idx) {
   modalMode = type;
   editIdx = (idx !== undefined) ? idx : null;
@@ -543,26 +543,26 @@ function openModal(type, idx) {
     const l = isEdit ? cfg.linhasPesquisa[idx] : {};
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Linha de Pesquisa' : 'Nova Linha de Pesquisa';
     body.innerHTML = `<div class="form-grid">
-      <div class="field"><label>Ãcone (emoji)</label><input id="m-icone" value="${l.icone||'ð¬'}"></div>
-      <div class="field"><label>TÃ­tulo</label><input id="m-titulo" value="${esc(l.titulo||'')}"></div>
-      <div class="field full"><label>DescriÃ§Ã£o</label><textarea id="m-desc">${esc(l.descricao||'')}</textarea></div>
+      <div class="field"><label>Ícone (emoji)</label><input id="m-icone" value="${l.icone||'🔬'}"></div>
+      <div class="field"><label>Título</label><input id="m-titulo" value="${esc(l.titulo||'')}"></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(l.descricao||'')}</textarea></div>
     </div>`;
 
   } else if (type === 'eq') {
     const m = isEdit ? cfg.equipe[idx] : {};
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Membro' : 'Novo Membro';
-    const niveis = ['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','PÃ³s-Doutorado','Doutorado','Mestrado','IC'];
+    const niveis = ['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','Pós-Doutorado','Doutorado','Mestrado','IC'];
     const papelOpts = niveis.map(v => `<option value="${v}" ${m.papel===v?'selected':''}>${v}</option>`).join('');
     body.innerHTML = `<div class="form-grid">
       <div class="field full"><label>Nome completo</label><input id="m-nome" value="${esc(m.nome||'')}"></div>
       <div class="field"><label>Tipo</label><select id="m-tipo"><option value="professor" ${m.tipo==='professor'?'selected':''}>Professor</option><option value="aluno" ${m.tipo!=='professor'?'selected':''}>Aluno</option></select></div>
-      <div class="field"><label>NÃ­vel / Cargo</label><select id="m-papel">${papelOpts}</select></div>
+      <div class="field"><label>Nível / Cargo</label><select id="m-papel">${papelOpts}</select></div>
       <div class="field full"><label>Tema de pesquisa</label><textarea id="m-tema">${esc(m.tema||'')}</textarea></div>
       <div class="field full">
         <label>Foto (caminho atual: ${m.foto||'nenhuma'})</label>
         <div class="img-upload-wrap" onclick="document.getElementById('m-foto-file').click()">
           ${m.foto ? `<img src="https://italapep.github.io/${m.foto}" class="img-preview" style="display:block" id="m-foto-preview">` : '<img id="m-foto-preview" class="img-preview">'}
-          <div id="m-foto-label">${m.foto ? 'â '+m.foto : 'ð· Clique para enviar foto'}</div>
+          <div id="m-foto-label">${m.foto ? '✓ '+m.foto : '📷 Clique para enviar foto'}</div>
           <input type="file" id="m-foto-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-foto-preview','m-foto-label','m-foto-path','Fotos Alunos')">
         </div>
         <input type="hidden" id="m-foto-path" value="${m.foto||''}">
@@ -573,29 +573,29 @@ function openModal(type, idx) {
     const p = isEdit ? cfg.projetos[idx] : {};
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Projeto' : 'Novo Projeto';
     body.innerHTML = `<div class="form-grid">
-      <div class="field full"><label>TÃ­tulo</label><input id="m-titulo" value="${esc(p.titulo||'')}"></div>
-      <div class="field"><label>Status</label><select id="m-status"><option value="Em andamento" ${p.status==='Em andamento'||!p.status?'selected':''}>Em andamento</option><option value="ConcluÃ­do" ${p.status==='ConcluÃ­do'?'selected':''}>ConcluÃ­do</option></select></div>
-      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="" ${!p.tipo?'selected':''}>â</option><option value="Mestrado" ${p.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${p.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="IC" ${p.tipo==='IC'?'selected':''}>IC</option><option value="P&D" ${p.tipo==='P&D'?'selected':''}>P&D</option></select></div>
-      <div class="field full"><label>DescriÃ§Ã£o</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
+      <div class="field full"><label>Título</label><input id="m-titulo" value="${esc(p.titulo||'')}"></div>
+      <div class="field"><label>Status</label><select id="m-status"><option value="Em andamento" ${p.status==='Em andamento'||!p.status?'selected':''}>Em andamento</option><option value="Concluído" ${p.status==='Concluído'?'selected':''}>Concluído</option></select></div>
+      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="" ${!p.tipo?'selected':''}>—</option><option value="Mestrado" ${p.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${p.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="IC" ${p.tipo==='IC'?'selected':''}>IC</option><option value="P&D" ${p.tipo==='P&D'?'selected':''}>P&D</option></select></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
     </div>`;
 
   } else if (type === 'pub') {
     const p = isEdit ? cfg.publicacoes[idx] : {};
-    document.getElementById('modal-title').textContent = isEdit ? 'Editar PublicaÃ§Ã£o' : 'Nova PublicaÃ§Ã£o';
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Publicação' : 'Nova Publicação';
     body.innerHTML = `<div class="form-grid">
       <div class="field"><label>Ano</label><input id="m-ano" type="number" value="${p.ano||new Date().getFullYear()}"></div>
       <div class="field"><label>Qualis</label><input id="m-qualis" value="${esc(p.qualis||'')}"></div>
-      <div class="field full"><label>TÃ­tulo</label><textarea id="m-titulo">${esc(p.titulo||'')}</textarea></div>
+      <div class="field full"><label>Título</label><textarea id="m-titulo">${esc(p.titulo||'')}</textarea></div>
       <div class="field full"><label>Autores</label><input id="m-autores" value="${esc(p.autores||'')}"></div>
-      <div class="field full"><label>PeriÃ³dico</label><input id="m-periodico" value="${esc(p.periodico||'')}"></div>
+      <div class="field full"><label>Periódico</label><input id="m-periodico" value="${esc(p.periodico||'')}"></div>
       <div class="field full"><label>DOI / Link (URL externa, ex: doi.org/...)</label><input id="m-doi" value="${esc(p.doi||'')}"></div>
       <div class="field full">
         <label>PDF para download ${p.pdf ? `(atual: <a href="https://italapep.github.io/${p.pdf}" target="_blank">${p.pdf}</a>)` : '(nenhum)'}</label>
         <div class="img-upload-wrap" onclick="document.getElementById('m-pdf-file').click()" style="text-align:left;display:flex;align-items:center;gap:10px">
-          <span style="font-size:1.4rem">ð</span>
+          <span style="font-size:1.4rem">📄</span>
           <div>
-            <div id="m-pdf-label">${p.pdf ? 'â '+p.pdf : 'Clique para enviar um PDF'}</div>
-            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">O arquivo serÃ¡ enviado ao GitHub junto com as demais alteraÃ§Ãµes</div>
+            <div id="m-pdf-label">${p.pdf ? '✓ '+p.pdf : 'Clique para enviar um PDF'}</div>
+            <div style="font-size:.72rem;color:#94a3b8;margin-top:2px">O arquivo será enviado ao GitHub junto com as demais alterações</div>
           </div>
           <input type="file" id="m-pdf-file" accept="application/pdf" style="display:none" onchange="handleFileSelect(this,'m-pdf-label','m-pdf-path')">
         </div>
@@ -608,11 +608,11 @@ function openModal(type, idx) {
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Defesa' : 'Nova Defesa';
     body.innerHTML = `<div class="form-grid">
       <div class="field"><label>Ano</label><input id="m-ano" type="number" value="${d.ano||new Date().getFullYear()}"></div>
-      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="Mestrado" ${d.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${d.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="PÃ³s-Doc" ${d.tipo==='PÃ³s-Doc'?'selected':''}>PÃ³s-Doc</option><option value="IC" ${d.tipo==='IC'?'selected':''}>IC</option></select></div>
-      <div class="field full"><label>TÃ­tulo do trabalho</label><textarea id="m-titulo">${esc(d.titulo||'')}</textarea></div>
+      <div class="field"><label>Tipo</label><select id="m-tipo"><option value="Mestrado" ${d.tipo==='Mestrado'?'selected':''}>Mestrado</option><option value="Doutorado" ${d.tipo==='Doutorado'?'selected':''}>Doutorado</option><option value="Pós-Doc" ${d.tipo==='Pós-Doc'?'selected':''}>Pós-Doc</option><option value="IC" ${d.tipo==='IC'?'selected':''}>IC</option></select></div>
+      <div class="field full"><label>Título do trabalho</label><textarea id="m-titulo">${esc(d.titulo||'')}</textarea></div>
       <div class="field full"><label>Nome do aluno</label><input id="m-nome" value="${esc(d.nome||'')}"></div>
       <div class="field"><label>Papel (Orientador / Co-orientador)</label><input id="m-papel" value="${esc(d.papel||'Orientador')}"></div>
-      <div class="field"><label>InstituiÃ§Ã£o / Financiador</label><input id="m-inst" value="${esc(d.instituicao||'')}"></div>
+      <div class="field"><label>Instituição / Financiador</label><input id="m-inst" value="${esc(d.instituicao||'')}"></div>
     </div>`;
 
   } else if (type === 'parc') {
@@ -621,12 +621,12 @@ function openModal(type, idx) {
     body.innerHTML = `<div class="form-grid">
       <div class="field"><label>Sigla</label><input id="m-sigla" value="${esc(p.sigla||'')}"></div>
       <div class="field"><label>Nome completo</label><input id="m-nome" value="${esc(p.nome||'')}"></div>
-      <div class="field full"><label>DescriÃ§Ã£o</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
+      <div class="field full"><label>Descrição</label><textarea id="m-desc">${esc(p.descricao||'')}</textarea></div>
       <div class="field full">
         <label>Logo (arquivo atual: ${p.imagem||'nenhum'})</label>
         <div class="img-upload-wrap" onclick="document.getElementById('m-parc-img-file').click()">
           ${p.imagem ? `<img src="https://italapep.github.io/${p.imagem}" class="img-preview" style="display:block" id="m-parc-img-preview">` : '<img id="m-parc-img-preview" class="img-preview">'}
-          <div id="m-parc-img-label">${p.imagem ? 'â '+p.imagem : 'ð· Clique para enviar logo'}</div>
+          <div id="m-parc-img-label">${p.imagem ? '✓ '+p.imagem : '📷 Clique para enviar logo'}</div>
           <input type="file" id="m-parc-img-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-parc-img-preview','m-parc-img-label','m-parc-img-path')">
         </div>
         <input type="hidden" id="m-parc-img-path" value="${p.imagem||''}">
@@ -635,17 +635,17 @@ function openModal(type, idx) {
 
   } else if (type === 'not') {
     const n = isEdit ? cfg.noticias[idx] : {};
-    document.getElementById('modal-title').textContent = isEdit ? 'Editar NotÃ­cia' : 'Nova NotÃ­cia';
+    document.getElementById('modal-title').textContent = isEdit ? 'Editar Notícia' : 'Nova Notícia';
     body.innerHTML = `<div class="form-grid">
-      <div class="field full"><label>TÃ­tulo</label><input id="m-titulo" value="${esc(n.titulo||'')}"></div>
+      <div class="field full"><label>Título</label><input id="m-titulo" value="${esc(n.titulo||'')}"></div>
       <div class="field"><label>Data (ex: Junho 2025)</label><input id="m-data" value="${esc(n.data||'')}"></div>
-      <div class="field"><label>VisÃ­vel no site</label><select id="m-ativo"><option value="true" ${n.ativo!==false?'selected':''}>Sim</option><option value="false" ${n.ativo===false?'selected':''}>NÃ£o (oculta)</option></select></div>
+      <div class="field"><label>Visível no site</label><select id="m-ativo"><option value="true" ${n.ativo!==false?'selected':''}>Sim</option><option value="false" ${n.ativo===false?'selected':''}>Não (oculta)</option></select></div>
       <div class="field full"><label>Texto</label><textarea id="m-desc" rows="4">${esc(n.texto||'')}</textarea></div>
       <div class="field full">
         <label>Imagem (atual: ${n.imagem||'nenhuma'})</label>
         <div class="img-upload-wrap" onclick="document.getElementById('m-not-img-file').click()">
           ${n.imagem ? `<img src="https://italapep.github.io/${n.imagem}" class="img-preview" style="display:block" id="m-not-img-preview">` : '<img id="m-not-img-preview" class="img-preview">'}
-          <div id="m-not-img-label">${n.imagem ? 'â '+n.imagem : 'ð· Clique para enviar imagem (opcional)'}</div>
+          <div id="m-not-img-label">${n.imagem ? '✓ '+n.imagem : '📷 Clique para enviar imagem (opcional)'}</div>
           <input type="file" id="m-not-img-file" accept="image/*" style="display:none" onchange="handleImgSelect(this,'m-not-img-preview','m-not-img-label','m-not-img-path')">
         </div>
         <input type="hidden" id="m-not-img-path" value="${n.imagem||''}">
@@ -667,40 +667,40 @@ function val(id) { return (document.getElementById(id)||{}).value || ''; }
 function saveModal() {
   if (modalMode === 'pesq') {
     const item = { icone: val('m-icone'), titulo: val('m-titulo').trim(), descricao: val('m-desc').trim() };
-    if (!item.titulo) { alert('TÃ­tulo obrigatÃ³rio'); return; }
+    if (!item.titulo) { alert('Título obrigatório'); return; }
     if (editIdx !== null) cfg.linhasPesquisa[editIdx] = item; else cfg.linhasPesquisa.push(item);
     renderPesquisa();
   } else if (modalMode === 'eq') {
     const newFoto = val('m-foto-path');
     const item = { nome: val('m-nome').trim(), tipo: val('m-tipo'), papel: val('m-papel'), tema: val('m-tema').trim(), foto: newFoto };
-    if (!item.nome) { alert('Nome obrigatÃ³rio'); return; }
+    if (!item.nome) { alert('Nome obrigatório'); return; }
     if (editIdx !== null) cfg.equipe[editIdx] = item; else cfg.equipe.push(item);
     renderEq();
   } else if (modalMode === 'proj') {
     const item = { titulo: val('m-titulo').trim(), status: val('m-status'), tipo: val('m-tipo'), descricao: val('m-desc').trim() };
-    if (!item.titulo) { alert('TÃ­tulo obrigatÃ³rio'); return; }
+    if (!item.titulo) { alert('Título obrigatório'); return; }
     if (editIdx !== null) cfg.projetos[editIdx] = item; else cfg.projetos.push(item);
     renderProj();
   } else if (modalMode === 'pub') {
     const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), titulo: val('m-titulo').trim(), autores: val('m-autores').trim(), periodico: val('m-periodico').trim(), qualis: val('m-qualis').trim(), doi: val('m-doi').trim(), pdf: val('m-pdf-path').trim() };
-    if (!item.titulo) { alert('TÃ­tulo obrigatÃ³rio'); return; }
+    if (!item.titulo) { alert('Título obrigatório'); return; }
     if (editIdx !== null) cfg.publicacoes[editIdx] = item; else cfg.publicacoes.unshift(item);
     renderPub();
   } else if (modalMode === 'def') {
     const item = { ano: parseInt(val('m-ano'))||new Date().getFullYear(), tipo: val('m-tipo'), titulo: val('m-titulo').trim(), nome: val('m-nome').trim(), papel: val('m-papel').trim(), instituicao: val('m-inst').trim() };
-    if (!item.titulo) { alert('TÃ­tulo obrigatÃ³rio'); return; }
+    if (!item.titulo) { alert('Título obrigatório'); return; }
     if (editIdx !== null) cfg.defesas[editIdx] = item; else cfg.defesas.push(item);
     renderDef();
   } else if (modalMode === 'parc') {
     const imgPath = val('m-parc-img-path');
     const item = { sigla: val('m-sigla').trim(), nome: val('m-nome').trim(), descricao: val('m-desc').trim(), imagem: imgPath };
-    if (!item.nome) { alert('Nome obrigatÃ³rio'); return; }
+    if (!item.nome) { alert('Nome obrigatório'); return; }
     if (editIdx !== null) cfg.parcerias[editIdx] = item; else cfg.parcerias.push(item);
     renderParc();
   } else if (modalMode === 'not') {
     const imgPath = val('m-not-img-path');
     const item = { titulo: val('m-titulo').trim(), data: val('m-data').trim(), texto: val('m-desc').trim(), imagem: imgPath, ativo: val('m-ativo') !== 'false' };
-    if (!item.titulo) { alert('TÃ­tulo obrigatÃ³rio'); return; }
+    if (!item.titulo) { alert('Título obrigatório'); return; }
     if (!cfg.noticias) cfg.noticias = [];
     if (editIdx !== null) cfg.noticias[editIdx] = item; else cfg.noticias.unshift(item);
     renderNoticias();
@@ -709,7 +709,7 @@ function saveModal() {
 }
 
 function deleteItem(type, idx) {
-  const labels = { pesq:'linha de pesquisa', eq:'membro', proj:'projeto', pub:'publicaÃ§Ã£o', def:'defesa', parc:'parceria', not:'notÃ­cia' };
+  const labels = { pesq:'linha de pesquisa', eq:'membro', proj:'projeto', pub:'publicação', def:'defesa', parc:'parceria', not:'notícia' };
   if (!confirm(`Remover esta ${labels[type]}?`)) return;
   if (type==='pesq') { cfg.linhasPesquisa.splice(idx,1); renderPesquisa(); }
   else if (type==='eq')   { cfg.equipe.splice(idx,1); renderEq(); }
@@ -721,9 +721,9 @@ function deleteItem(type, idx) {
   markUnsaved();
 }
 
-// ââ Save to GitHub ââ
+// ── Save to GitHub ──
 async function saveAll() {
-  if (!confirm('Salvar todas as alteraÃ§Ãµes no GitHub? O site atualiza em ~1 min.')) return;
+  if (!confirm('Salvar todas as alterações no GitHub? O site atualiza em ~1 min.')) return;
   showStatus('loading','<span class="spinner"></span>Salvando no GitHub...');
   try {
     // Salvar backup do config.js atual antes de publicar
@@ -731,7 +731,7 @@ async function saveAll() {
     const backupB64 = btoa(unescape(encodeURIComponent(backupContent)));
     const backupChk = await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
       { headers:{ Authorization:`token ${TOKEN}` } });
-    const backupBody = { message:'backup automÃ¡tico antes de salvar', content: backupB64 };
+    const backupBody = { message:'backup automático antes de salvar', content: backupB64 };
     if (backupChk.ok) backupBody.sha = (await backupChk.json()).sha;
     await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
       { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' },
@@ -761,9 +761,9 @@ async function saveAll() {
     cfgSha = d.content.sha;
     unsaved = false;
     document.getElementById('unsaved-badge').style.display = 'none';
-    showStatus('ok','â Salvo! O site atualiza em ~1 minuto.');
+    showStatus('ok','✅ Salvo! O site atualiza em ~1 minuto.');
     setTimeout(clearStatus, 7000);
-  } catch(e) { showStatus('err','â Erro: ' + e.message); }
+  } catch(e) { showStatus('err','❌ Erro: ' + e.message); }
 }
 
 function buildConfigJs() {
@@ -777,17 +777,17 @@ function buildConfigJs() {
   const nots  = (cfg.noticias||[]).map(n => `    { titulo: ${q(n.titulo)}, data: ${q(n.data)}, texto: ${q(n.texto)}, imagem: ${q(n.imagem)}, ativo: ${n.ativo!==false} }`).join(',\n');
   const parcs = cfg.parcerias.map(p => `    { sigla: ${q(p.sigla)}, imagem: ${q(p.imagem)}, nome: ${q(p.nome)}, descricao: ${q(p.descricao)} }`).join(',\n');
   const equipe = cfg.equipe.map(m => `    { nome: ${q(m.nome)}, papel: ${q(m.papel)}, foto: ${q(m.foto)}, tema: ${q(m.tema)}, tipo: ${q(m.tipo)} }`).join(',\n');
-  return `/**\n * LAPEP-ITA â config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ],\n\n  noticias: [\n${nots}\n  ]\n\n};\n`;
+  return `/**\n * LAPEP-ITA — config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ],\n\n  noticias: [\n${nots}\n  ]\n\n};\n`;
 }
 
-// ââ Helpers ââ
+// ── Helpers ──
 async function restoreBackup() {
-  if (!confirm('Restaurar o backup? Isso desfaz todas as alteraÃ§Ãµes publicadas desde o Ãºltimo salvamento.')) return;
+  if (!confirm('Restaurar o backup? Isso desfaz todas as alterações publicadas desde o último salvamento.')) return;
   showStatus('loading','<span class="spinner"></span>Restaurando backup...');
   try {
     const r = await fetch(`https://api.github.com/repos/${REPO}/contents/config.backup.js`,
       { headers:{ Authorization:`token ${TOKEN}` } });
-    if (!r.ok) { showStatus('err','â Nenhum backup encontrado.'); return; }
+    if (!r.ok) { showStatus('err','❌ Nenhum backup encontrado.'); return; }
     const d = await r.json();
     const backupSrc = new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')),c=>c.charCodeAt(0)));
     const b64 = btoa(unescape(encodeURIComponent(backupSrc)));
@@ -798,8 +798,8 @@ async function restoreBackup() {
       { method:'PUT', headers:{ Authorization:`token ${TOKEN}`, 'Content-Type':'application/json' },
         body:JSON.stringify({ message:'restaurar backup', content:b64, sha:cfgCurrent.sha }) });
     if (!res.ok) throw new Error((await res.json()).message);
-    showStatus('ok','â Backup restaurado! Recarregue a pÃ¡gina para ver o estado anterior.');
-  } catch(e) { showStatus('err','â Erro: ' + e.message); }
+    showStatus('ok','✅ Backup restaurado! Recarregue a página para ver o estado anterior.');
+  } catch(e) { showStatus('err','❌ Erro: ' + e.message); }
 }
 
 function markUnsaved() { unsaved=true; document.getElementById('unsaved-badge').style.display='inline'; }
