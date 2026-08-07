@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 07/08/2026, 19:58:37
+ * Editado via painel admin em 07/08/2026, 20:09:07
  */
 
 const LAPEP_CONFIG = {
@@ -11,7 +11,7 @@ const LAPEP_CONFIG = {
   portalOrientador: 'https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec?page=dashboard' ,
 
   sobre: {
-    texto: 'O LAPEP (Laboratório de Pesquisas em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional.' ,
+    texto: 'O LAPEP (Laboratório de Pesquisa em Propelentes) é um laboratório do Instituto Tecnológico de Aeronáutica (ITA) dedicado ao desenvolvimento de tecnologias para propulsão química e materiais avançados voltados aos setores aeroespacial, energético e de defesa. Suas linhas de pesquisa abrangem propelentes líquidos, sólidos, híbridos e em gel, além de propelentes verdes à base de HTP, N₂O e ADN. O laboratório também atua no desenvolvimento de catalisadores e suportes catalíticos para sistemas propulsivos, bem como de materiais cerâmicos e carbonosos avançados. Outras áreas de atuação incluem materiais eletromagnéticos para aplicações em radar e comunicações estratégicas, materiais funcionais para baixa observabilidade e gerenciamento de assinaturas, manufatura aditiva de componentes funcionais e nanocatalisadores para aplicações energéticas e ambientais. O LAPEP realiza atividades de síntese, caracterização e avaliação de desempenho de materiais e sistemas, contribuindo para o avanço científico e tecnológico de áreas estratégicas para o Brasil. Suas pesquisas têm como foco a autonomia tecnológica, a inovação e o fortalecimento da capacidade nacional.' ,
     foto: 'LAPEP/Foto_LAPEP_Sobre.png' 
   },
 
@@ -78,12 +78,12 @@ const LAPEP_CONFIG = {
   ],
 
   parcerias: [
-    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE / LCP' , descricao: 'Laboratório de Combustão e Propulsão — parceria histórica em propulsão e foguetes desde 2011.'  },
-    { sigla: 'TII' , imagem: 'Parceiros/TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute — colaboração internacional em propulsão com HTP.'  },
-    { sigla: 'LTF' , imagem: 'Parceiros/LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de propulsão e desenvolvimento de HTP propulsivo.'  },
-    { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
-    { sigla: 'LPL' , imagem: 'Parceiros/LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de Propulsão Líquida.'  },
-    { sigla: 'BIZU' , imagem: 'Parceiros/Bizu.jpg' , nome: 'Bizu' , descricao: 'Parceria em projeto de preparo de propelentes e desenvolvimento tecnológico.'  }
+    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE / LCP' , descricao: 'Instituto Nacional de Pesquisas Espaciais: parceria em propelentes, materiais carbonosos e materiais cerâmicos'  },
+    { sigla: 'TII' , imagem: 'Parceiros/TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute: colaboração internacional em propulsão com HTP.'  },
+    { sigla: 'LTF' , imagem: 'Parceiros/LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório de Tecnologias de Foguetes (ITA): colaboração em projetos de propulsão.'  },
+    { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena: colaboração em catálise e materiais para propulsão.'  },
+    { sigla: 'LPL' , imagem: 'Parceiros/LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório de Propulsão Líquida (ITA): colaboração em projetos de Propulsão Líquida.'  },
+    { sigla: 'BIZU' , imagem: 'Parceiros/Bizu.jpg' , nome: 'Bizu' , descricao: 'Bizu Space: Parceria em projeto de preparo de propelente líquido.'  }
   ],
 
   publicacoes: [
