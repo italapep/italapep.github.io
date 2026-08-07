@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 07/08/2026, 19:58:38
+ * Editado via painel admin em 07/08/2026, 20:14:03
  */
 
 const LAPEP_CONFIG = {
@@ -78,12 +78,12 @@ const LAPEP_CONFIG = {
   ],
 
   parcerias: [
-    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE / LCP' , descricao: 'Laboratório de Combustão e Propulsão — parceria histórica em propulsão e foguetes desde 2011.'  },
-    { sigla: 'TII' , imagem: 'Parceiros/TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute — colaboração internacional em propulsão com HTP.'  },
-    { sigla: 'LTF' , imagem: 'Parceiros/LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de propulsão e desenvolvimento de HTP propulsivo.'  },
-    { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena — colaboração em catálise e materiais para propulsão.'  },
-    { sigla: 'LPL' , imagem: 'Parceiros/LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório do ITA com colaboração em projetos de Propulsão Líquida.'  },
-    { sigla: 'BIZU' , imagem: 'Parceiros/Bizu.jpg' , nome: 'Bizu' , descricao: 'Parceria em projeto de preparo de propelentes e desenvolvimento tecnológico.'  }
+    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE / LCP' , descricao: 'Instituto Nacional de Pesquisas Espaciais: parceria em propelentes, materiais carbonosos e materiais cerâmicos'  },
+    { sigla: 'TII' , imagem: 'Parceiros/TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute: colaboração internacional em propulsão com HTP.'  },
+    { sigla: 'LTF' , imagem: 'Parceiros/LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório de Tecnologias de Foguetes (ITA): colaboração em projetos de propulsão.'  },
+    { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena: colaboração em catálise e materiais para propulsão.'  },
+    { sigla: 'LPL' , imagem: 'Parceiros/LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório de Propulsão Líquida (ITA): colaboração em projetos de Propulsão Líquida.'  },
+    { sigla: 'BIZU' , imagem: 'Parceiros/Bizu.jpg' , nome: 'Bizu' , descricao: 'Bizu Space: Parceria em projeto de preparo de propelente líquido.'  }
   ],
 
   publicacoes: [
