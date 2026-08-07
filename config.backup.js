@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 07/08/2026, 20:14:01
+ * Editado via painel admin em 07/08/2026, 20:25:11
  */
 
 const LAPEP_CONFIG = {
@@ -68,7 +68,8 @@ const LAPEP_CONFIG = {
     { titulo: 'Combustíveis Hipergólicos Catalisados para Sistemas Bipropelentes' , descricao: 'Desenvolvimento de combustíveis com aditivos catalíticos para ignição hipergólica com HTP. (IC, 2022)' , status: 'Concluído' , tipo: 'IC'  },
     { titulo: 'Catalisadores Mássicos para HTP por Modelagem de Misturas' , descricao: 'Síntese e caracterização de catalisadores preparados por modelagem de misturas para decomposição de HTP. (IC, 2021)' , status: 'Concluído' , tipo: 'IC'  },
     { titulo: 'Catalisadores Espinélios Mistos para Decomposição de HTP' , descricao: 'Síntese e avaliação de catalisadores espinélios de metais de transição para propulsão monopropelente. (IC, 2020)' , status: 'Concluído' , tipo: 'IC'  },
-    { titulo: 'Catalisadores Co-Mn para Decomposição de HTP' , descricao: 'Desenvolvimento inicial de catalisadores espinélios Co-Mn para propulsão monopropelente. (IC, 2017)' , status: 'Concluído' , tipo: 'IC'  }
+    { titulo: 'Catalisadores Co-Mn para Decomposição de HTP' , descricao: 'Desenvolvimento inicial de catalisadores espinélios Co-Mn para propulsão monopropelente. (IC, 2017)' , status: 'Concluído' , tipo: 'IC'  },
+    { titulo: 'Divulgação científica por meio das redes sociais do LAPEP-ITA' , descricao: 'Divulgação científica das atividades desenvolvidas no LAPEP, contemplando as linhas de pesquisa, atividades experimentais, rotina laboratorial, boas práticas e demais ações relacionadas ao cotidiano do laboratório.' , status: 'Em andamento' , tipo: 'IC'  }
   ],
 
   defesas: [
@@ -78,7 +79,7 @@ const LAPEP_CONFIG = {
   ],
 
   parcerias: [
-    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE / LCP' , descricao: 'Instituto Nacional de Pesquisas Espaciais: parceria em propelentes, materiais carbonosos e materiais cerâmicos'  },
+    { sigla: 'INPE' , imagem: 'Parceiros/INPE.png' , nome: 'INPE' , descricao: 'Instituto Nacional de Pesquisas Espaciais: Parceria em propelentes, materiais carbonosos e materiais cerâmicos'  },
     { sigla: 'TII' , imagem: 'Parceiros/TII.png' , nome: 'TII' , descricao: 'Technology Innovation Institute: colaboração internacional em propulsão com HTP.'  },
     { sigla: 'LTF' , imagem: 'Parceiros/LTF.jpeg' , nome: 'LTF-ITA' , descricao: 'Laboratório de Tecnologias de Foguetes (ITA): colaboração em projetos de propulsão.'  },
     { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena: colaboração em catálise e materiais para propulsão.'  },
