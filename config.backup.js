@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 07/08/2026, 20:25:11
+ * Editado via painel admin em 13/08/2026, 11:22:18
  */
 
 const LAPEP_CONFIG = {
@@ -18,7 +18,7 @@ const LAPEP_CONFIG = {
   contato: {
     endereco: 'Departamento de Química — ITA\nCampus do CTA, São José dos Campos, SP\nCEP 12228-900' ,
     telefone: '(12) 3947-5948' ,
-    email: 'lgustavoferroni@ita.br' ,
+    email: 'lapep@gp.ita.br' ,
     instagram: 'ita_lapep' 
   },
 
