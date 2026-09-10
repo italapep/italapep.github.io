@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 10/09/2026, 08:24:28
+ * Editado via painel admin em 10/09/2026, 08:37:34
  */
 
 const LAPEP_CONFIG = {
@@ -51,7 +51,7 @@ const LAPEP_CONFIG = {
     { titulo: 'Oxidantes Verdes à Base de ADN e HTP para Sistemas Bipropelentes' , descricao: 'Avaliação de oxidantes alternativos de baixa toxicidade para aplicações em propulsão bipropelente. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
     { titulo: 'Síntese de Catalisadores de Ag para Decomposição de H₂O₂ por DOE' , descricao: 'Planejamento experimental para otimização de catalisadores de prata para decomposição catalítica. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
     { titulo: 'Óxidos Mistos para Degradação Fotocatalítica de Corantes' , descricao: 'Síntese e avaliação de óxidos mistos nanoestruturados como fotocatalisadores para tratamento de efluentes. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
-    { titulo: 'Materiais Carbonosos como Suportes para Eletrocatalisadores' , descricao: 'Desenvolvimento de suportes carbonosos nanoestruturados para aplicação em eletrocatálise e energia. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
+    { titulo: 'Otimização dos parâmetros de síntese para produção do trihidróxido de alumínio' , descricao: 'Estudo da influência dos íons e dos parâmetros de síntese sobre o crescimento cristalino do trihidróxido de alumínio. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
     { titulo: 'Materiais Carbonosos Nanoestruturados para Aplicação em Refratários Industriais e Aeroespaciais por Pirólise Controlada' , descricao: 'Síntese de materiais carbonosos via pirólise controlada para aplicações refratárias. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
     { titulo: 'Pirólise para Produção de Materiais Carbonosos Nanoestruturados de Alta Área Superficial' , descricao: 'Desenvolvimento de materiais carbonosos com elevada área superficial via pirólise. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
     { titulo: 'Síntese de Óxidos Mistos Ti-Fe para Degradação Fotocatalítica de Corantes' , descricao: 'Desenvolvimento e otimização por DOE de catalisadores à base de óxidos mistos para fotocatálise ambiental. (IC, 2026)' , status: 'Em andamento' , tipo: 'IC'  },
