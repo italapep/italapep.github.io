@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 10/09/2026, 08:37:34
+ * Editado via painel admin em 22/09/2026, 11:03:23
  */
 
 const LAPEP_CONFIG = {
@@ -125,7 +125,6 @@ const LAPEP_CONFIG = {
   ],
 
   noticias: [
-    { titulo: 'Oportunidade de Iniciação Científica' , data: 'Junho de 2026' , texto: '' , imagem: 'Refratários.jpeg' , ativo: true },
     { titulo: 'Faça parte do LAPEP' , data: 'Junho de 2026' , texto: '' , imagem: 'Faça parte do LAPEP.png' , ativo: true }
   ]
 
