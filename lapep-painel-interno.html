@@ -267,6 +267,42 @@ let eqFilter = 'todos';
 let projFilter = 'todos';
 let pendingImgUploads = [];  // {path, b64} to upload on save
 
+// ── Níveis da equipe ──
+// A posição de cada nível vai de 10 em 10 de propósito. As folgas entre eles
+// são onde entram os níveis personalizados criados pela opção "Outros...".
+// O site (index.html) usa exatamente a mesma escala; se mexer aqui, mexa lá.
+const NIVEIS_FIXOS = [
+  ['Coordenador', 10],
+  ['Coordenador Adjunto', 20],
+  ['Pesquisador Integrante', 30],
+  ['Pós-Doutorado', 40],
+  ['Doutorado', 50],
+  ['Mestrado', 60],
+  ['IC', 70],
+  ['Estágio', 80]
+];
+
+// Lista fixa + níveis personalizados que já existam em alguém da equipe,
+// para não ter que digitar de novo e não criar duas grafias do mesmo cargo.
+function niveisDisponiveis() {
+  const fixos = NIVEIS_FIXOS.map(n => n[0]);
+  const custom = [];
+  (cfg && cfg.equipe ? cfg.equipe : []).forEach(p => {
+    if (!p.papel || fixos.indexOf(p.papel) !== -1) return;
+    if (custom.some(c => c[0] === p.papel)) return;
+    custom.push([p.papel, typeof p.ordem === 'number' ? p.ordem : 999]);
+  });
+  return NIVEIS_FIXOS.concat(custom).sort((a, b) => a[1] - b[1]);
+}
+
+// Mostra os campos extras só quando o usuário escolhe "Outros...".
+function togglePapelOutros() {
+  const sel = document.getElementById('m-papel');
+  const wrap = document.getElementById('m-outros-wrap');
+  if (!sel || !wrap) return;
+  wrap.style.display = (sel.value === '__outros__') ? '' : 'none';
+}
+
 // ── Login ──
 function login() {
   if (document.getElementById('pwd').value !== SENHA) {
@@ -551,12 +587,21 @@ function openModal(type, idx) {
   } else if (type === 'eq') {
     const m = isEdit ? cfg.equipe[idx] : {};
     document.getElementById('modal-title').textContent = isEdit ? 'Editar Membro' : 'Novo Membro';
-    const niveis = ['Coordenador | Professor Adjunto','Coordenador Adjunto | Professor Adjunto','Pós-Doutorado','Doutorado','Mestrado','IC'];
-    const papelOpts = niveis.map(v => `<option value="${v}" ${m.papel===v?'selected':''}>${v}</option>`).join('');
+    const niveis = niveisDisponiveis();
+    const conhecido = niveis.some(n => n[0] === m.papel);
+    const papelOpts = niveis.map(n => `<option value="${n[0]}" ${m.papel===n[0]?'selected':''}>${n[0]}</option>`).join('')
+      + `<option value="__outros__" ${(m.papel && !conhecido)?'selected':''}>Outros...</option>`;
+    const depoisOpts = niveis.map(n => `<option value="${n[1]}">${n[0]}</option>`).join('');
     body.innerHTML = `<div class="form-grid">
       <div class="field full"><label>Nome completo</label><input id="m-nome" value="${esc(m.nome||'')}"></div>
       <div class="field"><label>Tipo</label><select id="m-tipo"><option value="professor" ${m.tipo==='professor'?'selected':''}>Professor</option><option value="aluno" ${m.tipo!=='professor'?'selected':''}>Aluno</option></select></div>
-      <div class="field"><label>Nível / Cargo</label><select id="m-papel">${papelOpts}</select></div>
+      <div class="field"><label>Nível</label><select id="m-papel" onchange="togglePapelOutros()">${papelOpts}</select></div>
+      <div class="field full" id="m-outros-wrap" style="display:${(m.papel && !conhecido) ? '' : 'none'}">
+        <label>Nome do novo nível</label>
+        <input id="m-papel-outro" placeholder="ex.: Pesquisador Visitante" value="${(m.papel && !conhecido) ? esc(m.papel) : ''}">
+        <label style="display:block;margin-top:10px">Aparecer depois de</label>
+        <select id="m-papel-depois">${depoisOpts}</select>
+      </div>
       <div class="field full"><label>Tema de pesquisa</label><textarea id="m-tema">${esc(m.tema||'')}</textarea></div>
       <div class="field full">
         <label>Foto (caminho atual: ${m.foto||'nenhuma'})</label>
@@ -672,7 +717,24 @@ function saveModal() {
     renderPesquisa();
   } else if (modalMode === 'eq') {
     const newFoto = val('m-foto-path');
-    const item = { nome: val('m-nome').trim(), tipo: val('m-tipo'), papel: val('m-papel'), tema: val('m-tema').trim(), foto: newFoto };
+    let papel = val('m-papel'), ordem;
+    if (papel === '__outros__') {
+      papel = val('m-papel-outro').trim();
+      if (!papel) { alert('Escreva o nome do novo nível.'); return; }
+      // Entra logo depois do nível escolhido. Se outro personalizado já ocupa
+      // essa folga, empurra um a mais, para os dois não se embaralharem.
+      const base = parseInt(val('m-papel-depois'), 10) || 0;
+      const ocupados = {};
+      (cfg.equipe || []).forEach(p => {
+        if (typeof p.ordem === 'number' && p.papel !== papel) ocupados[p.ordem] = true;
+      });
+      ordem = base + 5;
+      while (ocupados[ordem] && ordem < base + 10) ordem++;
+    } else {
+      const achado = niveisDisponiveis().find(n => n[0] === papel);
+      ordem = achado ? achado[1] : 999;
+    }
+    const item = { nome: val('m-nome').trim(), tipo: val('m-tipo'), papel: papel, ordem: ordem, tema: val('m-tema').trim(), foto: newFoto };
     if (!item.nome) { alert('Nome obrigatório'); return; }
     if (editIdx !== null) cfg.equipe[editIdx] = item; else cfg.equipe.push(item);
     renderEq();
@@ -776,7 +838,13 @@ function buildConfigJs() {
   const defs = cfg.defesas.map(d => `    { ano: ${d.ano}, tipo: ${q(d.tipo)}, titulo: ${q(d.titulo)}, nome: ${q(d.nome)}, papel: ${q(d.papel)}, instituicao: ${q(d.instituicao)} }`).join(',\n');
   const nots  = (cfg.noticias||[]).map(n => `    { titulo: ${q(n.titulo)}, data: ${q(n.data)}, texto: ${q(n.texto)}, imagem: ${q(n.imagem)}, ativo: ${n.ativo!==false} }`).join(',\n');
   const parcs = cfg.parcerias.map(p => `    { sigla: ${q(p.sigla)}, imagem: ${q(p.imagem)}, nome: ${q(p.nome)}, descricao: ${q(p.descricao)} }`).join(',\n');
-  const equipe = cfg.equipe.map(m => `    { nome: ${q(m.nome)}, papel: ${q(m.papel)}, foto: ${q(m.foto)}, tema: ${q(m.tema)}, tipo: ${q(m.tipo)} }`).join(',\n');
+  // "ordem" só é gravada quando existe. Para quem nunca foi editado desde a
+  // criação dos níveis novos, o campo fica ausente e o site se vira pelo texto
+  // do cargo. Gravar um valor padrão aqui jogaria todo mundo para o fim da fila.
+  const equipe = cfg.equipe.map(m => {
+    const ord = (typeof m.ordem === 'number') ? `, ordem: ${m.ordem}` : '';
+    return `    { nome: ${q(m.nome)}, papel: ${q(m.papel)}${ord}, foto: ${q(m.foto)}, tema: ${q(m.tema)}, tipo: ${q(m.tipo)} }`;
+  }).join(',\n');
   return `/**\n * LAPEP-ITA — config.js\n * Editado via painel admin em ${new Date().toLocaleString('pt-BR')}\n */\n\nconst LAPEP_CONFIG = {\n\n  sheetId: ${q(cfg.sheetId||'')},\n  abaAlunos: ${q(cfg.abaAlunos||'Alunos')},\n  portalAluno: ${q(cfg.portalAluno||'')},\n  portalOrientador: ${q(cfg.portalOrientador||'')},\n\n${sobre}\n\n${contato}\n\n  linhasPesquisa: [\n${pesq}\n  ],\n\n  projetos: [\n${proj}\n  ],\n\n  defesas: [\n${defs}\n  ],\n\n  parcerias: [\n${parcs}\n  ],\n\n  publicacoes: [\n${pubs}\n  ],\n\n  equipe: [\n${equipe}\n  ],\n\n  noticias: [\n${nots}\n  ]\n\n};\n`;
 }
 
