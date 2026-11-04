@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 04/11/2026, 11:46:56
+ * Editado via painel admin em 04/11/2026, 11:48:35
  */
 
 const LAPEP_CONFIG = {
