@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 04/11/2026, 14:25:22
+ * Editado via painel admin em 04/11/2026, 18:31:02
  */
 
 const LAPEP_CONFIG = {
@@ -85,7 +85,8 @@ const LAPEP_CONFIG = {
     { sigla: 'USP' , imagem: 'Parceiros/EEL_USP.png' , nome: 'EEL-USP' , descricao: 'Escola de Engenharia de Lorena: colaboração em catálise e materiais para propulsão.'  },
     { sigla: 'LPL' , imagem: 'Parceiros/LPL.jpeg' , nome: 'LPL-ITA' , descricao: 'Laboratório de Propulsão Líquida (ITA): colaboração em projetos de Propulsão Líquida.'  },
     { sigla: 'BIZU' , imagem: 'Parceiros/Bizu.jpg' , nome: 'Bizu' , descricao: 'Bizu Space: Parceria em projeto de preparo de propelente líquido.'  },
-    { sigla: 'INMETRO' , imagem: 'WhatsApp Image 2026-11-04 at 12.48.26.jpeg' , nome: 'INMETRO' , descricao: 'Inmetro: colaboração em caracterização e avaliação de materiais para aplicações em catálise, energia, meio ambiente e setor aeroespacial.'  }
+    { sigla: 'INMETRO' , imagem: 'WhatsApp Image 2026-11-04 at 12.48.26.jpeg' , nome: 'INMETRO' , descricao: 'Inmetro: colaboração em caracterização e avaliação de materiais para aplicações em catálise, energia, meio ambiente e setor aeroespacial.'  },
+    { sigla: 'ETER-ITA' , imagem: 'ETER.png' , nome: 'Estudos Teóricos de Espectroscopia e Reatividade' , descricao: 'Colaboração em modelagem e simulação computacional de materiais energéticos e processos reacionais aplicados à propulsão'  }
   ],
 
   publicacoes: [
