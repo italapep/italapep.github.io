@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 04/11/2026, 13:32:58
+ * Editado via painel admin em 04/11/2026, 14:25:21
  */
 
 const LAPEP_CONFIG = {
@@ -104,8 +104,8 @@ const LAPEP_CONFIG = {
   ],
 
   equipe: [
-    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira' , papel: 'Coordenador | Professor Adjunto' , foto: 'Fotos Alunos/Luis-Gustavo.jpeg' , tema: 'Monopropelentes, bipropelentes hipergólicos, propelentes sólidos e híbridos, propelentes em gel, catalisadores, suportes catalíticos, manufatura aditiva, H₂ verde, fotocatálise, materiais carbonosos e materiais eletromagnéticos' , tipo: 'professor'  },
-    { nome: 'Prof. Dr. Leonardo Henrique Gouvêa' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/Leonardo-Henrique.jpeg' , tema: 'Propulsão química de foguetes, propelentes híbridos, motores hipergólicos, candy rocket, HTP, projeto e operação de bancadas de testes e motores foguete' , tipo: 'professor'  },
+    { nome: 'Prof. Dr. Luís Gustavo Ferroni Pereira' , papel: 'Coordenador' , ordem: 10, foto: 'Fotos Alunos/Luis-Gustavo.jpeg' , tema: 'Monopropelentes, bipropelentes hipergólicos, propelentes sólidos e híbridos, propelentes em gel, catalisadores, suportes catalíticos, manufatura aditiva, H₂ verde, fotocatálise, materiais carbonosos e materiais eletromagnéticos' , tipo: 'professor'  },
+    { nome: 'Prof. Dr. Leonardo Henrique Gouvêa' , papel: 'Coordenador Adjunto' , ordem: 20, foto: 'Fotos Alunos/Leonardo-Henrique.jpeg' , tema: 'Propulsão química de foguetes, propelentes híbridos, motores hipergólicos, candy rocket, HTP, projeto e operação de bancadas de testes e motores foguete' , tipo: 'professor'  },
     { nome: 'Dra. Renata Fraga Cardoso' , papel: 'Pós-Doutorado' , foto: 'Fotos Alunos/Renata.jpeg' , tema: 'Catálise heterogênea e propulsão' , tipo: 'aluno'  },
     { nome: 'Sandra Helena da Silva Siqueira Tanaka' , papel: 'Doutorado' , foto: 'Fotos Alunos/Sandra.jpeg' , tema: 'Métodos analíticos para detecção de contaminantes' , tipo: 'aluno'  },
     { nome: 'Emilly Stefane de Oliveira Fernandes' , papel: 'Mestrado' , foto: 'Fotos Alunos/Emilly.jpeg' , tema: 'Catalisadores para H₂ verde' , tipo: 'aluno'  },
@@ -123,7 +123,7 @@ const LAPEP_CONFIG = {
     { nome: 'Maria Vitória Santos do Nascimento' , papel: 'IC' , foto: 'Fotos Alunos/Maria-Vitoria.png' , tema: 'Materiais carbonosos nanoestruturados' , tipo: 'aluno'  },
     { nome: 'Samuel Francisco Delfino Alves' , papel: 'IC' , foto: 'Fotos Alunos/Samuel.jpeg' , tema: 'Materiais cerâmicos para suportes catalíticos' , tipo: 'aluno'  },
     { nome: 'Camile Caroline de Sousa' , papel: 'IC' , foto: 'Fotos Alunos/Camile.jpeg' , tema: 'Divulgação Científica' , tipo: 'aluno'  },
-    { nome: 'Prof. Dr. Luiz Fernando de Araújo Ferrão' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/WhatsApp Image 2026-11-04 at 10.11.14.jpeg' , tema: 'Modelagem e simulação de materiais aeroespaciais, materiais energéticos e de transição energética, fotocatálise, semicondutores orgânicos, estrutura eletrônica, química quântica, termoquímica, cinética e mecanismos reacionais.' , tipo: 'professor'  }
+    { nome: 'Prof. Dr. Luiz Fernando de Araújo Ferrão' , papel: 'Pesquisador Integrante' , ordem: 30, foto: 'Fotos Alunos/WhatsApp Image 2026-11-04 at 10.11.14.jpeg' , tema: 'Modelagem e simulação de materiais aeroespaciais, materiais energéticos e de transição energética, fotocatálise, semicondutores orgânicos, estrutura eletrônica, química quântica, termoquímica, cinética e mecanismos reacionais.' , tipo: 'professor'  }
   ],
 
   noticias: [
