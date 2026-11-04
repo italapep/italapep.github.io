@@ -218,35 +218,6 @@
     .parceiro-card p { font-size: .77rem; color: var(--texto-cl); margin-top: 4px; }
 
     /* ═══════════════════════════════════════════════
-       PORTAIS
-       ═══════════════════════════════════════════════ */
-    #portais { background: var(--branco); }
-
-    .portal-tab-btns { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
-    .portal-tab-btn {
-      padding: 10px 24px; border-radius: 8px; font-weight: 700; font-size: .95rem;
-      border: 2px solid var(--azul); color: var(--azul); background: transparent;
-      cursor: pointer; transition: .2s;
-    }
-    .portal-tab-btn.active { background: var(--azul); color: #fff; border-color: var(--azul); }
-    .portal-tab-btn:hover:not(.active) { background: var(--cinza-cl); }
-    .portal-nova-janela {
-      margin-left: auto; font-size: .82rem; color: var(--laranja); font-weight: 600;
-      cursor: pointer; background: none; border: none; text-decoration: underline;
-    }
-
-    .portal-panel { display: none; }
-    .portal-panel.active { display: block; }
-    .iframe-wrap {
-      width: 100%; border-radius: 12px; overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,.3);
-      background: #fff;
-    }
-    .iframe-wrap iframe {
-      width: 100%; height: 680px; border: none; display: block;
-    }
-
-    /* ═══════════════════════════════════════════════
        NOTÍCIAS
        ═══════════════════════════════════════════════ */
     .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
@@ -318,7 +289,6 @@
       .sobre-grid, .contato-grid, .sobre-foto { grid-template-columns: 1fr; }
       .sobre-foto { order: -1; }
       #inicio h1 { font-size: 1.9rem; }
-      .iframe-wrap iframe { height: 520px; }
     }
   </style>
 </head>
@@ -342,7 +312,6 @@
       <li><a href="#publicacoes">Publicações</a></li>
       <li><a href="#defesas">Defesas</a></li>
       <li><a href="#parcerias">Parcerias</a></li>
-      <li><a href="#portais">Portais</a></li>
       <li><a href="#noticias" style="white-space:nowrap">Notícias/Oportunidades</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
@@ -469,32 +438,6 @@
   </div>
 </section>
 
-<!-- ═══════ PORTAIS ═══════ -->
-<section id="portais">
-  <div class="section-inner">
-    <div class="divider"></div>
-    <h2 class="section-title">Portais</h2>
-    <p class="section-sub">Acesso ao sistema interno do LAPEP</p>
-    <div class="portal-tab-btns">
-      <button class="portal-tab-btn active" onclick="showPortal('aluno', this)">👨‍🎓 Portal do Aluno</button>
-      <button class="portal-tab-btn" onclick="showPortal('orientador', this)">👨‍🏫 Portal do Orientador</button>
-      <button class="portal-nova-janela" onclick="abrirPortalJanela()">↗ Abrir em nova janela</button>
-    </div>
-    <div id="portal-aluno" class="portal-panel active">
-      <div class="iframe-wrap">
-        <iframe src="https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec"
-                title="Portal do Aluno LAPEP" loading="lazy" allowfullscreen></iframe>
-      </div>
-    </div>
-    <div id="portal-orientador" class="portal-panel">
-      <div class="iframe-wrap">
-        <iframe src="https://script.google.com/macros/s/AKfycbwHcZVJd2vAC2PaNGXMVTR4j5nUIkaHRhWgFXOUaE5TUTgm9NXbztCLDdkECM59z02o/exec?page=dashboard"
-                title="Portal do Orientador LAPEP" loading="lazy" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════ NOTÍCIAS ═══════ -->
 <section id="noticias">
   <div class="section-inner">
@@ -558,22 +501,6 @@ function showTab(id, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
-}
-
-/* ── Tabs Portais ── */
-let _portalAtivo = 'aluno';
-function showPortal(id, btn) {
-  document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.portal-tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('portal-' + id).classList.add('active');
-  btn.classList.add('active');
-  _portalAtivo = id;
-}
-function abrirPortalJanela() {
-  const url = _portalAtivo === 'orientador'
-    ? LAPEP_CONFIG.portalOrientador
-    : LAPEP_CONFIG.portalAluno;
-  window.open(url, '_blank', 'width=' + screen.availWidth + ',height=' + screen.availHeight + ',top=0,left=0');
 }
 
 /* ── Renderiza Publicações ── */
@@ -689,7 +616,12 @@ function renderPesquisa() {
 function renderProjetos() {
   const c = document.getElementById('projetos-container');
   if (!c || typeof LAPEP_CONFIG === 'undefined') return;
-  c.innerHTML = (LAPEP_CONFIG.projetos || []).map(p => {
+  /* Em andamento primeiro, concluídos depois. Dentro de cada grupo preserva a
+     ordem do config.js, que é a ordem de cadastro no painel: a ordenação do
+     JavaScript é estável, então quem empata não troca de lugar. */
+  const _posStatus = p => (p.status === 'Concluído' ? 1 : 0);
+  const _projOrd = [...(LAPEP_CONFIG.projetos || [])].sort((a, b) => _posStatus(a) - _posStatus(b));
+  c.innerHTML = _projOrd.map(p => {
     const cls = p.status === 'Concluído' ? ' encerrado' : '';
     return `<div class="proj-card"><span class="proj-badge${cls}">${p.status}</span><h3>${p.titulo}</h3><p>${p.descricao}</p></div>`;
   }).join('');
@@ -765,21 +697,44 @@ function renderEquipe() {
   const grid = document.getElementById('equipe-grid');
   if (!grid || typeof LAPEP_CONFIG === 'undefined' || !LAPEP_CONFIG.equipe) return;
   function iniciais(nome) { return nome.split(' ').filter(p=>p.length>2).slice(0,2).map(p=>p[0]).join(''); }
-  const _ordemNivel = m => {
-    const p = (m.papel || '').toLowerCase();
-    if (m.tipo === 'professor') {
-      if (p.includes('coordenador') && !p.includes('coordenador adjunto')) return 0;
-      return 1;
-    }
-    if (p.includes('pós') || p.includes('pos-doc')) return 2;
-    if (p.includes('doutora')) return 3;
-    if (p.includes('mestra')) return 4;
-    if (p.includes('ic') || p.includes('inicia')) return 5;
-    return 6;
+  /* Posição de cada nível na listagem. Os valores vão de 10 em 10 de propósito:
+     as folgas no meio são onde entram os níveis personalizados criados no painel,
+     que chegam aqui gravados no campo "ordem" de cada pessoa. */
+  const _NIVEIS_POS = {
+    'coordenador': 10,
+    'coordenador adjunto': 20,
+    'pesquisador integrante': 30,
+    'pós-doutorado': 40, 'pos-doutorado': 40,
+    'doutorado': 50,
+    'mestrado': 60,
+    'ic': 70,
+    'estágio': 80, 'estagio': 80
   };
+  const _ordemNivel = m => {
+    if (typeof m.ordem === 'number') return m.ordem;
+    const p = (m.papel || '').toLowerCase().trim();
+    if (_NIVEIS_POS[p] !== undefined) return _NIVEIS_POS[p];
+    /* Compatibilidade com cadastros antigos, do tempo em que o cargo vinha com
+       "| Professor Adjunto" colado. Atenção à ordem dos dois primeiros testes:
+       "Coordenador | Professor Adjunto" contém "adjunto" mas não é o adjunto. */
+    if (p.includes('coordenador adjunto')) return 20;
+    if (p.includes('coordenador')) return 10;
+    if (p.includes('pós') || p.includes('pos-doc')) return 40;
+    if (p.includes('doutora')) return 50;
+    if (p.includes('mestra')) return 60;
+    if (p === 'ic' || p.includes('inicia')) return 70;
+    if (p.includes('estág') || p.includes('estag')) return 80;
+    return 999;
+  };
+  /* Tira os títulos do começo do nome só para efeito de ordem alfabética, para
+     "Prof. Dr. Ana" entrar na letra A e não na P. O nome exibido não muda.
+     O ponto é opcional, mas o título precisa vir seguido de espaço: sem isso,
+     nomes como "Maria" ou "Drago" perderiam as primeiras letras. */
+  const _semTitulo = nome => String(nome || '')
+    .replace(/^(?:\s*(?:profa?|dra?|msc|phd)\.?(?=\s)\s*)+/i, '').trim();
   const _equipeOrd = [...LAPEP_CONFIG.equipe].sort((a, b) => {
     const d = _ordemNivel(a) - _ordemNivel(b);
-    return d !== 0 ? d : a.nome.localeCompare(b.nome, 'pt-BR');
+    return d !== 0 ? d : _semTitulo(a.nome).localeCompare(_semTitulo(b.nome), 'pt-BR');
   });
   grid.innerHTML = _equipeOrd.map(m => {
     const av = m.foto
