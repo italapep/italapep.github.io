@@ -1,6 +1,6 @@
 /**
  * LAPEP-ITA — config.js
- * Editado via painel admin em 04/11/2026, 11:48:33
+ * Editado via painel admin em 04/11/2026, 11:56:28
  */
 
 const LAPEP_CONFIG = {
@@ -122,7 +122,7 @@ const LAPEP_CONFIG = {
     { nome: 'Maria Vitória Santos do Nascimento' , papel: 'IC' , foto: 'Fotos Alunos/Maria-Vitoria.png' , tema: 'Materiais carbonosos nanoestruturados' , tipo: 'aluno'  },
     { nome: 'Samuel Francisco Delfino Alves' , papel: 'IC' , foto: 'Fotos Alunos/Samuel.jpeg' , tema: 'Materiais cerâmicos para suportes catalíticos' , tipo: 'aluno'  },
     { nome: 'Camile Caroline de Sousa' , papel: 'IC' , foto: 'Fotos Alunos/Camile.jpeg' , tema: 'Divulgação Científica' , tipo: 'aluno'  },
-    { nome: 'Luiz Fernando de Araújo Ferrão' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/WhatsApp Image 2026-11-04 at 10.11.14.jpeg' , tema: 'Modelagem e simulação de materiais aeroespaciais, materiais energéticos e de transição energética, fotocatálise, semicondutores orgânicos, estrutura eletrônica, química quântica, termoquímica, cinética e mecanismos reacionais.' , tipo: 'professor'  }
+    { nome: 'Prof. Dr. Luiz Fernando de Araújo Ferrão' , papel: 'Coordenador Adjunto | Professor Adjunto' , foto: 'Fotos Alunos/WhatsApp Image 2026-11-04 at 10.11.14.jpeg' , tema: 'Modelagem e simulação de materiais aeroespaciais, materiais energéticos e de transição energética, fotocatálise, semicondutores orgânicos, estrutura eletrônica, química quântica, termoquímica, cinética e mecanismos reacionais.' , tipo: 'professor'  }
   ],
 
   noticias: [
